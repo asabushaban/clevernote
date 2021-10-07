@@ -4,13 +4,12 @@ const cors = require("cors");
 const csurf = require("csurf");
 const helmet = require("helmet");
 const cookieParser = require("cookie-parser");
-const routes = require("./routes");
 const { environment } = require("./config");
+const routes = require("./routes");
 const isProduction = environment === "production";
 
 const app = express();
 
-app.use(routes);
 app.use(morgan("dev"));
 app.use(cookieParser());
 app.use(express.json());
@@ -25,7 +24,6 @@ app.use(
     contentSecurityPolicy: false,
   })
 );
-
 // Set the _csrf token and create req.csrfToken method
 app.use(
   csurf({
@@ -36,5 +34,7 @@ app.use(
     },
   })
 );
+
+app.use(routes);
 
 module.exports = app;
