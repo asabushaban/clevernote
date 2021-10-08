@@ -30,8 +30,8 @@ function LoginFormPage() {
       <div className="loginBackground">
         <form onSubmit={handleSubmit} className="loginCenter">
           <img className="logo" src={logo} />
-          <h1>Whatever Note</h1>
-          <p className="logoHeadline">Remember whatever matters.</p>
+          <h1>Clevernote</h1>
+          <p className="logoHeadline">Remember what matters.</p>
           <ul>
             {errors.map((error, idx) => (
               <li key={idx}>{error}</li>
