@@ -11,10 +11,22 @@ function SplashPage() {
     history.push("/signup");
   }
 
+  function navBottomBorder() {
+    const nav = document.querySelector(".splashNav");
+    nav.style.borderBottom = "5px solid grey";
+    // nav.style.backgroundColor = "red";
+  }
+
   return (
-    <>
-      <div className="splashNav">
-        <div id="leftNav"></div>
+    <div className="navAndSplashMainContainer">
+      <div className="splashNav" onScroll={navBottomBorder}>
+        <div id="leftNav">
+          <button id="demoButton">Demo</button>
+          <Link className="loginFromSplashNav" to="/login">
+            Log in
+          </Link>
+        </div>
+
         <div id="rightNav">
           <h3>Clevernote</h3>
           <img className="logo" src={logo} />
@@ -23,7 +35,7 @@ function SplashPage() {
       <div id="splashContainer">
         <div className="headingWithSignupLink">
           <h1 id="splashMainText">
-            Jot down a memory a note to your future self
+            Jot down a memory or a note to your future self
           </h1>
           <h2>
             Research shows people forget fifty percent of information in an
@@ -42,7 +54,7 @@ function SplashPage() {
           </Link>
         </div>
       </div>
-    </>
+    </div>
   );
 }
 export default SplashPage;
