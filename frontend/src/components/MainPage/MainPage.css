@@ -1,0 +1,24 @@
+/* #root {
+  height: 100%;
+  width: 100%;
+  display: flex;
+  justify-content: flex-start;
+} */
+
+.sideNav {
+  height: 100%;
+  width: 15%;
+  border: 3px solid yellow;
+}
+
+.notebookNav {
+  height: 100%;
+  width: 25%;
+  border: 3px solid purple;
+}
+
+.mainNoteArea {
+  height: 100%;
+  width: 60%;
+  border: 3px solid pink;
+}

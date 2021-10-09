@@ -21,7 +21,7 @@ function Navigation({ isLoaded }) {
 
   return (
     <>
-      <ul>
+      <ul className="splashNav">
         <li className="navBar">
           <NavLink exact to="/">
             Home
