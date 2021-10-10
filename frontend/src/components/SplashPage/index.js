@@ -73,7 +73,7 @@ function SplashPage() {
         </div>
         <div className="secondSectionSplash">
           <img className="secondSectionImage" src={logo} />
-          <ul>
+          <ul className="secondSectionText">
             <li>
               <h4>WORK ANYWHERE</h4>
               <p>
