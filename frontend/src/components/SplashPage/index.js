@@ -11,15 +11,33 @@ function SplashPage() {
     history.push("/signup");
   }
 
-  function navBottomBorder() {
+  //   function navBottomBorder() {
+  //     const nav = document.querySelector(".splashNav");
+  //     nav.style.boxShadow = "0px 2px 5px rgba(0, 0, 0, 0.5)";
+  //     // nav.style.backgroundColor = "red";
+  //   }
+
+  //   window.addEventListener("DOMContentLoaded", event => {
+  //     const body = document.querySelector("body");
+  //     console.log(body);
+  //     const nav = document.querySelector(".splashNav");
+  //     console.log(nav);
+  //     body.onscroll = function () {
+  //       nav.style.boxShadow = "0px 2px 5px rgba(0, 0, 0, 0.5)";
+  //     };
+  //   });
+
+  setTimeout(event => {
+    const body = document.querySelector("body");
     const nav = document.querySelector(".splashNav");
-    nav.style.borderBottom = "5px solid grey";
-    // nav.style.backgroundColor = "red";
-  }
+    body.onscroll = function () {
+      nav.style.boxShadow = "0px 2px 5px rgba(0, 0, 0, 0.125)";
+    };
+  }, 100);
 
   return (
     <div className="navAndSplashMainContainer">
-      <div className="splashNav" onScroll={navBottomBorder}>
+      <div className="splashNav">
         <div id="leftNav">
           <button id="demoButton">Demo</button>
           <Link className="loginFromSplashNav" to="/login">
@@ -29,7 +47,7 @@ function SplashPage() {
 
         <div id="rightNav">
           <h3>Clevernote</h3>
-          <img className="logo" src={logo} />
+          <img className="logoSplash" src={logo} />
         </div>
       </div>
       <div id="splashContainer">
@@ -52,6 +70,39 @@ function SplashPage() {
           <Link className="loginFromSplash" to="/login">
             Already have and account? Log in
           </Link>
+        </div>
+        <div className="secondSectionSplash">
+          <img className="secondSectionImage" src={logo} />
+          <ul>
+            <li>
+              <h4>WORK ANYWHERE</h4>
+              <p>
+                Keep important info handy—your notes sync automatically to all
+                your devices.
+              </p>
+            </li>
+            <li>
+              <h4>REMEMBER EVERYTHING</h4>
+              <p>
+                Make notes more useful by adding text, images, audio, scans,
+                PDFs, and documents.
+              </p>
+            </li>
+            <li>
+              <h4>TURN TO-DO INTO DONE</h4>
+              <p>
+                Bring your notes, tasks, and schedules together to get things
+                done more easily.
+              </p>
+            </li>
+            <li>
+              <h4>FIND THINGS FAST</h4>
+              <p>
+                Get what you need, when you need it with powerful, flexible
+                search capabilities.
+              </p>
+            </li>
+          </ul>
         </div>
       </div>
     </div>

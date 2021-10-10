@@ -2,21 +2,35 @@
   height: 100%;
 }
 
+.splashNav {
+  box-sizing: border-box;
+  background-color: white;
+  overflow: hidden;
+  position: fixed; /* Set the navbar to fixed position */
+  top: 0; /* Position the navbar at the top of the page */
+  width: 100%; /* Full width */
+  display: flex;
+  align-items: center;
+  height: 8%;
+  padding: 20px 0px 20px 0px;
+}
+
 #splashContainer {
   display: flex;
   flex-direction: column;
+  justify-content: space-around;
   /* margin-top: 400px; */
-  height: 70%;
-  margin: 60px 150px 0px 150px;
+  height: 92%;
+  margin: 60px 150px 60px 150px;
 }
 
 .headingWithSignupLink {
   display: flex;
   flex-direction: column;
-  /* justify-content: space-around; */
+  justify-content: space-around;
   align-items: center;
   width: 100%;
-  height: 55%;
+  /* margin: ; */
 }
 
 #signupFromSplashButton {
@@ -58,18 +72,6 @@ h2 {
   font-size: 36pt;
 }
 
-.splashNav {
-  box-sizing: border-box;
-  background-color: white;
-  overflow: hidden;
-  position: fixed; /* Set the navbar to fixed position */
-  top: 0; /* Position the navbar at the top of the page */
-  width: 100%; /* Full width */
-  display: flex;
-  align-items: center;
-  padding: 20px 0px 20px 0px;
-}
-
 #leftNav {
   width: 50%;
   display: flex;
@@ -101,7 +103,7 @@ h2 {
   margin-right: 10px;
 }
 
-.logo {
+.logoSplash {
   width: 87.5px;
   height: 31.165px;
 }
@@ -145,3 +147,8 @@ h3 {
   height: 15%;
   margin: 0;
 } */
+
+.secondSectionSplash {
+  position: relative;
+  display: flex;
+}
