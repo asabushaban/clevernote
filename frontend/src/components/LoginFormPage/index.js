@@ -31,7 +31,7 @@ function LoginFormPage() {
         <form onSubmit={handleSubmit} className="loginCenter">
           <img className="logo" src={logo} />
           <h1>Clevernote</h1>
-          <p className="logoHeadline">Remember what matters.</p>
+          <p className="logoHeadline">A clone of evernote.</p>
           <ul>
             {errors.map((error, idx) => (
               <li key={idx}>{error}</li>
