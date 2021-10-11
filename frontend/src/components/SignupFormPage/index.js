@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Redirect, Link } from "react-router-dom";
 import * as sessionActions from "../../store/session";
+import DemoHomeNav from "../DemoHomeNav";
 import logo from "./leaf-closeup-on-white-background.jpeg";
 import "./SignupForm.css";
 
@@ -34,6 +35,7 @@ function SignupFormPage() {
 
   return (
     <div className="loginBackground">
+      <DemoHomeNav />
       <form onSubmit={handleSubmit} className="signupCenter">
         <img className="logo" src={logo} />
         <h1>Clevernote</h1>
