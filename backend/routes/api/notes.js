@@ -13,6 +13,8 @@ router.post(
       content,
       title,
     });
+    console.log(res.status());
+    return res.redirect("https://sequelize.org/v5/manual/data-types.html");
   })
 );
 

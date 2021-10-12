@@ -23,18 +23,13 @@ function App() {
       {isLoaded && (
         <Switch>
           <Route exact path="/">
-            {/* <Navigation isLoaded={isLoaded} /> */}
-            <SplashPage />
+            {sessionUser ? <MainPage /> : <SplashPage />}
           </Route>
           <Route path="/login">
             <LoginFormPage />
           </Route>
           <Route path="/signup">
             <SignupFormPage />
-          </Route>
-          <Route exact path="/:userId">
-            {/* <Navigation isLoaded={isLoaded} /> */}
-            <MainPage />
           </Route>
         </Switch>
       )}

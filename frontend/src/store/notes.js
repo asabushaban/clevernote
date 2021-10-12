@@ -35,8 +35,16 @@ const notesReducer = (state = initialState, action) => {
           ...state,
           [action.note.id]: action.note,
         };
+        console.log(newState);
         return newState;
       }
+      console.log({
+        ...state,
+        [action.note.id]: {
+          ...state[action.note.id],
+          ...action.note,
+        },
+      });
       return {
         ...state,
         [action.note.id]: {
