@@ -25,7 +25,6 @@ router.get(
         user_id: req.params.id,
       },
     });
-    console.log(notes.length);
     return res.json(notes);
   })
 );

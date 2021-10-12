@@ -19,6 +19,7 @@ export const getNotes = userId => async dispatch => {
   if (response.ok) {
     const notes = await response.json();
     dispatch(load(notes));
+    return response;
   }
 };
 
@@ -68,7 +69,7 @@ const notesReducer = (state = initialState, action) => {
       //   };
     }
     case LOAD: {
-      const newNotes = {};
+      const newNotes = { ...action.list };
       return {
         ...state,
         ...newNotes,

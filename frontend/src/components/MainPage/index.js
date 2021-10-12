@@ -13,6 +13,9 @@ function MainPage() {
   useEffect(() => {
     dispatch(getNotes(sessionUser.id));
   }, []);
+  const notes = useSelector(state => state.notes);
+
+  console.log("notes to follow:", notes);
 
   const handleSubmit = async e => {
     e.preventDefault();
@@ -27,7 +30,13 @@ function MainPage() {
   return (
     <div id="mainPageContainer">
       <div className="sideNav"></div>
-      <div className="notebookNav"></div>
+      <div className="notebookNav">
+        <ul>
+          {Object.values(notes).map(note => (
+            <li className="notebookNavList">{note.title}</li>
+          ))}
+        </ul>
+      </div>
       <div className="mainNoteArea">
         <form id="noteContainer" onSubmit={handleSubmit}>
           <input
