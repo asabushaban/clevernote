@@ -14,12 +14,6 @@ function MainPage() {
   const [content, setContentState] = useState("");
   const [title, setTitleState] = useState("");
 
-  // if (sessionUser) {
-  //   if (params.userId != sessionUser.id) {
-  //     return <Redirect to={`/`} />;
-  //   }
-  // }
-
   if (!sessionUser || params.userId != sessionUser.id)
     return <Redirect to={`/`} />;
 

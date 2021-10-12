@@ -28,13 +28,7 @@ function SignupFormPage() {
         const data = await res.json();
         if (data && data.errors) setErrors(data.errors);
       });
-      await dispatch(sessionActions.login({ username, password })).catch(
-        async res => {
-          const data = await res.json();
-          if (data && data.errors) setErrors(data.errors);
-        }
-      );
-      history.push(`/${sessionUser.id}`);
+      history.push(`/`);
       return;
     }
     return setErrors([
