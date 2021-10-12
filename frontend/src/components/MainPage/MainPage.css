@@ -1,24 +1,85 @@
-/* #root {
+#mainPageContainer {
+  margin: 0;
   height: 100%;
   width: 100%;
   display: flex;
-  justify-content: flex-start;
-} */
+}
 
 .sideNav {
   height: 100%;
-  width: 15%;
-  border: 3px solid yellow;
+  width: 12%;
+  background-color: #000000;
 }
 
 .notebookNav {
   height: 100%;
-  width: 25%;
-  border: 3px solid purple;
+  width: 20%;
+  background-color: #2f2f2f;
 }
 
 .mainNoteArea {
   height: 100%;
-  width: 60%;
-  border: 3px solid pink;
+  width: 68%;
+  padding-left: 30px;
+  padding-right: 30px;
+  background-color: rgb(46, 45, 45);
+  /* background-color: #ffffff; */
+  color: black;
+  overflow: scroll;
 }
+
+#noteContainer {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  background-color: rgb(46, 45, 45);
+}
+
+#title {
+  font-size: 30pt;
+  color: #818181;
+  height: 8%;
+  width: 100%;
+  background-color: rgb(46, 45, 45);
+  border: none;
+}
+
+#textarea {
+  width: 100%;
+  height: 100%;
+  background-color: rgb(46, 45, 45);
+  color: beige;
+  border: none;
+}
+
+#createNoteButton {
+  background-color: #00a82d;
+  color: white;
+  /* height: 8%;
+  width: 65%; */
+  /* width: 25%;
+    height: 8%; */
+  border: none;
+  border-radius: 7px;
+  font-size: 13pt;
+  font-weight: 400;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
+    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
+    sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto",
+    "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
+    sans-serif;
+  width: 7.83rem;
+  height: 2.67rem;
+  margin-bottom: 3rem;
+}
+
+/* .rdw-block-wrapper,
+.rdw-fontsize-wrapper,
+.rdw-fontfamily-wrapper {
+  color: black;
+}
+
+.rdw-editor-toolbar {
+  border: none;
+  background-color: rgb(46, 45, 45);
+} */
