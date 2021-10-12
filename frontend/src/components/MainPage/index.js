@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import "./MainPage.css";
-import { createNote } from "../../store/notes";
+import { createNote, getNotes } from "../../store/notes";
 import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
 
 function MainPage() {
@@ -9,6 +9,10 @@ function MainPage() {
   const sessionUser = useSelector(state => state.session.user);
   const [content, setContentState] = useState("");
   const [title, setTitleState] = useState("");
+
+  useEffect(() => {
+    dispatch(getNotes(sessionUser.id));
+  }, []);
 
   const handleSubmit = async e => {
     e.preventDefault();

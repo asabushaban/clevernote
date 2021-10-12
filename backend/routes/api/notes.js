@@ -3,7 +3,7 @@ const asyncHandler = require("express-async-handler");
 const { Note } = require("../../db/models");
 
 const router = express.Router();
-console.log("hit");
+
 router.post(
   "/",
   asyncHandler(async function (req, res) {
@@ -13,8 +13,20 @@ router.post(
       content,
       title,
     });
-    console.log(res.status());
-    return res.redirect("https://sequelize.org/v5/manual/data-types.html");
+    return res.json(note);
+  })
+);
+
+router.get(
+  "/:id",
+  asyncHandler(async function (req, res) {
+    const notes = await Note.findAll({
+      where: {
+        user_id: req.params.id,
+      },
+    });
+    console.log(notes.length);
+    return res.json(notes);
   })
 );
 
