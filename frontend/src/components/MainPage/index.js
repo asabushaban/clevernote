@@ -7,15 +7,15 @@ import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
 function MainPage() {
   const dispatch = useDispatch();
   const sessionUser = useSelector(state => state.session.user);
+  const notes = useSelector(state => state.notes);
   const [content, setContentState] = useState("");
   const [title, setTitleState] = useState("");
-  const [mainTitle, setMainTitle] = useState("Welcome");
-  const [mainContent, setMainContent] = useState("");
+  const [mainNote, setMainNote] = useState("");
 
   useEffect(() => {
     dispatch(getNotes(sessionUser.id));
+    // setMainNote(notes["1"]);
   }, []);
-  const notes = useSelector(state => state.notes);
 
   const handleSubmit = async e => {
     e.preventDefault();
@@ -27,23 +27,23 @@ function MainPage() {
     let createdNote = await dispatch(createNote(payload));
   };
 
-  const mainNote = () => {
-    console.log(notes);
-    setMainTitle(Object.values(notes)[0].title);
-    console.log(mainTitle);
-    setMainContent(Object.values(notes)[0].content);
-    console.log(mainContent);
-  };
-
   return (
     <div id="mainPageContainer">
       <div className="sideNav"></div>
       <div className="notebookNav">
         <ul id="notebookList">
-          {Object.values(notes).map(note => (
-            <li onClick={mainNote} className="notebookNavListItem">
-              {note.title}
-              <p id="dateOfNote">{note.updatedAt.slice(0, 10)}</p>
+          {/* <form>
+            <input></input>
+            <button></button>
+          </form> */}
+          {Object.entries(notes).map(note => (
+            <li
+              className="notebookNavListItem"
+              key={note[0]}
+              onClick={() => setMainNote(notes[note[0]])}
+            >
+              {note[1].title}
+              <p id="dateOfNote">{note[1].updatedAt.slice(0, 10)}</p>
             </li>
           ))}
         </ul>
@@ -52,20 +52,16 @@ function MainPage() {
         <form id="noteContainer" onSubmit={handleSubmit}>
           <input
             id="title"
-            placeholder="Title"
+            value={mainNote ? mainNote.title : "Title"}
             onChange={e => setTitleState(e.target.value)}
-            onClick={mainNote}
-            value={mainTitle}
           ></input>
           <textarea
             id="textarea"
             onChange={e => setContentState(e.target.value)}
-            onClick={mainNote}
-          >
-            {mainContent}
-          </textarea>
+            value={mainNote ? mainNote.content : console.log(mainNote)}
+          ></textarea>
           <button id="createNoteButton" type="submit">
-            Create note
+            Save note
           </button>
         </form>
       </div>
