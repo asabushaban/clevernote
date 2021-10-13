@@ -9,13 +9,13 @@ function MainPage() {
   const sessionUser = useSelector(state => state.session.user);
   const [content, setContentState] = useState("");
   const [title, setTitleState] = useState("");
+  const [mainTitle, setMainTitle] = useState("Welcome");
+  const [mainContent, setMainContent] = useState("");
 
   useEffect(() => {
     dispatch(getNotes(sessionUser.id));
   }, []);
   const notes = useSelector(state => state.notes);
-
-  console.log("notes to follow:", notes);
 
   const handleSubmit = async e => {
     e.preventDefault();
@@ -27,13 +27,24 @@ function MainPage() {
     let createdNote = await dispatch(createNote(payload));
   };
 
+  const mainNote = () => {
+    console.log(notes);
+    setMainTitle(Object.values(notes)[0].title);
+    console.log(mainTitle);
+    setMainContent(Object.values(notes)[0].content);
+    console.log(mainContent);
+  };
+
   return (
     <div id="mainPageContainer">
       <div className="sideNav"></div>
       <div className="notebookNav">
-        <ul>
+        <ul id="notebookList">
           {Object.values(notes).map(note => (
-            <li className="notebookNavList">{note.title}</li>
+            <li onClick={mainNote} className="notebookNavListItem">
+              {note.title}
+              <p id="dateOfNote">{note.updatedAt.slice(0, 10)}</p>
+            </li>
           ))}
         </ul>
       </div>
@@ -43,11 +54,16 @@ function MainPage() {
             id="title"
             placeholder="Title"
             onChange={e => setTitleState(e.target.value)}
+            onClick={mainNote}
+            value={mainTitle}
           ></input>
           <textarea
             id="textarea"
             onChange={e => setContentState(e.target.value)}
-          ></textarea>
+            onClick={mainNote}
+          >
+            {mainContent}
+          </textarea>
           <button id="createNoteButton" type="submit">
             Create note
           </button>
@@ -57,6 +73,29 @@ function MainPage() {
   );
 }
 export default MainPage;
+
+// const notes = useSelector(state => state.notes);
+// console.log(notes);
+// const [mainTitle, setMainTitle] = useState(Object.values(notes)[0].title);
+// const [mainContent, setMainContent] = useState(
+//   Object.values(notes)[0].content
+// );
+
+// const handleSubmit = async e => {
+//   e.preventDefault();
+//   const payload = {
+//     user_id: sessionUser.id,
+//     content,
+//     title,
+//   };
+//   let createdNote = await dispatch(createNote(payload));
+// };
+
+// const mainNote = () => {
+//   console.log(notes);
+//   console.log(mainTitle);
+//   console.log(mainContent);
+// };
 
 // import { Editor } from "react-draft-wysiwyg";
 // import { EditorState } from "draft-js";
