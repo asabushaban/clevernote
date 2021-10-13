@@ -13,6 +13,16 @@ const load = list => ({
   list,
 });
 
+export const deleteNote = id => async dispatch => {
+  const response = await csrfFetch(`/api/note/${id}`, {
+    method: "DELETE",
+  });
+  if (response.ok) {
+    const note = await response.json();
+    return response;
+  }
+};
+
 export const editNote = note => async dispatch => {
   const { content, title, id } = note;
   const response = await csrfFetch(`/api/note/edit/${id}`, {
@@ -44,8 +54,6 @@ export const createNote = note => async dispatch => {
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ content, title, user_id }),
   });
-  console.log("this is the note ===================>", note);
-  console.log("this is the response:", response);
   if (response.ok) {
     const note = await response.json();
     dispatch(addOneNote(note));
@@ -70,7 +78,10 @@ const notesReducer = (state = initialState, action) => {
       }
     }
     case LOAD: {
-      const newNotes = { ...action.list };
+      const newNotes = {};
+      action.list.forEach(element => {
+        newNotes[element.id] = element;
+      });
       return {
         ...state,
         ...newNotes,

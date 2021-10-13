@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import "./MainPage.css";
-import { createNote, getNotes, editNote } from "../../store/notes";
+import { createNote, getNotes, editNote, deleteNote } from "../../store/notes";
 import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
 
 function MainPage() {
@@ -46,10 +46,14 @@ function MainPage() {
       content: mainNoteContent,
       title: mainNoteTitle,
     };
-
     let editedNote = await dispatch(editNote(editPayload));
     await dispatch(getNotes(sessionUser.id));
     // let createdNote = await dispatch(createNote(payload));
+  };
+
+  const handleDelete = async e => {
+    await dispatch(deleteNote(mainNote.id));
+    dispatch(getNotes(sessionUser.id));
   };
 
   return (
@@ -98,9 +102,14 @@ function MainPage() {
             }
             value={mainNoteContent ? mainNoteContent : content}
           ></textarea>
-          <button id="createNoteButton" type="submit">
-            Save note
-          </button>
+          <div id="buttons">
+            <button id="createNoteButton" type="submit">
+              Save note
+            </button>
+            <button id="deleteNoteButton" onClick={handleDelete}>
+              Delete note
+            </button>
+          </div>
         </form>
       </div>
     </div>

@@ -41,4 +41,13 @@ router.put(
   })
 );
 
+router.delete(
+  "/:id",
+  asyncHandler(async function (req, res) {
+    const condition = { where: { id: req.params.id } };
+    const note = await Note.destroy(condition);
+    return res.json(note);
+  })
+);
+
 module.exports = router;
