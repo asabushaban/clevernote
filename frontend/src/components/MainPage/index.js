@@ -11,6 +11,8 @@ function MainPage() {
   const [content, setContentState] = useState("");
   const [title, setTitleState] = useState("");
   const [mainNote, setMainNote] = useState("");
+  const [mainNoteTitle, setMainNoteTitle] = useState("");
+  const [mainNoteContent, setMainNoteContent] = useState("");
 
   useEffect(() => {
     dispatch(getNotes(sessionUser.id));
@@ -40,7 +42,11 @@ function MainPage() {
             <li
               className="notebookNavListItem"
               key={note[0]}
-              onClick={() => setMainNote(notes[note[0]])}
+              onClick={() => {
+                setMainNote(notes[note[0]]);
+                setMainNoteTitle(notes[note[0]].title);
+                setMainNoteContent(notes[note[0]].content);
+              }}
             >
               {note[1].title}
               <p id="dateOfNote">{note[1].updatedAt.slice(0, 10)}</p>
@@ -52,13 +58,13 @@ function MainPage() {
         <form id="noteContainer" onSubmit={handleSubmit}>
           <input
             id="title"
-            value={mainNote ? mainNote.title : "Title"}
-            onChange={e => setTitleState(e.target.value)}
+            value={mainNoteTitle ? mainNoteTitle : "Title"}
+            onChange={e => setMainNoteTitle(e.target.value)}
           ></input>
           <textarea
             id="textarea"
-            onChange={e => setContentState(e.target.value)}
-            value={mainNote ? mainNote.content : console.log(mainNote)}
+            onChange={e => setMainNoteContent(e.target.value)}
+            value={mainNoteContent ? mainNoteContent : "Note"}
           ></textarea>
           <button id="createNoteButton" type="submit">
             Save note
