@@ -13,6 +13,20 @@ const load = list => ({
   list,
 });
 
+export const editNote = note => async dispatch => {
+  const { content, title, id } = note;
+  const response = await csrfFetch(`/api/note/edit/${id}`, {
+    method: "PUT",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ content, title, id }),
+  });
+  if (response.ok) {
+    const note = await response.json();
+    dispatch(addOneNote(note));
+    return response;
+  }
+};
+
 export const getNotes = userId => async dispatch => {
   const response = await fetch(`/api/note/${userId}`);
 
@@ -44,29 +58,16 @@ const initialState = {};
 const notesReducer = (state = initialState, action) => {
   switch (action.type) {
     case ADD_ONE: {
-      //maybe deleting below alows overwritting note
-      //   if (!state[action.note.id]) {
-      const newState = {
-        ...state,
-        [action.note.id]: action.note,
-      };
-      console.log("this is the newState:", newState);
-      return newState;
-      //   }
-      //   console.log({
-      //     ...state,
-      //     [action.note.id]: {
-      //       ...state[action.note.id],
-      //       ...action.note,
-      //     },
-      //   });
-      //   return {
-      //     ...state,
-      //     [action.note.id]: {
-      //       ...state[action.note.id],
-      //       ...action.note,
-      //     },
-      //   };
+      if (action.note.id) {
+        const newState = {
+          ...state,
+          [action.note.id]: action.note,
+        };
+        console.log("this is the newState:", newState);
+        return newState;
+      } else {
+        return state;
+      }
     }
     case LOAD: {
       const newNotes = { ...action.list };

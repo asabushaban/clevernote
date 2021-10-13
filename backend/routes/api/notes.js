@@ -29,4 +29,16 @@ router.get(
   })
 );
 
+router.put(
+  "/edit/:id",
+  asyncHandler(async function (req, res) {
+    const { content, title } = req.body;
+    const values = { title: title, content: content };
+    const options = { multi: true };
+    const condition = { where: { id: req.params.id } };
+    const note = await Note.update(values, condition, options);
+    return res.json(note);
+  })
+);
+
 module.exports = router;

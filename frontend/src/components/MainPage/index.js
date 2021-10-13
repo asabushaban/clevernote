@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import "./MainPage.css";
-import { createNote, getNotes } from "../../store/notes";
+import { createNote, getNotes, editNote } from "../../store/notes";
 import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
 
 function MainPage() {
@@ -14,19 +14,40 @@ function MainPage() {
   const [mainNoteTitle, setMainNoteTitle] = useState("");
   const [mainNoteContent, setMainNoteContent] = useState("");
 
+  console.log(mainNote);
+  console.log(notes);
+
   useEffect(() => {
     dispatch(getNotes(sessionUser.id));
     // setMainNote(notes["1"]);
   }, []);
 
+  // useEffect(() => {
+  //   dispatch(getNotes(sessionUser.id));
+  // }, [mainNote]);
+
   const handleSubmit = async e => {
     e.preventDefault();
-    const payload = {
-      user_id: sessionUser.id,
-      content,
-      title,
+    if (!mainNote) {
+      const payload = {
+        user_id: sessionUser.id,
+        content,
+        title,
+      };
+      let createdNote = await dispatch(createNote(payload));
+      await dispatch(getNotes(sessionUser.id));
+      return;
+    }
+
+    const editPayload = {
+      id: mainNote.id,
+      content: mainNoteContent,
+      title: mainNoteTitle,
     };
-    let createdNote = await dispatch(createNote(payload));
+
+    let editedNote = await dispatch(editNote(editPayload));
+    await dispatch(getNotes(sessionUser.id));
+    // let createdNote = await dispatch(createNote(payload));
   };
 
   return (
@@ -58,13 +79,13 @@ function MainPage() {
         <form id="noteContainer" onSubmit={handleSubmit}>
           <input
             id="title"
-            value={mainNoteTitle ? mainNoteTitle : "Title"}
+            value={mainNoteTitle ? mainNoteTitle : title}
             onChange={e => setMainNoteTitle(e.target.value)}
           ></input>
           <textarea
             id="textarea"
             onChange={e => setMainNoteContent(e.target.value)}
-            value={mainNoteContent ? mainNoteContent : "Note"}
+            value={mainNoteContent ? mainNoteContent : content}
           ></textarea>
           <button id="createNoteButton" type="submit">
             Save note
