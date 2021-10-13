@@ -1,6 +1,6 @@
-html {
+/* html {
   background-color: black;
-}
+} */
 
 #mainPageContainer {
   margin: 0;
@@ -61,7 +61,8 @@ html {
     sans-serif;
   color: #818181;
   font-size: 14pt;
-  border: none;
+  border: hidden;
+  resize: none;
 }
 
 #createNoteButton {

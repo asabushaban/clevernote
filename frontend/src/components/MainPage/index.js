@@ -6,16 +6,19 @@ import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
 
 function MainPage() {
   const dispatch = useDispatch();
+
   const sessionUser = useSelector(state => state.session.user);
   const notes = useSelector(state => state.notes);
   const [content, setContentState] = useState("");
   const [title, setTitleState] = useState("");
+  const [newNote, setNewNote] = useState(true);
   const [mainNote, setMainNote] = useState("");
   const [mainNoteTitle, setMainNoteTitle] = useState("");
   const [mainNoteContent, setMainNoteContent] = useState("");
 
   console.log(mainNote);
   console.log(notes);
+  console.log(title);
 
   useEffect(() => {
     dispatch(getNotes(sessionUser.id));
@@ -28,7 +31,7 @@ function MainPage() {
 
   const handleSubmit = async e => {
     e.preventDefault();
-    if (!mainNote) {
+    if (newNote) {
       const payload = {
         user_id: sessionUser.id,
         content,
@@ -38,7 +41,6 @@ function MainPage() {
       await dispatch(getNotes(sessionUser.id));
       return;
     }
-
     const editPayload = {
       id: mainNote.id,
       content: mainNoteContent,
@@ -67,6 +69,7 @@ function MainPage() {
                 setMainNote(notes[note[0]]);
                 setMainNoteTitle(notes[note[0]].title);
                 setMainNoteContent(notes[note[0]].content);
+                setNewNote(false);
               }}
             >
               {note[1].title}
@@ -80,11 +83,19 @@ function MainPage() {
           <input
             id="title"
             value={mainNoteTitle ? mainNoteTitle : title}
-            onChange={e => setMainNoteTitle(e.target.value)}
+            onChange={
+              newNote
+                ? e => setTitleState(e.target.value)
+                : e => setMainNoteTitle(e.target.value)
+            }
           ></input>
           <textarea
             id="textarea"
-            onChange={e => setMainNoteContent(e.target.value)}
+            onChange={
+              newNote
+                ? e => setContentState(e.target.value)
+                : e => setMainNoteContent(e.target.value)
+            }
             value={mainNoteContent ? mainNoteContent : content}
           ></textarea>
           <button id="createNoteButton" type="submit">
