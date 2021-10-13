@@ -2,6 +2,7 @@ import { csrfFetch } from "./csrf";
 
 const ADD_ONE = "notes/ADD_ONE";
 const LOAD = "notes/LOAD";
+const REMOVE_NOTE = "notes/REMOVE_NOTE";
 
 const addOneNote = note => ({
   type: ADD_ONE,
@@ -13,12 +14,18 @@ const load = list => ({
   list,
 });
 
+const remove = id => ({
+  type: REMOVE_NOTE,
+  id,
+});
+
 export const deleteNote = id => async dispatch => {
   const response = await csrfFetch(`/api/note/${id}`, {
     method: "DELETE",
   });
   if (response.ok) {
-    const note = await response.json();
+    await response.json();
+    dispatch(remove(id));
     return response;
   }
 };
@@ -71,7 +78,6 @@ const notesReducer = (state = initialState, action) => {
           ...state,
           [action.note.id]: action.note,
         };
-        console.log("this is the newState:", newState);
         return newState;
       } else {
         return state;
@@ -86,6 +92,11 @@ const notesReducer = (state = initialState, action) => {
         ...state,
         ...newNotes,
       };
+    }
+    case REMOVE_NOTE: {
+      const newState = { ...state };
+      delete newState[action.id];
+      return newState;
     }
     default:
       return state;

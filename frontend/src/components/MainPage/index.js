@@ -25,9 +25,7 @@ function MainPage() {
     // setMainNote(notes["1"]);
   }, []);
 
-  // useEffect(() => {
-  //   dispatch(getNotes(sessionUser.id));
-  // }, [mainNote]);
+  useEffect(() => {}, [mainNote, mainNoteContent, mainNoteTitle]);
 
   const handleSubmit = async e => {
     e.preventDefault();
@@ -53,7 +51,12 @@ function MainPage() {
 
   const handleDelete = async e => {
     await dispatch(deleteNote(mainNote.id));
-    dispatch(getNotes(sessionUser.id));
+    setMainNoteTitle("");
+    setMainNoteContent("");
+    setMainNote("");
+    setTitleState("");
+    setContentState("");
+    setNewNote(true);
   };
 
   return (
