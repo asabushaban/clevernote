@@ -12,8 +12,10 @@ import {
 function MainPage() {
   const dispatch = useDispatch();
 
+  //subscribed
   const sessionUser = useSelector(state => state.session.user);
   const notes = useSelector(state => state.notes);
+  const notebooks = useSelector(state => state.notebooks);
 
   //New Notes
   const [newNote, setNewNote] = useState(true);
@@ -25,15 +27,19 @@ function MainPage() {
   const [mainNoteTitle, setMainNoteTitle] = useState("");
   const [mainNoteContent, setMainNoteContent] = useState("");
 
-  //New Notebook
+  //Notebooks
+  const [mainNotebook, setMainNotebook] = useState("All Notes");
   const [name, setName] = useState("");
 
   console.log("mainNote =======>", mainNote);
   console.log("notes ==========>", notes);
+  console.log("notebooks=======>", notebooks);
   console.log("title===========>", title);
-  console.log("Notebook=========>", name);
+  console.log("Notebook========>", name);
 
   useEffect(() => dispatch(getNotes(sessionUser.id)), []);
+  useEffect(() => dispatch(getNotebooks(sessionUser.id)), []);
+
   useEffect(() => {}, [mainNote, mainNoteContent, mainNoteTitle]);
 
   const handleSubmit = async e => {
@@ -54,7 +60,7 @@ function MainPage() {
       title: mainNoteTitle,
     };
     let editedNote = await dispatch(editNote(editPayload));
-    // await dispatch(getNotes(sessionUser.id));
+    await dispatch(getNotes(sessionUser.id));
     // let createdNote = await dispatch(createNote(payload));
   };
 
@@ -92,11 +98,25 @@ function MainPage() {
             <input
               id="newNotebookInput"
               onChange={e => setName(e.target.value)}
+              required="required"
             ></input>
             <button id="newNotebookButton" type="submit">
               +
             </button>
           </form>
+          <ul id="notebookNameList">
+            {Object.keys(notebooks).map(key => (
+              <li
+                className="notebookNameListItem"
+                key={key}
+                onClick={() => {
+                  setMainNotebook(notebooks[key].name);
+                }}
+              >
+                {notebooks[key].name}
+              </li>
+            ))}
+          </ul>
         </div>
         <div id="sideNavBottom">
           {/* <form>
@@ -112,6 +132,7 @@ function MainPage() {
         </div>
       </div>
       <div className="notebookNav">
+        <h1>{mainNotebook}</h1>
         <ul id="notebookList">
           {/* <form>
             <input></input>

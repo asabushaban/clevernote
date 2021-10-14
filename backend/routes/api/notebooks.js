@@ -16,17 +16,17 @@ router.post(
   })
 );
 
-// router.get(
-//   "/:id",
-//   asyncHandler(async function (req, res) {
-//     const notes = await Notebook.findAll({
-//       where: {
-//         userId: req.params.id,
-//       },
-//     });
-//     return res.json(notes);
-//   })
-// );
+router.get(
+  "/:id",
+  asyncHandler(async function (req, res) {
+    const notes = await Notebook.findAll({
+      where: {
+        userId: req.params.id,
+      },
+    });
+    return res.json(notes);
+  })
+);
 
 // router.put(
 //   "/edit/:id",
