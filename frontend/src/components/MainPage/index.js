@@ -92,6 +92,46 @@ function MainPage() {
     await dispatch(createNotebook(payload));
   };
 
+  const sortByNotebook = notebook => {
+    if (notebook === "All Notes") {
+      return Object.values(notes).map(note => (
+        <li
+          className="notebookNavListItem"
+          key={note.id}
+          onClick={() => {
+            setMainNote(note);
+            setMainNoteTitle(note.title);
+            setMainNoteContent(note.content);
+            setNewNote(false);
+          }}
+        >
+          {note.title}
+          <p id="dateOfNote">{note.updatedAt.slice(0, 10)}</p>
+        </li>
+      ));
+    } else {
+      return Object.values(notes).map(note => {
+        if (note.notebookId === mainNotebook.id) {
+          return (
+            <li
+              className="notebookNavListItem"
+              key={note.id}
+              onClick={() => {
+                setMainNote(note);
+                setMainNoteTitle(note.title);
+                setMainNoteContent(note.content);
+                setNewNote(false);
+              }}
+            >
+              {note.title}
+              <p id="dateOfNote">{note.updatedAt.slice(0, 10)}</p>
+            </li>
+          );
+        }
+      });
+    }
+  };
+
   return (
     <div id="mainPageContainer">
       <div className="sideNav">
@@ -128,23 +168,28 @@ function MainPage() {
         </div>
       </div>
       <div className="notebookNav">
-        <h1>{mainNotebook.name}</h1>
+        <h1>{mainNotebook.name || mainNotebook}</h1>
         <ul id="notebookList">
-          {Object.entries(notes).map(note => (
-            <li
-              className="notebookNavListItem"
-              key={note[0]}
-              onClick={() => {
-                setMainNote(notes[note[0]]);
-                setMainNoteTitle(notes[note[0]].title);
-                setMainNoteContent(notes[note[0]].content);
-                setNewNote(false);
-              }}
-            >
-              {note[1].title}
-              <p id="dateOfNote">{note[1].updatedAt.slice(0, 10)}</p>
-            </li>
-          ))}
+          {sortByNotebook(mainNotebook)}
+          {/* {Object.entries(notes).map(note =>
+            note[1].notebookId === mainNotebook.id ? (
+              <li
+                className="notebookNavListItem"
+                key={note[0]}
+                onClick={() => {
+                  setMainNote(notes[note[0]]);
+                  setMainNoteTitle(notes[note[0]].title);
+                  setMainNoteContent(notes[note[0]].content);
+                  setNewNote(false);
+                }}
+              >
+                {note[1].title}
+                <p id="dateOfNote">{note[1].updatedAt.slice(0, 10)}</p>
+              </li>
+            ) : (
+              <li></li>
+            )
+          )} */}
         </ul>
         <button id="createNoteButton" onClick={createNewNote}>
           Create note
