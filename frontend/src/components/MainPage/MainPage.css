@@ -1,5 +1,5 @@
 /* html {
-  background-color: black;
+  box-sizing: border-box;
 } */
 
 #mainPageContainer {
@@ -37,6 +37,7 @@
   height: 2rem;
   border-top-left-radius: 7px;
   border-bottom-left-radius: 7px;
+  margin-bottom: 3rem;
 }
 
 #newNotebookButton {
@@ -46,6 +47,7 @@
   border-top-right-radius: 7px;
   border-bottom-right-radius: 7px;
   height: 2rem;
+  margin-bottom: 3rem;
 }
 
 #newNotebookButton:hover {
@@ -130,6 +132,10 @@
   height: 100%;
   width: 20%;
   background-color: #2f2f2f;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
   /* border: 1px solid gray; */
   /* border-radius: 7px; */
 }
@@ -236,7 +242,7 @@
 }
 
 #notebookList {
-  height: 100%;
+  height: 80%;
   width: 100%;
   padding: 2px 2px 2px 2px;
   overflow: hidden;

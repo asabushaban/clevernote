@@ -93,8 +93,8 @@ function MainPage() {
     <div id="mainPageContainer">
       <div className="sideNav">
         <div id="sideNavTop">
-          <p id="createNotebookPrompt"> Create New Notebook</p>
-          <form onSubmit={handleNewNotebookSubmit}>
+          {/* <p id="createNotebookPrompt"> Create New Notebook</p> */}
+          {/* <form onSubmit={handleNewNotebookSubmit}>
             <input
               id="newNotebookInput"
               onChange={e => setName(e.target.value)}
@@ -103,7 +103,7 @@ function MainPage() {
             <button id="newNotebookButton" type="submit">
               +
             </button>
-          </form>
+          </form> */}
           <ul id="notebookNameList">
             {Object.keys(notebooks).map(key => (
               <li
@@ -119,16 +119,16 @@ function MainPage() {
           </ul>
         </div>
         <div id="sideNavBottom">
-          {/* <form>
+          <form onSubmit={handleNewNotebookSubmit}>
             <input
               id="newNotebookInput"
               onChange={e => setName(e.target.value)}
+              required="required"
             ></input>
-            <button id="newNotebookButton">+</button>
-          </form> */}
-          <button id="createNoteButton" onClick={createNewNote}>
-            Create note
-          </button>
+            <button id="newNotebookButton" type="submit">
+              +
+            </button>
+          </form>
         </div>
       </div>
       <div className="notebookNav">
@@ -154,6 +154,9 @@ function MainPage() {
             </li>
           ))}
         </ul>
+        <button id="createNoteButton" onClick={createNewNote}>
+          Create note
+        </button>
       </div>
       <div className="mainNoteArea">
         <form id="noteContainer" onSubmit={handleSubmit}>
