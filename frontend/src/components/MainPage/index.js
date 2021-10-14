@@ -32,7 +32,7 @@ function MainPage() {
         title,
       };
       let createdNote = await dispatch(createNote(payload));
-      await dispatch(getNotes(sessionUser.id));
+      // await dispatch(getNotes(sessionUser.id));
       return;
     }
     const editPayload = {
@@ -41,7 +41,7 @@ function MainPage() {
       title: mainNoteTitle,
     };
     let editedNote = await dispatch(editNote(editPayload));
-    await dispatch(getNotes(sessionUser.id));
+    // await dispatch(getNotes(sessionUser.id));
     // let createdNote = await dispatch(createNote(payload));
   };
 
