@@ -16,15 +16,11 @@ function MainPage() {
   const [mainNoteTitle, setMainNoteTitle] = useState("");
   const [mainNoteContent, setMainNoteContent] = useState("");
 
-  console.log(mainNote);
-  console.log(notes);
-  console.log(title);
+  console.log("mainNote =======>", mainNote);
+  console.log("notes ==========>", notes);
+  console.log("title===========>", title);
 
-  useEffect(() => {
-    dispatch(getNotes(sessionUser.id));
-    // setMainNote(notes["1"]);
-  }, []);
-
+  useEffect(() => dispatch(getNotes(sessionUser.id)), []);
   useEffect(() => {}, [mainNote, mainNoteContent, mainNoteTitle]);
 
   const handleSubmit = async e => {
@@ -49,8 +45,7 @@ function MainPage() {
     // let createdNote = await dispatch(createNote(payload));
   };
 
-  const handleDelete = async e => {
-    await dispatch(deleteNote(mainNote.id));
+  const createNewNote = () => {
     setMainNoteTitle("");
     setMainNoteContent("");
     setMainNote("");
@@ -59,9 +54,31 @@ function MainPage() {
     setNewNote(true);
   };
 
+  const handleDelete = async e => {
+    await dispatch(deleteNote(mainNote.id));
+    createNewNote();
+  };
+
   return (
     <div id="mainPageContainer">
-      <div className="sideNav"></div>
+      <div className="sideNav">
+        <div id="sideNavTop">
+          <p id="createNotebookPrompt"> Create New Notebook</p>
+          <form>
+            <input id="newNotebookInput"></input>
+            <button id="newNotebookButton">+</button>
+          </form>
+        </div>
+        <div id="sideNavBottom">
+          <form>
+            <input id="newNotebookInput"></input>
+            <button id="newNotebookButton">+</button>
+          </form>
+          <button id="createNoteButton" onClick={createNewNote}>
+            Create note
+          </button>
+        </div>
+      </div>
       <div className="notebookNav">
         <ul id="notebookList">
           {/* <form>
@@ -106,7 +123,7 @@ function MainPage() {
             value={mainNoteContent ? mainNoteContent : content}
           ></textarea>
           <div id="buttons">
-            <button id="createNoteButton" type="submit">
+            <button id="saveNoteButton" type="submit">
               Save note
             </button>
             <button id="deleteNoteButton" onClick={handleDelete}>
