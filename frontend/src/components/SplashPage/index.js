@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import Navigation from "../Navigation";
 import { useHistory, Link } from "react-router-dom";
 import logo from "./leaf-closeup-on-white-background.jpeg";
+import placeholder from "./placeholder-splash.png";
 import "./SplashPage.css";
 
 function SplashPage() {
@@ -72,7 +73,7 @@ function SplashPage() {
           </Link>
         </div>
         <div className="secondSectionSplash">
-          <img className="secondSectionImage" src={logo} />
+          <img className="secondSectionImage" src={placeholder} />
           <ul className="secondSectionText">
             <li>
               <h4>WORK ANYWHERE</h4>

@@ -40,8 +40,7 @@ function MainPage() {
 
   useEffect(() => dispatch(getNotes(sessionUser.id)), []);
   useEffect(() => dispatch(getNotebooks(sessionUser.id)), []);
-
-  useEffect(() => {}, [mainNote, mainNoteContent, mainNoteTitle]);
+  useEffect(() => {}, [mainNote, mainNoteContent, mainNoteTitle, mainNotebook]);
 
   const handleSubmit = async e => {
     e.preventDefault();
@@ -137,6 +136,14 @@ function MainPage() {
       <div className="sideNav">
         <div id="sideNavTop">
           <ul id="notebookNameList">
+            <li
+              className="notebookNameListItem"
+              onClick={() => {
+                setMainNotebook("All Notes");
+              }}
+            >
+              All Notes
+            </li>
             {Object.keys(notebooks).map(key => (
               <li
                 className="notebookNameListItem"
@@ -215,13 +222,18 @@ function MainPage() {
             }
             value={mainNoteContent ? mainNoteContent : content}
           ></textarea>
-          <div id="buttons">
-            <button id="saveNoteButton" type="submit">
-              Save note
-            </button>
-            <button id="deleteNoteButton" onClick={handleDelete}>
-              Delete note
-            </button>
+          <div id="bottomMain">
+            <div id="buttons">
+              <button id="deleteNoteButton" onClick={handleDelete}>
+                Delete note
+              </button>
+              <button id="saveNoteButton" type="submit">
+                Save note
+              </button>
+            </div>
+            <p id="whereToSavePrompt">
+              {mainNotebook.name ? mainNotebook.name : mainNotebook}
+            </p>
           </div>
         </form>
       </div>

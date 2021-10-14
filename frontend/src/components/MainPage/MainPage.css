@@ -189,6 +189,11 @@
   margin-top: 8px;
 }
 
+#bottomMain {
+  display: flex;
+  justify-content: space-between;
+}
+
 #saveNoteButton {
   background-color: #00a82d;
   color: white;
@@ -235,11 +240,23 @@
   width: 7.83rem;
   height: 2.67rem;
   margin-bottom: 3rem;
+  margin-right: 8px;
 }
 
 #deleteNoteButton:hover {
   background-color: rgb(245, 92, 92);
   cursor: pointer;
+}
+
+#whereToSavePrompt {
+  color: rgb(161, 159, 159);
+  font-weight: 500;
+  margin-left: 400px;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
+    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
+    sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto",
+    "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
+    sans-serif;
 }
 
 #notebookList {
