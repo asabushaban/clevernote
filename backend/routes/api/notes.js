@@ -7,9 +7,9 @@ const router = express.Router();
 router.post(
   "/",
   asyncHandler(async function (req, res) {
-    const { title, content, user_id } = req.body;
+    const { title, content, userId } = req.body;
     const note = await Note.create({
-      user_id,
+      userId,
       content,
       title,
     });
@@ -22,7 +22,7 @@ router.get(
   asyncHandler(async function (req, res) {
     const notes = await Note.findAll({
       where: {
-        user_id: req.params.id,
+        userId: req.params.id,
       },
     });
     return res.json(notes);

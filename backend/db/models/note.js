@@ -4,8 +4,8 @@ module.exports = (sequelize, DataTypes) => {
     "Note",
     {
       title: DataTypes.STRING,
-      user_id: DataTypes.INTEGER,
-      notebook_id: DataTypes.INTEGER,
+      userId: DataTypes.INTEGER,
+      notebookId: DataTypes.INTEGER,
       content: DataTypes.TEXT,
       createdAt: DataTypes.DATE,
       updatedAt: DataTypes.DATE,

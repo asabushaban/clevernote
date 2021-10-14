@@ -2,23 +2,36 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import "./MainPage.css";
 import { createNote, getNotes, editNote, deleteNote } from "../../store/notes";
-import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
+import {
+  createNotebook,
+  getNotebooks,
+  editNotebook,
+  deleteNotebook,
+} from "../../store/notebooks";
 
 function MainPage() {
   const dispatch = useDispatch();
 
   const sessionUser = useSelector(state => state.session.user);
   const notes = useSelector(state => state.notes);
+
+  //New Notes
+  const [newNote, setNewNote] = useState(true);
   const [content, setContentState] = useState("");
   const [title, setTitleState] = useState("");
-  const [newNote, setNewNote] = useState(true);
+
+  //Old Notes
   const [mainNote, setMainNote] = useState("");
   const [mainNoteTitle, setMainNoteTitle] = useState("");
   const [mainNoteContent, setMainNoteContent] = useState("");
 
+  //New Notebook
+  const [name, setName] = useState("");
+
   console.log("mainNote =======>", mainNote);
   console.log("notes ==========>", notes);
   console.log("title===========>", title);
+  console.log("Notebook=========>", name);
 
   useEffect(() => dispatch(getNotes(sessionUser.id)), []);
   useEffect(() => {}, [mainNote, mainNoteContent, mainNoteTitle]);
@@ -27,7 +40,7 @@ function MainPage() {
     e.preventDefault();
     if (newNote) {
       const payload = {
-        user_id: sessionUser.id,
+        userId: sessionUser.id,
         content,
         title,
       };
@@ -59,21 +72,40 @@ function MainPage() {
     createNewNote();
   };
 
+  const handleNewNotebookSubmit = async e => {
+    e.preventDefault();
+
+    const payload = {
+      userId: sessionUser.id,
+      name,
+    };
+
+    await dispatch(createNotebook(payload));
+  };
+
   return (
     <div id="mainPageContainer">
       <div className="sideNav">
         <div id="sideNavTop">
           <p id="createNotebookPrompt"> Create New Notebook</p>
-          <form>
-            <input id="newNotebookInput"></input>
-            <button id="newNotebookButton">+</button>
+          <form onSubmit={handleNewNotebookSubmit}>
+            <input
+              id="newNotebookInput"
+              onChange={e => setName(e.target.value)}
+            ></input>
+            <button id="newNotebookButton" type="submit">
+              +
+            </button>
           </form>
         </div>
         <div id="sideNavBottom">
-          <form>
-            <input id="newNotebookInput"></input>
+          {/* <form>
+            <input
+              id="newNotebookInput"
+              onChange={e => setName(e.target.value)}
+            ></input>
             <button id="newNotebookButton">+</button>
-          </form>
+          </form> */}
           <button id="createNoteButton" onClick={createNewNote}>
             Create note
           </button>
@@ -170,7 +202,7 @@ export default MainPage;
 // import { EditorState } from "draft-js";
 // import { createNote } from "../../store/notes";
 // import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
-
+// import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
 // function MainPage() {
 //   // const noteTypes = useSelector(state => state.note.types);
 //   const dispatch = useDispatch();
