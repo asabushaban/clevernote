@@ -31,11 +31,11 @@ export const deleteNote = id => async dispatch => {
 };
 
 export const editNote = note => async dispatch => {
-  const { content, title, id } = note;
+  const { content, title, id, notebookId } = note;
   const response = await csrfFetch(`/api/note/edit/${id}`, {
     method: "PUT",
     headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ content, title, id }),
+    body: JSON.stringify({ content, title, id, notebookId }),
   });
   if (response.ok) {
     const note = await response.json();
@@ -55,11 +55,11 @@ export const getNotes = userId => async dispatch => {
 };
 
 export const createNote = note => async dispatch => {
-  const { content, title, userId } = note;
+  const { content, title, userId, notebookId } = note;
   const response = await csrfFetch("/api/note", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ content, title, userId }),
+    body: JSON.stringify({ content, title, userId, notebookId }),
   });
   if (response.ok) {
     const note = await response.json();

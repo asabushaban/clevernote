@@ -31,9 +31,10 @@ function MainPage() {
   const [mainNotebook, setMainNotebook] = useState("All Notes");
   const [name, setName] = useState("");
 
-  console.log("mainNote =======>", mainNote);
   console.log("notes ==========>", notes);
   console.log("notebooks=======>", notebooks);
+  console.log("mainNote =======>", mainNote);
+  console.log("mainNotebook====>", mainNotebook);
   console.log("title===========>", title);
   console.log("Notebook========>", name);
 
@@ -47,6 +48,7 @@ function MainPage() {
     if (newNote) {
       const payload = {
         userId: sessionUser.id,
+        notebookId: mainNotebook.id,
         content,
         title,
       };
@@ -56,6 +58,7 @@ function MainPage() {
     }
     const editPayload = {
       id: mainNote.id,
+      notebookId: mainNotebook.id,
       content: mainNoteContent,
       title: mainNoteTitle,
     };
@@ -99,7 +102,7 @@ function MainPage() {
                 className="notebookNameListItem"
                 key={key}
                 onClick={() => {
-                  setMainNotebook(notebooks[key].name);
+                  setMainNotebook(notebooks[key]);
                 }}
               >
                 {notebooks[key].name}
@@ -125,12 +128,8 @@ function MainPage() {
         </div>
       </div>
       <div className="notebookNav">
-        <h1>{mainNotebook}</h1>
+        <h1>{mainNotebook.name}</h1>
         <ul id="notebookList">
-          {/* <form>
-            <input></input>
-            <button></button>
-          </form> */}
           {Object.entries(notes).map(note => (
             <li
               className="notebookNavListItem"
