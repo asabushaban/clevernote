@@ -31,6 +31,7 @@ function MainPage() {
   const [mainNotebook, setMainNotebook] = useState("All Notes");
   const [name, setName] = useState("");
 
+  //debugging visuals
   console.log("notes ==========>", notes);
   console.log("notebooks=======>", notebooks);
   console.log("mainNote =======>", mainNote);
@@ -42,6 +43,7 @@ function MainPage() {
   useEffect(() => dispatch(getNotebooks(sessionUser.id)), []);
   useEffect(() => {}, [mainNote, mainNoteContent, mainNoteTitle, mainNotebook]);
 
+  //saving a new note or editing an old note
   const handleSubmit = async e => {
     e.preventDefault();
     if (newNote) {
@@ -51,7 +53,7 @@ function MainPage() {
         content,
         title,
       };
-      let createdNote = await dispatch(createNote(payload));
+      await dispatch(createNote(payload));
       // await dispatch(getNotes(sessionUser.id));
       return;
     }
@@ -61,36 +63,33 @@ function MainPage() {
       content: mainNoteContent,
       title: mainNoteTitle,
     };
-    let editedNote = await dispatch(editNote(editPayload));
+    await dispatch(editNote(editPayload));
     await dispatch(getNotes(sessionUser.id));
-    // let createdNote = await dispatch(createNote(payload));
   };
 
-  const createNewNote = () => {
-    setMainNoteTitle("");
-    setMainNoteContent("");
-    setMainNote("");
-    setTitleState("");
-    setContentState("");
-    setNewNote(true);
-  };
-
+  //deletes a note
   const handleDelete = async e => {
     await dispatch(deleteNote(mainNote.id));
     createNewNote();
   };
+  //deletes a notebook
+  const handleDeleteNotebook = async e => {
+    await dispatch(deleteNotebook(mainNotebook.id));
+    setMainNotebook("All Notes");
+  };
 
+  //creates new notebooks
   const handleNewNotebookSubmit = async e => {
     e.preventDefault();
-
     const payload = {
       userId: sessionUser.id,
       name,
     };
-
     await dispatch(createNotebook(payload));
   };
 
+  //function to sort the notes by the selected notebook
+  // one condition for all notes and one condition for specific notebooks
   const sortByNotebook = notebook => {
     if (notebook === "All Notes") {
       return Object.values(notes).map(note => (
@@ -129,6 +128,17 @@ function MainPage() {
         }
       });
     }
+  };
+
+  // create new note function updates state to empty strings
+  // and provides fresh input fields
+  const createNewNote = () => {
+    setMainNoteTitle("");
+    setMainNoteContent("");
+    setMainNote("");
+    setTitleState("");
+    setContentState("");
+    setNewNote(true);
   };
 
   return (
@@ -176,30 +186,12 @@ function MainPage() {
       </div>
       <div className="notebookNav">
         <h1>{mainNotebook.name || mainNotebook}</h1>
-        <ul id="notebookList">
-          {sortByNotebook(mainNotebook)}
-          {/* {Object.entries(notes).map(note =>
-            note[1].notebookId === mainNotebook.id ? (
-              <li
-                className="notebookNavListItem"
-                key={note[0]}
-                onClick={() => {
-                  setMainNote(notes[note[0]]);
-                  setMainNoteTitle(notes[note[0]].title);
-                  setMainNoteContent(notes[note[0]].content);
-                  setNewNote(false);
-                }}
-              >
-                {note[1].title}
-                <p id="dateOfNote">{note[1].updatedAt.slice(0, 10)}</p>
-              </li>
-            ) : (
-              <li></li>
-            )
-          )} */}
-        </ul>
+        <ul id="notebookList">{sortByNotebook(mainNotebook)}</ul>
         <button id="createNoteButton" onClick={createNewNote}>
           Create note
+        </button>
+        <button id="deleteNotebookButton" onClick={handleDeleteNotebook}>
+          Delete notebook
         </button>
       </div>
       <div className="mainNoteArea">
