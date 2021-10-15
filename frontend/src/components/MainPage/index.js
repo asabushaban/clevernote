@@ -9,6 +9,8 @@ import {
   deleteNotebook,
 } from "../../store/notebooks";
 
+import ProfileButton from "../Navigation/ProfileButton";
+
 function MainPage() {
   const dispatch = useDispatch();
 
@@ -150,6 +152,9 @@ function MainPage() {
       hour12: true,
     };
     let date = new Date(SQLDate).toISOString().slice(0, 19).replace("T", " ");
+    console.log(date);
+    // date = moment.utc(date);
+    // date = date.tz("America/Chicago");
     date = new Date(date);
     return date.toLocaleDateString("en-US", options);
   }
@@ -159,6 +164,7 @@ function MainPage() {
       <div className="sideNav">
         <div id="sideNavTop">
           <ul id="notebookNameList">
+            <ProfileButton user={sessionUser} />
             <li
               className="notebookNameListItem"
               onClick={() => {

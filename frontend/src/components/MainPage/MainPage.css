@@ -289,6 +289,7 @@
     "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
     sans-serif;
   font-weight: 550;
+  font-size: 15pt;
 }
 
 #notebookList {
@@ -316,6 +317,23 @@
   margin-right: 4px;
   cursor: pointer;
   border-radius: 7px;
+}
+
+.profile-dropdown {
+  color: gray;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
+    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
+    sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto",
+    "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
+    sans-serif;
+  font-size: 10pt;
+}
+
+.fas.fa-user-circle {
+}
+
+.profileButton {
+  margin: 8px;
 }
 
 @media screen and (max-width: 1500px) {
