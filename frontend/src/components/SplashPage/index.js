@@ -1,4 +1,6 @@
 import React, { useState } from "react";
+import * as sessionActions from "../../store/session";
+import { useDispatch } from "react-redux";
 import Navigation from "../Navigation";
 import { useHistory, Link } from "react-router-dom";
 import logo from "./leaf-closeup-on-white-background.jpeg";
@@ -7,6 +9,9 @@ import "./SplashPage.css";
 
 function SplashPage() {
   let history = useHistory();
+  const [errors, setErrors] = useState([]);
+
+  const dispatch = useDispatch();
 
   function SignupButton() {
     history.push("/signup");
@@ -36,11 +41,29 @@ function SplashPage() {
     };
   }, 100);
 
+  const handleDemo = async e => {
+    e.preventDefault();
+    setErrors([]);
+    await dispatch(
+      sessionActions.login({
+        credential: "Demo-lition",
+        password: "password",
+      })
+    ).catch(async res => {
+      const data = await res.json();
+      if (data && data.errors) setErrors(data.errors);
+    });
+    history.push("/");
+    return;
+  };
+
   return (
     <div className="navAndSplashMainContainer">
       <div className="splashNav">
         <div id="leftNav">
-          <button id="demoButton">Demo</button>
+          <button id="demoButton" onClick={handleDemo}>
+            Demo
+          </button>
           <Link className="loginFromSplashNav" to="/login">
             Log in
           </Link>

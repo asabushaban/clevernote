@@ -134,6 +134,7 @@ h3 {
 #demoButton:hover {
   color: #05c538;
   border: 2.2px solid #05c538;
+  cursor: pointer;
 }
 
 #signupFromSplashButton:hover {
