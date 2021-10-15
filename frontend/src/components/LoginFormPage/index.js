@@ -24,6 +24,7 @@ function LoginFormPage() {
         if (!data.errors) history.push("/");
       }
     );
+    history.push("/");
     return;
   };
 

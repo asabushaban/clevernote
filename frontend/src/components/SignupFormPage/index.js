@@ -29,6 +29,7 @@ function SignupFormPage() {
         if (data && data.errors) setErrors(data.errors);
         if (!data.errors) history.push("/");
       });
+      history.push("/");
       return;
     }
     return setErrors([
