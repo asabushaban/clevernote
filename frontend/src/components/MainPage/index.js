@@ -37,12 +37,12 @@ function MainPage() {
   const [date, setDate] = useState(new Date());
 
   //debugging visuals
-  console.log("notes ==========>", notes);
-  console.log("notebooks=======>", notebooks);
-  console.log("mainNote =======>", mainNote);
-  console.log("mainNotebook====>", mainNotebook);
-  console.log("title===========>", title);
-  console.log("Notebook========>", name);
+  // console.log("notes ==========>", notes);
+  // console.log("notebooks=======>", notebooks);
+  // console.log("mainNote =======>", mainNote);
+  // console.log("mainNotebook====>", mainNotebook);
+  // console.log("title===========>", title);
+  // console.log("Notebook========>", name);
 
   useEffect(() => dispatch(getNotes(sessionUser.id)), []);
   useEffect(() => dispatch(getNotebooks(sessionUser.id)), []);
@@ -162,9 +162,11 @@ function MainPage() {
   return (
     <div id="mainPageContainer">
       <div className="sideNav">
+        <div id="profileDiv">
+          <ProfileButton user={sessionUser} />
+        </div>
         <div id="sideNavTop">
           <ul id="notebookNameList">
-            <ProfileButton user={sessionUser} />
             <li
               className="notebookNameListItem"
               onClick={() => {
