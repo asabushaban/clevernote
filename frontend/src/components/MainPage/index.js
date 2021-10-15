@@ -111,7 +111,7 @@ function MainPage() {
       }}
     >
       {note.title}
-      <p id="dateOfNote">{note.updatedAt.slice(0, 10)}</p>
+      <p id="dateOfNote">{note.content.slice(0, 40)}...</p>
     </li>
   );
 
