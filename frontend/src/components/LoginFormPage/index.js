@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import * as sessionActions from "../../store/session";
 import { useDispatch, useSelector } from "react-redux";
-import { Redirect, Link, useHistory } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import DemoHomeNav from "../DemoHomeNav";
 import logo from "./leaf-closeup-on-white-background.jpeg";
 import "./LoginForm.css";

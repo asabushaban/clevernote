@@ -43,8 +43,8 @@ router.get(
 router.delete(
   "/:id",
   asyncHandler(async function (req, res) {
-    const condition = { where: { id: req.params.id } };
-    const note = await Notebook.destroy(condition);
+    const notebook = await Notebook.findByPk(req.params.id);
+    const note = await notebook.destroy();
     return res.json(note);
   })
 );

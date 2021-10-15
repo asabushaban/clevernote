@@ -18,7 +18,6 @@ module.exports = {
       notebookId: {
         type: Sequelize.INTEGER,
         references: { model: "Notebooks" },
-        onDelete: "CASCADE",
       },
       content: {
         type: Sequelize.TEXT,

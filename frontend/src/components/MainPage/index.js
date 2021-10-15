@@ -31,6 +31,9 @@ function MainPage() {
   const [mainNotebook, setMainNotebook] = useState("All Notes");
   const [name, setName] = useState("");
 
+  //date
+  const [date, setDate] = useState(new Date());
+
   //debugging visuals
   console.log("notes ==========>", notes);
   console.log("notebooks=======>", notebooks);
@@ -41,7 +44,13 @@ function MainPage() {
 
   useEffect(() => dispatch(getNotes(sessionUser.id)), []);
   useEffect(() => dispatch(getNotebooks(sessionUser.id)), []);
-  useEffect(() => {}, [mainNote, mainNoteContent, mainNoteTitle, mainNotebook]);
+  useEffect(() => {}, [
+    mainNote,
+    mainNoteContent,
+    mainNoteTitle,
+    mainNotebook,
+    date,
+  ]);
 
   //saving a new note or editing an old note
   const handleSubmit = async e => {
@@ -90,41 +99,29 @@ function MainPage() {
 
   //function to sort the notes by the selected notebook
   // one condition for all notes and one condition for specific notebooks
+  const sortByNotebookHelper = note => (
+    <li
+      className="notebookNavListItem"
+      key={note.id}
+      onClick={() => {
+        setMainNote(note);
+        setMainNoteTitle(note.title);
+        setMainNoteContent(note.content);
+        setNewNote(false);
+      }}
+    >
+      {note.title}
+      <p id="dateOfNote">{note.updatedAt.slice(0, 10)}</p>
+    </li>
+  );
+
   const sortByNotebook = notebook => {
     if (notebook === "All Notes") {
-      return Object.values(notes).map(note => (
-        <li
-          className="notebookNavListItem"
-          key={note.id}
-          onClick={() => {
-            setMainNote(note);
-            setMainNoteTitle(note.title);
-            setMainNoteContent(note.content);
-            setNewNote(false);
-          }}
-        >
-          {note.title}
-          <p id="dateOfNote">{note.updatedAt.slice(0, 10)}</p>
-        </li>
-      ));
+      return Object.values(notes).map(note => sortByNotebookHelper(note));
     } else {
       return Object.values(notes).map(note => {
         if (note.notebookId === mainNotebook.id) {
-          return (
-            <li
-              className="notebookNavListItem"
-              key={note.id}
-              onClick={() => {
-                setMainNote(note);
-                setMainNoteTitle(note.title);
-                setMainNoteContent(note.content);
-                setNewNote(false);
-              }}
-            >
-              {note.title}
-              <p id="dateOfNote">{note.updatedAt.slice(0, 10)}</p>
-            </li>
-          );
+          return sortByNotebookHelper(note);
         }
       });
     }
@@ -140,6 +137,22 @@ function MainPage() {
     setContentState("");
     setNewNote(true);
   };
+
+  //function to handle dates to display prettier
+  function prettyDateMaker(SQLDate) {
+    const options = {
+      weekday: "long",
+      year: "numeric",
+      month: "long",
+      day: "numeric",
+      hour: "numeric",
+      minute: "numeric",
+      hour12: true,
+    };
+    let date = new Date(SQLDate).toISOString().slice(0, 19).replace("T", " ");
+    date = new Date(date);
+    return date.toLocaleDateString("en-US", options);
+  }
 
   return (
     <div id="mainPageContainer">
@@ -205,6 +218,9 @@ function MainPage() {
                 : e => setMainNoteTitle(e.target.value)
             }
           ></input>
+          <p id="date">
+            {mainNote ? prettyDateMaker(mainNote.createdAt) : mainNote}
+          </p>
           <textarea
             id="textarea"
             onChange={
@@ -214,10 +230,14 @@ function MainPage() {
             }
             value={mainNoteContent ? mainNoteContent : content}
           ></textarea>
+          <p id="date">
+            Last updated:{" "}
+            {mainNote ? prettyDateMaker(mainNote.updatedAt) : mainNote}
+          </p>
           <div id="bottomMain">
             <div id="buttons">
               <button id="deleteNoteButton" onClick={handleDelete}>
-                Delete note
+                Delete
               </button>
               <button id="saveNoteButton" type="submit">
                 Save note
