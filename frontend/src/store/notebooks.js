@@ -3,6 +3,7 @@ import { csrfFetch } from "./csrf";
 const ADD_ONE = "notebooks/ADD_ONE";
 const LOAD = "notebooks/LOAD";
 const REMOVE_NOTEBOOK = "notebooks/REMOVE_NOTE";
+const REMOVE_USER = "session/removeUser";
 
 const addOneNotebook = notebook => ({
   type: ADD_ONE,
@@ -97,6 +98,9 @@ const notebooksReducer = (state = initialState, action) => {
       const newState = { ...state };
       delete newState[action.id];
       return newState;
+    }
+    case REMOVE_USER: {
+      return {};
     }
     default:
       return state;

@@ -92,6 +92,7 @@ function MainPage() {
   //creates new notebooks
   const handleNewNotebookSubmit = async e => {
     e.preventDefault();
+    if (name === "") return;
     const payload = {
       userId: sessionUser.id,
       name,
