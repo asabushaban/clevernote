@@ -142,6 +142,32 @@ function MainPage() {
   };
 
   //function to handle dates to display prettier
+  //SQL was providing times 6 hours ahead
+  //converting from GT to CST
+
+  //changing day and hour in helper function
+  const timeConverter = date => {
+    const wrongDate = date.split(" ");
+    let wrongTime = wrongDate[1].split(":");
+    let wrongDay = wrongDate[0].split("-");
+    let day = +wrongDay[2];
+    let hour = +wrongTime[0] - 6;
+
+    if (hour < 0) {
+      hour += 25;
+      day -= 1;
+    }
+
+    wrongTime[0] = hour.toString();
+    wrongDay[2] = day.toString();
+    wrongDay = wrongDay.join("-");
+    wrongTime = wrongTime.join(":");
+    const correctDate = [wrongDay, wrongTime].join(" ");
+    return correctDate;
+  };
+
+  //function below converts SQL date object to:
+  //Sunday, January 1, 2000, 12:00AM
   function prettyDateMaker(SQLDate) {
     const options = {
       weekday: "long",
@@ -152,11 +178,10 @@ function MainPage() {
       minute: "numeric",
       hour12: true,
     };
+
     let date = new Date(SQLDate).toISOString().slice(0, 19).replace("T", " ");
-    console.log(date);
-    // date = moment.utc(date);
-    // date = date.tz("America/Chicago");
-    date = new Date(date);
+    const newDate = timeConverter(date);
+    date = new Date(newDate);
     return date.toLocaleDateString("en-US", options);
   }
 
