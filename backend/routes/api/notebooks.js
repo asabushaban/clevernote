@@ -28,17 +28,18 @@ router.get(
   })
 );
 
-// router.put(
-//   "/edit/:id",
-//   asyncHandler(async function (req, res) {
-//     const { content, title } = req.body;
-//     const values = { title: title, content: content };
-//     const options = { multi: true };
-//     const condition = { where: { id: req.params.id } };
-//     const note = await Note.update(values, condition, options);
-//     return res.json(note);
-//   })
-// );
+router.put(
+  "/edit/:id",
+  asyncHandler(async function (req, res) {
+    const { name, id } = req.body;
+    const values = { name: name };
+    // const options = { multi: true };
+    const condition = { where: { id: id } };
+    await Notebook.update(values, condition);
+    const notebook = await Notebook.findByPk(id);
+    return res.json(notebook);
+  })
+);
 
 router.delete(
   "/:id",

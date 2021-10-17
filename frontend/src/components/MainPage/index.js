@@ -32,19 +32,7 @@ function MainPage() {
   //Notebooks
   const [mainNotebook, setMainNotebook] = useState("All Notes");
   const [name, setName] = useState("");
-  const [notebookList, setNotebookList] = useState(
-    Object.keys(notebooks).map(key => (
-      <li
-        className="notebookNameListItem"
-        key={key}
-        onClick={() => {
-          setMainNotebook(notebooks[key]);
-        }}
-      >
-        {notebooks[key].name}
-      </li>
-    ))
-  );
+  const [newName, setNewName] = useState("");
 
   //Notebook Ellipsis
   const [open, setOpen] = useState(false);
@@ -77,9 +65,11 @@ function MainPage() {
         content,
         title,
       };
-      await dispatch(createNote(payload));
-      // await dispatch(getNotes(sessionUser.id));
+      let createdNote = await dispatch(createNote(payload));
+      setMainNote(createdNote);
+      createNewNote();
       return;
+      // await dispatch(getNotes(sessionUser.id));
     }
     const editPayload = {
       id: mainNote.id,
@@ -91,9 +81,25 @@ function MainPage() {
     await dispatch(getNotes(sessionUser.id));
   };
 
+  //editing notebook name
+
+  const editNotebookName = async e => {
+    setOpen(!open);
+    const editPayload = {
+      id: mainNotebook.id,
+      name: newName,
+    };
+    let editedNotebook = await dispatch(editNotebook(editPayload));
+    await dispatch(getNotebooks(sessionUser.id));
+    setMainNotebook(editedNotebook);
+  };
+
   //deletes a note
   const handleDelete = async e => {
-    await dispatch(deleteNote(mainNote.id));
+    e.preventDefault();
+    const id = mainNote.id;
+    setMainNote("");
+    await dispatch(deleteNote(id));
     createNewNote();
   };
   //deletes a notebook
@@ -165,14 +171,14 @@ function MainPage() {
 
   // create new note function updates state to empty strings
   // and provides fresh input fields
-  const createNewNote = () => {
+  function createNewNote() {
     setMainNoteTitle("");
     setMainNoteContent("");
     setMainNote("");
     setTitleState("");
     setContentState("");
     setNewNote(true);
-  };
+  }
 
   //function to handle dates to display prettier
   //SQL was providing times 6 hours ahead
@@ -274,9 +280,13 @@ function MainPage() {
           <h1 id="notebookNavTopHeading">
             {mainNotebook.name || mainNotebook}
           </h1>
-          <h1 id="verticalEllipsis" onClick={() => setOpen(!open)}>
-            ⋮
-          </h1>
+          {mainNotebook != "All Notes" ? (
+            <h1 id="verticalEllipsis" onClick={() => setOpen(!open)}>
+              ⋮
+            </h1>
+          ) : (
+            ""
+          )}
         </div>
         <ul id="notebookList">{sortByNotebook(mainNotebook)}</ul>
         <button id="createNoteButton" onClick={createNewNote}>
@@ -290,19 +300,22 @@ function MainPage() {
               <input
                 id="notebookSearch"
                 type="search"
-                placeholder="Search notebooks.."
-                onChange={e => e.target.value}
+                placeholder="New notebook name.."
+                onChange={e => setNewName(e.target.value)}
               ></input>
-              <li className="dropDownListItem">Edit notebook name</li>
+              {/* <li className="dropDownListItem">Edit notebook name</li>
               <li className="dropDownListItem">Sort notes</li>
-              <li className="dropDownListItem">Create new notebook</li>
+              <li className="dropDownListItem">Create new notebook</li> */}
+              <button id="editNotebookButton" onClick={editNotebookName}>
+                Edit name
+              </button>
               <button id="deleteNotebookButton" onClick={handleDeleteNotebook}>
                 Delete notebook
               </button>
             </ul>
           </div>
         )}
-        <form id="noteContainer" onSubmit={handleSubmit}>
+        <form id="noteContainer">
           <input
             id="title"
             placeholder="Write a title for your note here"
@@ -327,14 +340,15 @@ function MainPage() {
             value={mainNoteContent ? mainNoteContent : content}
           ></textarea>
           <p id="date">
-            Last updated: {mainNote ? findUpdate(mainNote.id) : mainNote} (CDT)
+            Last updated: {mainNote != "" ? findUpdate(mainNote.id) : mainNote}{" "}
+            (CDT)
           </p>
           <div id="bottomMain">
             <div id="buttons">
               <button id="deleteNoteButton" onClick={handleDelete}>
                 Delete
               </button>
-              <button id="saveNoteButton" type="submit">
+              <button id="saveNoteButton" onClick={handleSubmit}>
                 Save note
               </button>
             </div>

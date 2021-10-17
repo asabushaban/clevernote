@@ -41,7 +41,8 @@ export const editNotebook = notebook => async dispatch => {
   if (response.ok) {
     const notebook = await response.json();
     dispatch(addOneNotebook(notebook));
-    return response;
+    console.log("notebook response", notebook);
+    return notebook;
   }
 };
 

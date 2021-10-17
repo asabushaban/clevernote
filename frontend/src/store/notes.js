@@ -65,7 +65,7 @@ export const createNote = note => async dispatch => {
   if (response.ok) {
     const note = await response.json();
     dispatch(addOneNote(note));
-    return response;
+    return note;
   }
 };
 
