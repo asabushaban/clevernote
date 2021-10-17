@@ -32,17 +32,30 @@ function MainPage() {
   //Notebooks
   const [mainNotebook, setMainNotebook] = useState("All Notes");
   const [name, setName] = useState("");
+  const [notebookList, setNotebookList] = useState(
+    Object.keys(notebooks).map(key => (
+      <li
+        className="notebookNameListItem"
+        key={key}
+        onClick={() => {
+          setMainNotebook(notebooks[key]);
+        }}
+      >
+        {notebooks[key].name}
+      </li>
+    ))
+  );
 
-  //date
-  const [date, setDate] = useState(new Date());
+  //Notebook Ellipsis
+  const [open, setOpen] = useState(false);
 
   //debugging visuals
-  // console.log("notes ==========>", notes);
-  // console.log("notebooks=======>", notebooks);
-  // console.log("mainNote =======>", mainNote);
-  // console.log("mainNotebook====>", mainNotebook);
-  // console.log("title===========>", title);
-  // console.log("Notebook========>", name);
+  console.log("notes ==========>", notes);
+  console.log("notebooks=======>", notebooks);
+  console.log("mainNote =======>", mainNote);
+  console.log("mainNotebook====>", mainNotebook);
+  console.log("title===========>", title);
+  console.log("Notebook========>", name);
 
   useEffect(() => dispatch(getNotes(sessionUser.id)), []);
   useEffect(() => dispatch(getNotebooks(sessionUser.id)), []);
@@ -51,7 +64,7 @@ function MainPage() {
     mainNoteContent,
     mainNoteTitle,
     mainNotebook,
-    date,
+    open,
   ]);
 
   //saving a new note or editing an old note
@@ -85,6 +98,7 @@ function MainPage() {
   };
   //deletes a notebook
   const handleDeleteNotebook = async e => {
+    setOpen(!open);
     await dispatch(deleteNotebook(mainNotebook.id));
     setMainNotebook("All Notes");
   };
@@ -114,7 +128,7 @@ function MainPage() {
       }}
     >
       {note.title}
-      <p id="dateOfNote">{note.content.slice(0, 40)}...</p>
+      <p id="dateOfNote">{note.content.slice(0, 120)}...</p>
     </li>
   );
 
@@ -129,6 +143,25 @@ function MainPage() {
       });
     }
   };
+
+  //function to list all notebooks or specific notebooks on search
+
+  // const searchNotebook = input => {
+  //   const searchableNotebooks = Object.values(notebooks);
+  //   return searchableNotebooks.map(notebook => {
+  //     if (notebook.name.includes(input)) {
+  //       return (
+  //         <li
+  //           className="notebookNameListItem"
+  //           key={notebook.id}
+  //           onClick={() => setMainNotebook(notebook)}
+  //         >
+  //           {notebook.name}
+  //         </li>
+  //       );
+  //     }
+  //   });
+  // };
 
   // create new note function updates state to empty strings
   // and provides fresh input fields
@@ -151,10 +184,10 @@ function MainPage() {
     let wrongTime = wrongDate[1].split(":");
     let wrongDay = wrongDate[0].split("-");
     let day = +wrongDay[2];
-    let hour = +wrongTime[0] - 6;
+    let hour = +wrongTime[0] - 5;
 
     if (hour < 0) {
-      hour += 25;
+      hour += 24;
       day -= 1;
     }
 
@@ -166,7 +199,8 @@ function MainPage() {
     return correctDate;
   };
 
-  //function below converts SQL date object to:
+  //function converts SQL date object "2000-01-01T12:00:00.786Z"
+  //to the format below:
   //Sunday, January 1, 2000, 12:00AM
   function prettyDateMaker(SQLDate) {
     const options = {
@@ -181,9 +215,13 @@ function MainPage() {
 
     let date = new Date(SQLDate).toISOString().slice(0, 19).replace("T", " ");
     const newDate = timeConverter(date);
+    console.log(date);
     date = new Date(newDate);
     return date.toLocaleDateString("en-US", options);
   }
+
+  //match notebook dates
+  const findUpdate = id => prettyDateMaker(notes[id].updatedAt);
 
   return (
     <div id="mainPageContainer">
@@ -232,19 +270,42 @@ function MainPage() {
         </div>
       </div>
       <div className="notebookNav">
-        <h1>{mainNotebook.name || mainNotebook}</h1>
+        <div id="notebookNavTop">
+          <h1 id="notebookNavTopHeading">
+            {mainNotebook.name || mainNotebook}
+          </h1>
+          <h1 id="verticalEllipsis" onClick={() => setOpen(!open)}>
+            ⋮
+          </h1>
+        </div>
         <ul id="notebookList">{sortByNotebook(mainNotebook)}</ul>
         <button id="createNoteButton" onClick={createNewNote}>
           Create note
         </button>
-        <button id="deleteNotebookButton" onClick={handleDeleteNotebook}>
-          Delete notebook
-        </button>
       </div>
       <div className="mainNoteArea">
+        {open && (
+          <div id="dropDown">
+            <ul id="dropDownAlign">
+              <input
+                id="notebookSearch"
+                type="search"
+                placeholder="Search notebooks.."
+                onChange={e => e.target.value}
+              ></input>
+              <li className="dropDownListItem">Edit notebook name</li>
+              <li className="dropDownListItem">Sort notes</li>
+              <li className="dropDownListItem">Create new notebook</li>
+              <button id="deleteNotebookButton" onClick={handleDeleteNotebook}>
+                Delete notebook
+              </button>
+            </ul>
+          </div>
+        )}
         <form id="noteContainer" onSubmit={handleSubmit}>
           <input
             id="title"
+            placeholder="Write a title for your note here"
             value={mainNoteTitle ? mainNoteTitle : title}
             onChange={
               newNote
@@ -257,6 +318,7 @@ function MainPage() {
           </p>
           <textarea
             id="textarea"
+            placeholder="There was an old farmer who sat on a rock..."
             onChange={
               newNote
                 ? e => setContentState(e.target.value)
@@ -265,8 +327,7 @@ function MainPage() {
             value={mainNoteContent ? mainNoteContent : content}
           ></textarea>
           <p id="date">
-            Last updated:{" "}
-            {mainNote ? prettyDateMaker(mainNote.updatedAt) : mainNote}
+            Last updated: {mainNote ? findUpdate(mainNote.id) : mainNote} (CDT)
           </p>
           <div id="bottomMain">
             <div id="buttons">

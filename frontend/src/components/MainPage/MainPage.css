@@ -123,11 +123,103 @@
   height: 2.67rem;
   margin-bottom: 8px;
   margin-top: 8px;
+  margin-bottom: 3rem;
 }
 
 #createNoteButton:hover {
   background-color: #4fa566;
   cursor: pointer;
+}
+
+.notebookNav {
+  height: 100%;
+  width: 20%;
+  background-color: #2f2f2f;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  /* border: 1px solid gray; */
+  /* border-radius: 7px; */
+}
+
+#notebookNavTop {
+  display: flex;
+  width: 100%;
+}
+
+#notebookNavTopHeading {
+  width: 85%;
+  text-align: center;
+  padding-left: 20px;
+}
+
+#verticalEllipsis {
+  width: 15%;
+  text-align: left;
+}
+
+#verticalEllipsis:hover {
+  cursor: pointer;
+}
+
+#dropDown {
+  display: flex;
+  justify-content: space-around;
+  flex-direction: column;
+  align-items: center;
+  position: absolute;
+  background-color: rgba(14, 13, 13, 0.85);
+  color: #8d8b8b;
+  border-radius: 4px;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
+    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
+    sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto",
+    "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
+    sans-serif;
+  font-size: 12pt;
+  border: 1px solid black;
+  width: 10%;
+  height: 16%;
+  margin-top: 2.3rem;
+  margin-left: -4.2rem;
+  padding-left: 1rem;
+  padding-right: 1rem;
+  padding-top: 2rem;
+  /* margin-left: 200px;
+  margin-top: 60px; */
+}
+
+#notebookSearch {
+  margin-bottom: 1rem;
+  text-align: center;
+}
+
+#dropDownAlign {
+  display: flex;
+  justify-content: space-around;
+  flex-direction: column;
+  align-items: center;
+  margin: 0;
+  width: 100%;
+}
+
+.dropDownListItem {
+  border-bottom: 0.5px solid rgb(110, 110, 110);
+  text-align: left;
+  margin-left: 10px;
+  margin-right: 10px;
+  width: 100%;
+}
+
+.dropDownListItem:hover {
+  cursor: pointer;
+  border-radius: 2px;
+  /* background-color: rgb(216, 214, 214); */
+  margin-left: 0px;
+  margin-right: 0px;
+  font-weight: 400;
+  padding-left: 3px;
 }
 
 #deleteNotebookButton {
@@ -147,8 +239,8 @@
     "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
     sans-serif;
   width: 80%;
-  height: 2.67rem;
-  margin-bottom: 3rem;
+  height: 1.87rem;
+  margin-top: 1rem;
 }
 
 #deleteNotebookButton:hover {
@@ -156,17 +248,9 @@
   cursor: pointer;
 }
 
-.notebookNav {
-  height: 100%;
-  width: 20%;
-  background-color: #2f2f2f;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  align-items: center;
-  /* border: 1px solid gray; */
-  /* border-radius: 7px; */
-}
+/* #deleteNotebookDropDown:hover {
+  background-color: rgb(243, 87, 87);
+} */
 
 .mainNoteArea {
   height: 100%;
@@ -320,21 +404,49 @@
 }
 
 .profile-dropdown {
+  display: flex;
+  flex-direction: column;
   color: gray;
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
     "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
     sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto",
     "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
     sans-serif;
-  font-size: 10pt;
+  font-size: 12pt;
+  margin-left: 30px;
+  align-items: center;
 }
 
-/* .fas.fa-user-circle {
-} */
+.fas.fa-user-circle {
+  height: fit-content;
+  width: fit-content;
+}
 
 .profileButton {
-  height: 12%;
+  display: flex;
+  height: fit-content;
   margin: 8px;
+}
+
+#personButton {
+  height: fit-content;
+  width: fit-content;
+}
+
+.profileLogoutButton {
+  margin-top: 8px;
+  margin-bottom: 8px;
+  width: 4.83rem;
+  height: 1.87rem;
+  background-color: orange;
+  color: white;
+  border: none;
+  border-radius: 7px;
+}
+
+.profileLogoutButton:hover {
+  background-color: rgb(243, 201, 124);
+  cursor: pointer;
 }
 
 #profileDiv {
@@ -355,6 +467,16 @@
 
   .mainNoteArea {
     width: 62%;
+  }
+
+  #profileDiv {
+    margin-bottom: 28px;
+  }
+
+  #dropDown {
+    margin-left: -3rem;
+    width: 15%;
+    height: 22%;
   }
 }
 
