@@ -17,13 +17,17 @@ function LoginFormPage() {
   const handleSubmit = async e => {
     e.preventDefault();
     setErrors([]);
+    let saveError;
     await dispatch(sessionActions.login({ credential, password })).catch(
       async res => {
         const data = await res.json();
-        if (data && data.errors) setErrors(data.errors);
+        if (data && data.errors) {
+          setErrors(data.errors);
+          saveError = data.errors;
+        }
       }
     );
-    history.push("/");
+    if (!saveError) history.push("/");
     return;
   };
 

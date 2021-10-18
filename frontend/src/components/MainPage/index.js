@@ -69,7 +69,6 @@ function MainPage() {
       setMainNote(createdNote);
       createNewNote();
       return;
-      // await dispatch(getNotes(sessionUser.id));
     }
     const editPayload = {
       id: mainNote.id,

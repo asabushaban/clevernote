@@ -20,15 +20,21 @@ function SignupFormPage() {
 
   const handleSubmit = async e => {
     e.preventDefault();
+    let saveError;
     if (password === confirmPassword) {
       setErrors([]);
       await dispatch(
         sessionActions.signup({ email, username, password })
       ).catch(async res => {
         const data = await res.json();
-        if (data && data.errors) setErrors(data.errors);
+
+        if (data && data.errors) {
+          setErrors(data.errors);
+          saveError = data.errors;
+        }
       });
-      history.push("/");
+
+      if (!saveError) history.push("/");
       return;
     }
     return setErrors([
