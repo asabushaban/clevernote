@@ -101,16 +101,13 @@ function SplashPage() {
             <li>
               <h4>WORK ANYWHERE</h4>
               <p>
-                Keep important info handy—your notes sync automatically to all
-                your devices.
+                Keep important info handy—your notes are editable and can be
+                saved to different notebooks.
               </p>
             </li>
             <li>
-              <h4>REMEMBER EVERYTHING</h4>
-              <p>
-                Make notes more useful by adding text, images, audio, scans,
-                PDFs, and documents.
-              </p>
+              <h4>ORGANIZE EVERYTHING</h4>
+              <p>Make notes more useful by grouping notes within notebooks.</p>
             </li>
             <li>
               <h4>TURN TO-DO INTO DONE</h4>
@@ -122,8 +119,8 @@ function SplashPage() {
             <li>
               <h4>FIND THINGS FAST</h4>
               <p>
-                Get what you need, when you need it with powerful, flexible
-                search capabilities.
+                Your notes are timestamped by created date as well as updated
+                date and sorted from most to least recently updated.
               </p>
             </li>
           </ul>

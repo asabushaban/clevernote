@@ -38,12 +38,12 @@ function MainPage() {
   const [open, setOpen] = useState(false);
 
   //debugging visuals
-  console.log("notes ==========>", notes);
-  console.log("notebooks=======>", notebooks);
-  console.log("mainNote =======>", mainNote);
-  console.log("mainNotebook====>", mainNotebook);
-  console.log("title===========>", title);
-  console.log("Notebook========>", name);
+  // console.log("notes ==========>", notes);
+  // console.log("notebooks=======>", notebooks);
+  // console.log("mainNote =======>", mainNote);
+  // console.log("mainNotebook====>", mainNotebook);
+  // console.log("title===========>", title);
+  // console.log("Notebook========>", name);
 
   useEffect(() => dispatch(getNotes(sessionUser.id)), []);
   useEffect(() => dispatch(getNotebooks(sessionUser.id)), []);
