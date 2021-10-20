@@ -2,10 +2,16 @@ const router = require("express").Router();
 
 const sessionRouter = require("./session.js");
 const usersRouter = require("./users.js");
+const notesRouter = require("./notes.js");
+const notebooksRouter = require("./notebooks");
 
 router.use("/session", sessionRouter);
 
 router.use("/users", usersRouter);
+
+router.use("/note", notesRouter);
+
+router.use("/notebook", notebooksRouter);
 
 module.exports = router;
 

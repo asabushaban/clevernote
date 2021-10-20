@@ -1,0 +1,518 @@
+/* html {
+  box-sizing: border-box;
+} */
+
+#mainPageContainer {
+  margin: 0;
+  height: 100%;
+  width: 100%;
+  display: flex;
+}
+
+.sideNav {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 12%;
+  background-color: #000000;
+}
+
+#sideNavTop {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+  height: 76%;
+  width: 100%;
+}
+
+#newNotebookInput {
+  margin-top: 8px;
+  background-color: gray;
+  font-weight: 800;
+  /* border-bottom-left-radius: 7px; */
+  border: none;
+  width: 88%;
+  height: 2.67rem;
+  border-top-left-radius: 7px;
+  border-bottom-left-radius: 7px;
+  margin-bottom: 3rem;
+}
+
+#newNotebookButton {
+  background-color: #00a82d;
+  color: white;
+  border: none;
+  border-top-right-radius: 7px;
+  border-bottom-right-radius: 7px;
+  height: 2.67rem;
+  margin-bottom: 3rem;
+}
+
+#newNotebookButton:hover {
+  background-color: #4fa566;
+  cursor: pointer;
+}
+
+#createNotebookPrompt {
+  color: rgb(160, 155, 155);
+  font-weight: 300;
+  font-size: 11.5pt;
+  margin-bottom: 0;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
+    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
+    sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto",
+    "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
+    sans-serif;
+}
+
+#notebookNameList {
+  width: 100%;
+  height: 100%;
+  overflow: scroll;
+}
+
+.notebookNameListItem {
+  color: rgb(161, 159, 159);
+  font-weight: 400;
+  padding: 20px 20px 20px 20px;
+  padding-right: 10px;
+  border-bottom: 1px solid rgb(92, 90, 90);
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
+    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
+    sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto",
+    "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
+    sans-serif;
+}
+
+.notebookNameListItem:hover {
+  color: rgb(185, 182, 182);
+  font-size: 14pt;
+  margin-right: 4px;
+  cursor: pointer;
+  border-radius: 7px;
+}
+
+#sideNavBottom {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  align-items: center;
+  height: 18%;
+  width: 100%;
+}
+
+#createNoteButton {
+  background-color: #00a82d;
+  color: white;
+  /* height: 8%;
+  width: 65%; */
+  /* width: 25%;
+    height: 8%; */
+  border: none;
+  border-radius: 7px;
+  font-size: 11pt;
+  font-weight: 400;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
+    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
+    sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto",
+    "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
+    sans-serif;
+  width: 80%;
+  height: 2.67rem;
+  margin-bottom: 8px;
+  margin-top: 8px;
+  margin-bottom: 3rem;
+}
+
+#createNoteButton:hover {
+  background-color: #4fa566;
+  cursor: pointer;
+}
+
+.notebookNav {
+  height: 100%;
+  width: 20%;
+  background-color: #2f2f2f;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  /* border: 1px solid gray; */
+  /* border-radius: 7px; */
+}
+
+#notebookNavTop {
+  display: flex;
+  width: 100%;
+}
+
+#notebookNavTopHeading {
+  width: 85%;
+  text-align: center;
+  padding-left: 20px;
+}
+
+#verticalEllipsis {
+  width: 15%;
+  text-align: left;
+}
+
+#verticalEllipsis:hover {
+  cursor: pointer;
+}
+
+#dropDown {
+  display: flex;
+  justify-content: space-around;
+  flex-direction: column;
+  align-items: center;
+  position: absolute;
+  background-color: rgba(14, 13, 13, 0.85);
+  color: #8d8b8b;
+  border-radius: 4px;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
+    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
+    sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto",
+    "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
+    sans-serif;
+  font-size: 12pt;
+  border: 1px solid black;
+  width: 10%;
+  height: 16%;
+  margin-top: 2.3rem;
+  margin-left: -4.2rem;
+  padding-left: 1rem;
+  padding-right: 1rem;
+  padding-top: 2rem;
+  /* margin-left: 200px;
+  margin-top: 60px; */
+}
+
+#notebookSearch {
+  margin-bottom: 1rem;
+  text-align: center;
+}
+
+#dropDownAlign {
+  display: flex;
+  justify-content: space-around;
+  flex-direction: column;
+  align-items: center;
+  margin: 0;
+  width: 100%;
+}
+
+.dropDownListItem {
+  border-bottom: 0.5px solid rgb(110, 110, 110);
+  text-align: left;
+  margin-left: 10px;
+  margin-right: 10px;
+  width: 100%;
+}
+
+.dropDownListItem:hover {
+  cursor: pointer;
+  border-radius: 2px;
+  /* background-color: rgb(216, 214, 214); */
+  margin-left: 0px;
+  margin-right: 0px;
+  font-weight: 400;
+  padding-left: 3px;
+}
+
+#editNotebookButton {
+  background-color: blue;
+  color: white;
+  /* height: 8%;
+  width: 65%; */
+  /* width: 25%;
+    height: 8%; */
+  border: none;
+  border-radius: 7px;
+  font-size: 11pt;
+  font-weight: 400;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
+    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
+    sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto",
+    "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
+    sans-serif;
+  width: 80%;
+  height: 1.87rem;
+  margin-top: 5px;
+}
+
+#editNotebookButton:hover {
+  background-color: rgb(122, 146, 255);
+  cursor: pointer;
+}
+
+#deleteNotebookButton {
+  background-color: red;
+  color: white;
+  /* height: 8%;
+  width: 65%; */
+  /* width: 25%;
+    height: 8%; */
+  border: none;
+  border-radius: 7px;
+  font-size: 11pt;
+  font-weight: 400;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
+    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
+    sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto",
+    "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
+    sans-serif;
+  width: 80%;
+  height: 1.87rem;
+  margin-top: 1rem;
+}
+
+#deleteNotebookButton:hover {
+  background-color: rgb(255, 122, 122);
+  cursor: pointer;
+}
+
+/* #deleteNotebookDropDown:hover {
+  background-color: rgb(243, 87, 87);
+} */
+
+.mainNoteArea {
+  height: 100%;
+  width: 68%;
+  padding-left: 30px;
+  padding-right: 30px;
+  background-color: rgb(46, 45, 45);
+  /* background-color: #ffffff; */
+  color: black;
+  overflow: scroll;
+}
+
+#noteContainer {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  background-color: rgb(46, 45, 45);
+}
+
+#title {
+  font-size: 30pt;
+  color: #818181;
+  height: 8%;
+  width: 100%;
+  background-color: rgb(46, 45, 45);
+  border: none;
+}
+
+#textarea {
+  width: 100%;
+  height: 100%;
+  background-color: rgb(46, 45, 45);
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
+    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
+    sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto",
+    "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
+    sans-serif;
+  color: #818181;
+  font-size: 14pt;
+  border: hidden;
+  resize: none;
+}
+
+#buttons {
+  display: flex;
+  justify-content: flex-start;
+  margin-top: 8px;
+}
+
+#bottomMain {
+  display: flex;
+  justify-content: space-between;
+}
+
+#saveNoteButton {
+  background-color: #00a82d;
+  color: white;
+  /* height: 8%;
+  width: 65%; */
+  /* width: 25%;
+    height: 8%; */
+  border: none;
+  border-radius: 7px;
+  font-size: 10pt;
+  font-weight: 650;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
+    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
+    sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto",
+    "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
+    sans-serif;
+  width: 4.83rem;
+  height: 1.87rem;
+  margin-bottom: 3rem;
+  margin-right: 8px;
+}
+
+#saveNoteButton:hover {
+  background-color: #4fa566;
+  cursor: pointer;
+}
+
+#deleteNoteButton {
+  background-color: red;
+  color: white;
+  border: none;
+  border-radius: 7px;
+  font-size: 10pt;
+  font-weight: 650;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
+    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
+    sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto",
+    "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
+    sans-serif;
+  width: 4.83rem;
+  height: 1.87rem;
+  margin-bottom: 3rem;
+  margin-right: 8px;
+}
+
+#deleteNoteButton:hover {
+  background-color: rgb(245, 92, 92);
+  cursor: pointer;
+}
+
+#whereToSavePrompt {
+  color: rgb(161, 159, 159);
+  font-weight: 500;
+  margin-left: 400px;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
+    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
+    sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto",
+    "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
+    sans-serif;
+}
+
+#date {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
+    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
+    sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto",
+    "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
+    sans-serif;
+  font-weight: 550;
+  font-size: 15pt;
+}
+
+#notebookList {
+  height: 80%;
+  width: 100%;
+  padding: 2px 2px 2px 2px;
+  overflow: hidden;
+  overflow: scroll;
+}
+
+.notebookNavListItem {
+  font-weight: 900;
+  padding: 20px 20px 0px 20px;
+  padding-right: 10px;
+  border-bottom: 1px solid black;
+}
+
+#dateOfNote {
+  color: rgb(92, 90, 90);
+  font-size: 8pt;
+}
+
+.notebookNavListItem:hover {
+  background-color: #00a82d;
+  margin-right: 4px;
+  cursor: pointer;
+  border-radius: 7px;
+}
+
+.profile-dropdown {
+  display: flex;
+  flex-direction: column;
+  color: gray;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
+    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
+    sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto",
+    "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
+    sans-serif;
+  font-size: 12pt;
+  margin-left: 30px;
+  align-items: center;
+}
+
+.fas.fa-user-circle {
+  height: fit-content;
+  width: fit-content;
+}
+
+.profileButton {
+  display: flex;
+  height: fit-content;
+  margin: 8px;
+}
+
+#personButton {
+  height: fit-content;
+  width: fit-content;
+}
+
+.profileLogoutButton {
+  margin-top: 8px;
+  margin-bottom: 8px;
+  width: 4.83rem;
+  height: 1.87rem;
+  background-color: orange;
+  color: white;
+  border: none;
+  border-radius: 7px;
+}
+
+.profileLogoutButton:hover {
+  background-color: rgb(243, 201, 124);
+  cursor: pointer;
+}
+
+#profileDiv {
+  display: flex;
+  justify-content: flex-start;
+  width: 100%;
+  height: 8%;
+  margin-bottom: 15px;
+}
+
+@media screen and (max-width: 1500px) {
+  .sideNav {
+    width: 19%;
+  }
+  .notebookNav {
+    width: 19%;
+  }
+
+  .mainNoteArea {
+    width: 62%;
+  }
+
+  #profileDiv {
+    margin-bottom: 28px;
+  }
+
+  #dropDown {
+    margin-left: -3rem;
+    width: 15%;
+    height: 22%;
+  }
+}
+
+/* .rdw-block-wrapper,
+.rdw-fontsize-wrapper,
+.rdw-fontfamily-wrapper {
+  color: black;
+}
+
+.rdw-editor-toolbar {
+  border: none;
+  background-color: rgb(46, 45, 45);
+} */

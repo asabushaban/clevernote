@@ -20,6 +20,7 @@ function Navigation({ isLoaded }) {
   }
 
   return (
+<<<<<<< HEAD
     <ul>
       <li>
         <NavLink exact to="/">
@@ -28,6 +29,18 @@ function Navigation({ isLoaded }) {
         {isLoaded && sessionLinks}
       </li>
     </ul>
+=======
+    <>
+      <ul className="splashNav">
+        <li className="navBar">
+          <NavLink exact to="/">
+            Home
+          </NavLink>
+          {isLoaded && sessionLinks}
+        </li>
+      </ul>
+    </>
+>>>>>>> dbe419051e9a12aeb27de52466e628f8f8a31952
   );
 }
 

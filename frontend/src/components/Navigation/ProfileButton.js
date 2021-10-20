@@ -29,13 +29,19 @@ function ProfileButton({ user }) {
   };
 
   return (
+<<<<<<< HEAD
     <>
       <button onClick={openMenu}>
+=======
+    <div className="profileButton">
+      <button id="personButton" onClick={openMenu}>
+>>>>>>> dbe419051e9a12aeb27de52466e628f8f8a31952
         <i className="fas fa-user-circle" />
       </button>
       {showMenu && (
         <ul className="profile-dropdown">
           <li>{user.username}</li>
+<<<<<<< HEAD
           <li>{user.email}</li>
           <li>
             <button onClick={logout}>Log Out</button>
@@ -43,6 +49,21 @@ function ProfileButton({ user }) {
         </ul>
       )}
     </>
+=======
+          <li>
+            {user.email.length > 16
+              ? `${user.email.slice(0, 16)}...`
+              : user.email}
+          </li>
+          <li>
+            <button className="profileLogoutButton" onClick={logout}>
+              Log Out
+            </button>
+          </li>
+        </ul>
+      )}
+    </div>
+>>>>>>> dbe419051e9a12aeb27de52466e628f8f8a31952
   );
 }
 
