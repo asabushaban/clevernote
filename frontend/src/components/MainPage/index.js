@@ -295,11 +295,12 @@ function MainPage() {
       <div className="mainNoteArea">
         {open && (
           <div id="dropDown">
-            <ul id="dropDownAlign">
+            <form id="dropDownAlign">
               <input
                 id="notebookSearch"
                 type="search"
                 placeholder="New notebook name.."
+                required="required"
                 onChange={e => setNewName(e.target.value)}
               ></input>
               {/* <li className="dropDownListItem">Edit notebook name</li>
@@ -311,7 +312,7 @@ function MainPage() {
               <button id="deleteNotebookButton" onClick={handleDeleteNotebook}>
                 Delete notebook
               </button>
-            </ul>
+            </form>
           </div>
         )}
         <form id="noteContainer">
