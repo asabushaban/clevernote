@@ -295,18 +295,18 @@ function MainPage() {
       <div className="mainNoteArea">
         {open && (
           <div id="dropDown">
-            <form id="dropDownAlign">
+            <form id="dropDownAlign" onSubmit={editNotebookName}>
               <input
                 id="notebookSearch"
                 type="search"
                 placeholder="New notebook name.."
-                required="required"
+                required
                 onChange={e => setNewName(e.target.value)}
               ></input>
               {/* <li className="dropDownListItem">Edit notebook name</li>
               <li className="dropDownListItem">Sort notes</li>
               <li className="dropDownListItem">Create new notebook</li> */}
-              <button id="editNotebookButton" onClick={editNotebookName}>
+              <button id="editNotebookButton" type="submit">
                 Edit name
               </button>
               <button id="deleteNotebookButton" onClick={handleDeleteNotebook}>
