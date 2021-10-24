@@ -90,9 +90,7 @@ function MainPage() {
     };
     let editedNotebook = await dispatch(editNotebook(editPayload));
     await dispatch(getNotebooks(sessionUser.id));
-    editedNotebook.name
-      ? setMainNotebook(editedNotebook)
-      : setMainNotebook(editedNotebook.id);
+    setMainNotebook(editedNotebook);
   };
 
   //deletes a note
@@ -106,10 +104,7 @@ function MainPage() {
   //deletes a notebook
   const handleDeleteNotebook = async e => {
     setOpen(!open);
-    if (+mainNotebook) await dispatch(deleteNotebook(+mainNotebook));
-    else {
-      await dispatch(deleteNotebook(mainNotebook.id));
-    }
+    await dispatch(deleteNotebook(mainNotebook.id));
     setMainNotebook("All Notes");
   };
 
@@ -253,11 +248,7 @@ function MainPage() {
               <li
                 className="notebookNameListItem"
                 key={key}
-                onClick={() => {
-                  notebooks[key].name
-                    ? setMainNotebook(notebooks[key])
-                    : setMainNotebook(notebooks[key].id);
-                }}
+                onClick={() => setMainNotebook(notebooks[key])}
               >
                 {notebooks[key].name}
               </li>

@@ -126,6 +126,33 @@ function SplashPage() {
           </ul>
         </div>
       </div>
+      <div id="footer">
+        <div id="innerFooter">
+          <h4>Designed by: AJ Abushaban</h4>
+          <Link
+            to={{
+              pathname: "https://github.com/asabushaban",
+            }}
+            target="_blank"
+          >
+            <img
+              id="github"
+              src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/github/github-original.svg"
+            />
+          </Link>
+          <Link
+            to={{
+              pathname: "https://www.linkedin.com/in/aj-abushaban-919231100/",
+            }}
+            target="_blank"
+          >
+            <img
+              id="linkedin"
+              src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/linkedin/linkedin-original-wordmark.svg"
+            />
+          </Link>
+        </div>
+      </div>
     </div>
   );
 }
