@@ -10,6 +10,10 @@ import {
 } from "../../store/notebooks";
 
 import ProfileButton from "../Navigation/ProfileButton";
+import ReactQuill from "react-quill";
+import ReactHtmlParser from "react-html-parser";
+// import moment from "moment";
+import "react-quill/dist/quill.snow.css";
 
 function MainPage() {
   const dispatch = useDispatch();
@@ -38,12 +42,12 @@ function MainPage() {
   const [open, setOpen] = useState(false);
 
   //debugging visuals
-  // console.log("notes ==========>", notes);
-  // console.log("notebooks=======>", notebooks);
-  // console.log("mainNote =======>", mainNote);
-  // console.log("mainNotebook====>", mainNotebook);
-  // console.log("title===========>", title);
-  // console.log("Notebook========>", name);
+  console.log("notes ==========>", notes);
+  console.log("notebooks=======>", notebooks);
+  console.log("mainNote =======>", mainNote);
+  console.log("mainNotebook====>", mainNotebook);
+  console.log("title===========>", title);
+  console.log("Notebook========>", name);
 
   useEffect(() => dispatch(getNotes(sessionUser.id)), []);
   useEffect(() => dispatch(getNotebooks(sessionUser.id)), []);
@@ -133,7 +137,7 @@ function MainPage() {
       }}
     >
       {note.title}
-      <p id="dateOfNote">{note.content.slice(0, 120)}...</p>
+      <p id="dateOfNote">{ReactHtmlParser(note.content.slice(0, 120))}...</p>
     </li>
   );
 
@@ -227,6 +231,40 @@ function MainPage() {
 
   //match notebook dates
   const findUpdate = id => prettyDateMaker(notes[id].updatedAt);
+
+  const modules = {
+    toolbar: [
+      [{ header: "1" }, { header: "2" }, { font: [] }],
+      [{ size: [] }, "code-block"],
+      ["bold", "italic", "underline", "strike"],
+      [{ script: "super" }, { script: "sub" }],
+      [{ list: "ordered" }, { list: "bullet" }],
+      [{ color: [] }, { background: [] }],
+      ["link", "image", "video"],
+      ["direction", { align: [] }],
+      ["clean"],
+    ],
+  };
+
+  const toolbarOptions = [
+    ["bold", "italic", "underline", "strike"], // toggled buttons
+    ["blockquote", "code-block"],
+
+    [{ header: 1 }, { header: 2 }], // custom button values
+    [{ list: "ordered" }, { list: "bullet" }],
+    [{ script: "sub" }, { script: "super" }], // superscript/subscript
+    [{ indent: "-1" }, { indent: "+1" }], // outdent/indent
+    [{ direction: "rtl" }], // text direction
+
+    [{ size: ["small", false, "large", "huge"] }], // custom dropdown
+    [{ header: [1, 2, 3, 4, 5, 6, false] }],
+
+    [{ color: [] }, { background: [] }], // dropdown with defaults from theme
+    [{ font: [] }],
+    [{ align: [] }],
+
+    ["clean"], // remove formatting button
+  ];
 
   return (
     <div id="mainPageContainer">
@@ -329,7 +367,30 @@ function MainPage() {
           <p id="date">
             {mainNote ? prettyDateMaker(mainNote.createdAt) : mainNote}
           </p>
-          <textarea
+          <div style={{ height: "95%" }}>
+            <ReactQuill
+              toolbarOptions={toolbarOptions}
+              modules={modules}
+              className="TET"
+              id="my-form1"
+              theme="snow"
+              value={newNote === false ? mainNoteContent : content}
+              type="text"
+              placeholder="Whats on your mind?"
+              onChange={
+                newNote
+                  ? value => setContentState(value)
+                  : value => setMainNoteContent(value)
+              }
+              style={{
+                // minHeight: "400px",
+                height: "90%",
+                width: "100%",
+                outline: "none",
+              }}
+            />
+          </div>
+          {/* <textarea
             id="textarea"
             placeholder="There was an old farmer who sat on a rock..."
             onChange={
@@ -338,7 +399,7 @@ function MainPage() {
                 : e => setMainNoteContent(e.target.value)
             }
             value={mainNoteContent ? mainNoteContent : content}
-          ></textarea>
+          ></textarea> */}
           <p id="date">
             Last updated: {mainNote != "" ? findUpdate(mainNote.id) : mainNote}{" "}
             (CDT)
