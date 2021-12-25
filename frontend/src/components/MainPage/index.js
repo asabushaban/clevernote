@@ -286,9 +286,7 @@ function MainPage() {
               <li
                 className="notebookNameListItem"
                 key={key}
-                onClick={() => {
-                  setMainNotebook(notebooks[key]);
-                }}
+                onClick={() => setMainNotebook(notebooks[key])}
               >
                 {notebooks[key].name}
               </li>
