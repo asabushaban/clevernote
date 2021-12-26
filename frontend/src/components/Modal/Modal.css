@@ -27,7 +27,7 @@
 
 .modal-content {
   width: 550px;
-  background-color: rgba(0, 0, 0, 0.52);
+  background-color: rgba(0, 0, 0, 0.86);
   transform: translateY(-200px);
   transition: all 0.3s ease-in-out;
   border-radius: 5px;
@@ -83,12 +83,12 @@
 
 /* ask question modal */
 
-#askQuestionModal {
+#editNotebookModal {
   display: flex;
   flex-direction: column;
 }
 
-#askQuestionInput {
+#editNotebookInput {
   color: rgb(184, 182, 182);
   width: 94%;
   font-size: 14pt;
@@ -100,15 +100,15 @@
   margin-bottom: 20px;
 }
 
-#askQuestionInput::placeholder {
+#editNotebookInput::placeholder {
   color: rgb(184, 182, 182);
 }
 
-#askQuestionInput:hover {
+#editNotebookInput:hover {
   border-bottom: 1.5px solid #fff;
 }
 
-#askQuestionModalBottom {
+#editNotebookModalBottom {
   display: flex;
   justify-content: flex-end;
   align-items: center;
@@ -116,7 +116,7 @@
   /* margin-top: 150px; */
 }
 
-#askQuestionName {
+#editNotebookName {
   padding: 10px;
   font-size: 11pt;
   color: rgb(133, 131, 131);
@@ -124,7 +124,7 @@
   margin-bottom: 10px;
 }
 
-#askQuestionButton {
+#editNotebookButton {
   border-radius: 7px;
   background-color: #2e69ff;
   font-size: 10pt;
@@ -137,11 +137,11 @@
   cursor: pointer;
 }
 
-#askQuestionButton:hover {
+#editNotebookButton:hover {
   background-color: #1556fc;
 }
 
-#askQuestionModalCancel {
+#editNotebookModalCancel {
   cursor: "pointer";
   font-size: 11pt;
   font-weight: 400;

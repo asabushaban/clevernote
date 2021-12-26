@@ -2,6 +2,11 @@
   box-sizing: border-box;
 } */
 
+* {
+  font-size: 12pt;
+  /* overflow: hidden; */
+}
+
 #mainPageContainer {
   margin: 0;
   height: 100%;
@@ -289,11 +294,19 @@
   overflow: scroll;
 }
 
+/* #my-form1 {
+}
+
+.ql-container.ql-snow {
+  overflow: scroll;
+  max-height: 400px;
+}
+
 #my-form1 {
   height: "90%";
   width: "100%";
   outline: "none";
-}
+} */
 
 #noteContainer {
   display: flex;
@@ -426,7 +439,7 @@
 
 #dateOfNote {
   color: rgb(92, 90, 90);
-  font-size: 8pt;
+  font-size: pt;
 }
 
 .notebookNavListItem:hover {
@@ -510,6 +523,11 @@
     margin-left: -3rem;
     width: 15%;
     height: 22%;
+  }
+
+  .ql-container.ql-snow {
+    overflow: scroll;
+    max-height: 400px;
   }
 }
 

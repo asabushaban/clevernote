@@ -135,9 +135,12 @@ function MainPage() {
         setMainNoteContent(note.content);
         setNewNote(false);
       }}
+      style={{ overflow: "hidden" }}
     >
       <li>{note.title}</li>
-      <p id="dateOfNote">{ReactHtmlParser(note.content.slice(0, 120))}...</p>
+      <p id="dateOfNote" style={{ fontSize: "8pt" }}>
+        {ReactHtmlParser(prettyDateMaker(note.createdAt).slice(0, 120))}
+      </p>
     </div>
   );
 
@@ -328,28 +331,6 @@ function MainPage() {
         </button>
       </div>
       <div className="mainNoteArea">
-        {/* {open && (
-          <div id="dropDown">
-            <form id="dropDownAlign" onSubmit={editNotebookName}>
-              <input
-                id="notebookSearch"
-                type="search"
-                placeholder="New notebook name.."
-                required
-                onChange={e => setNewName(e.target.value)}
-              ></input>
-              {/* <li className="dropDownListItem">Edit notebook name</li>
-              <li className="dropDownListItem">Sort notes</li>
-              <li className="dropDownListItem">Create new notebook</li> */}
-        {/* <button id="editNotebookButton" type="submit">
-                Edit name
-              </button>
-              <button id="deleteNotebookButton" onClick={handleDeleteNotebook}>
-                Delete notebook
-              </button>
-            </form>
-          </div> */}
-        {/* )} */}
         <form id="noteContainer">
           <input
             id="title"
@@ -364,11 +345,11 @@ function MainPage() {
           <p id="date">
             {mainNote ? prettyDateMaker(mainNote.createdAt) : mainNote}
           </p>
-          <div style={{ height: "95%" }}>
+          <div style={{ height: "100%" }}>
             <ReactQuill
               toolbarOptions={toolbarOptions}
               modules={modules}
-              className="TET"
+              // className="TET"
               id="my-form1"
               theme="snow"
               value={newNote === false ? mainNoteContent : content}
@@ -380,8 +361,7 @@ function MainPage() {
                   : value => setMainNoteContent(value)
               }
               style={{
-                // minHeight: "400px",
-                height: "90%",
+                height: "87%",
                 width: "100%",
                 outline: "none",
               }}
@@ -422,8 +402,8 @@ function MainPage() {
         show={open}
         onClose={() => setOpen(false)}
       >
-        <div id={"askQuestionModal"}>
-          <p id={"askQuestionName"}>{"Edit Notebook Name"}</p>
+        <div id={"editNotebookModal"}>
+          <p id={"editNotebookName"}>{"Edit Notebook Name"}</p>
           {error ? (
             <p style={{ color: "red", textAlign: "center", margin: "0px" }}>
               {error}
@@ -432,7 +412,7 @@ function MainPage() {
 
           <form id="dropDownAlign" onSubmit={editNotebookName}>
             <input
-              id={"askQuestionInput"}
+              id={"editNotebookInput"}
               // id="notebookSearch"
               value={mainNotebook.name}
               type="search"
@@ -440,19 +420,19 @@ function MainPage() {
               required
               onChange={e => setNewName(e.target.value)}
             ></input>
-            <div id={"askQuestionModalBottom"}>
-              <button id={"askQuestionButton"} type="submit">
+            <div id={"editNotebookModalBottom"}>
+              <button id={"editNotebookButton"} type="submit">
                 Edit
               </button>
               <button
-                id={"askQuestionButton"}
+                id={"editNotebookButton"}
                 style={{ backgroundColor: "red" }}
                 onClick={handleDeleteNotebook}
               >
                 Delete
               </button>
             </div>
-            <p id={"askQuestionModalCancel"} onClick={() => setOpen(false)}>
+            <p id={"editNotebookModalCancel"} onClick={() => setOpen(false)}>
               Cancel
             </p>
           </form>
