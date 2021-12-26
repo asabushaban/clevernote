@@ -8,11 +8,10 @@ import {
   editNotebook,
   deleteNotebook,
 } from "../../store/notebooks";
-
+import Modal from "../Modal/Modal";
 import ProfileButton from "../Navigation/ProfileButton";
 import ReactQuill from "react-quill";
 import ReactHtmlParser from "react-html-parser";
-// import moment from "moment";
 import "react-quill/dist/quill.snow.css";
 
 function MainPage() {
@@ -37,6 +36,7 @@ function MainPage() {
   const [mainNotebook, setMainNotebook] = useState("All Notes");
   const [name, setName] = useState("");
   const [newName, setNewName] = useState("");
+  const [error, setError] = useState("");
 
   //Notebook Ellipsis
   const [open, setOpen] = useState(false);
@@ -328,7 +328,7 @@ function MainPage() {
         </button>
       </div>
       <div className="mainNoteArea">
-        {open && (
+        {/* {open && (
           <div id="dropDown">
             <form id="dropDownAlign" onSubmit={editNotebookName}>
               <input
@@ -341,15 +341,15 @@ function MainPage() {
               {/* <li className="dropDownListItem">Edit notebook name</li>
               <li className="dropDownListItem">Sort notes</li>
               <li className="dropDownListItem">Create new notebook</li> */}
-              <button id="editNotebookButton" type="submit">
+        {/* <button id="editNotebookButton" type="submit">
                 Edit name
               </button>
               <button id="deleteNotebookButton" onClick={handleDeleteNotebook}>
                 Delete notebook
               </button>
             </form>
-          </div>
-        )}
+          </div> */}
+        {/* )} */}
         <form id="noteContainer">
           <input
             id="title"
@@ -416,6 +416,48 @@ function MainPage() {
           </div>
         </form>
       </div>
+
+      <Modal
+        title={sessionUser.username}
+        show={open}
+        onClose={() => setOpen(false)}
+      >
+        <div id={"askQuestionModal"}>
+          <p id={"askQuestionName"}>{"Edit Notebook Name"}</p>
+          {error ? (
+            <p style={{ color: "red", textAlign: "center", margin: "0px" }}>
+              {error}
+            </p>
+          ) : null}
+
+          <form id="dropDownAlign" onSubmit={editNotebookName}>
+            <input
+              id={"askQuestionInput"}
+              // id="notebookSearch"
+              value={mainNotebook.name}
+              type="search"
+              placeholder="New notebook name.."
+              required
+              onChange={e => setNewName(e.target.value)}
+            ></input>
+            <div id={"askQuestionModalBottom"}>
+              <button id={"askQuestionButton"} type="submit">
+                Edit
+              </button>
+              <button
+                id={"askQuestionButton"}
+                style={{ backgroundColor: "red" }}
+                onClick={handleDeleteNotebook}
+              >
+                Delete
+              </button>
+            </div>
+            <p id={"askQuestionModalCancel"} onClick={() => setOpen(false)}>
+              Cancel
+            </p>
+          </form>
+        </div>
+      </Modal>
     </div>
   );
 }

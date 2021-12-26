@@ -27,7 +27,7 @@ function LoginFormPage() {
         }
       }
     );
-    if (!saveError) history.push("/notes");
+    if (!saveError) history.push("/");
     return;
   };
 
