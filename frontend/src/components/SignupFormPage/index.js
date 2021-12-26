@@ -34,7 +34,7 @@ function SignupFormPage() {
         }
       });
 
-      if (!saveError) history.push("/");
+      if (!saveError) history.push("/notes");
       return;
     }
     return setErrors([

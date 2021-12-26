@@ -9,10 +9,6 @@
   display: flex;
 }
 
-* {
-  color: black;
-}
-
 .sideNav {
   height: 100%;
   display: flex;

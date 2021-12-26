@@ -42,15 +42,15 @@ function MainPage() {
   const [open, setOpen] = useState(false);
 
   //debugging visuals
-  console.log("notes ==========>", notes);
-  console.log("notebooks=======>", notebooks);
-  console.log("mainNote =======>", mainNote);
-  console.log("mainNotebook====>", mainNotebook);
-  console.log("title===========>", title);
-  console.log("Notebook========>", name);
+  // console.log("notes ==========>", notes);
+  // console.log("notebooks=======>", notebooks);
+  // console.log("mainNote =======>", mainNote);
+  // console.log("mainNotebook====>", mainNotebook);
+  // console.log("title===========>", title);
+  // console.log("Notebook========>", name);
 
-  useEffect(() => dispatch(getNotes(sessionUser.id)), []);
-  useEffect(() => dispatch(getNotebooks(sessionUser.id)), []);
+  useEffect(() => dispatch(getNotes(sessionUser.id)), [dispatch]);
+  useEffect(() => dispatch(getNotebooks(sessionUser.id)), [dispatch]);
   useEffect(() => {}, [
     mainNote,
     mainNoteContent,
@@ -126,7 +126,7 @@ function MainPage() {
   //function to sort the notes by the selected notebook
   // one condition for all notes and one condition for specific notebooks
   const sortByNotebookHelper = note => (
-    <li
+    <div
       className="notebookNavListItem"
       key={note.id}
       onClick={() => {
@@ -136,9 +136,9 @@ function MainPage() {
         setNewNote(false);
       }}
     >
-      {note.title}
+      <li>{note.title}</li>
       <p id="dateOfNote">{ReactHtmlParser(note.content.slice(0, 120))}...</p>
-    </li>
+    </div>
   );
 
   const sortByNotebook = notebook => {
@@ -224,7 +224,6 @@ function MainPage() {
 
     let date = new Date(SQLDate).toISOString().slice(0, 19).replace("T", " ");
     const newDate = timeConverter(date);
-    console.log(date);
     date = new Date(newDate);
     return date.toLocaleDateString("en-US", options);
   }
