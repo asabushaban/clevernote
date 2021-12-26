@@ -27,7 +27,7 @@
 
 .modal-content {
   width: 550px;
-  background-color: rgba(0, 0, 0, 0.1);
+  background-color: rgba(0, 0, 0, 0.52);
   transform: translateY(-200px);
   transition: all 0.3s ease-in-out;
   border-radius: 5px;
