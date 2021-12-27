@@ -349,7 +349,6 @@ function MainPage() {
             <ReactQuill
               toolbarOptions={toolbarOptions}
               modules={modules}
-              // className="TET"
               id="my-form1"
               theme="snow"
               value={newNote === false ? mainNoteContent : content}
