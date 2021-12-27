@@ -157,11 +157,13 @@
   width: 85%;
   text-align: center;
   padding-left: 20px;
+  font-size: 26pt;
 }
 
 #verticalEllipsis {
   width: 15%;
   text-align: left;
+  font-size: 26pt;
 }
 
 #verticalEllipsis:hover {
@@ -295,14 +297,14 @@
 }
 
 /* #my-form1 {
-}
+} */
 
 .ql-container.ql-snow {
   overflow: scroll;
-  max-height: 400px;
+  max-height: 680px;
 }
 
-#my-form1 {
+/* #my-form1 {
   height: "90%";
   width: "100%";
   outline: "none";
@@ -322,6 +324,7 @@
   width: 100%;
   background-color: rgb(46, 45, 45);
   border: none;
+  margin-top: 10px;
 }
 
 #textarea {
@@ -528,6 +531,17 @@
   .ql-container.ql-snow {
     overflow: scroll;
     max-height: 400px;
+  }
+
+  #title {
+    margin-top: 5px;
+  }
+  #notebookNavTopHeading {
+    font-size: 18pt;
+  }
+
+  #verticalEllipsis {
+    font-size: 18pt;
   }
 }
 

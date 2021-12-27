@@ -360,11 +360,11 @@ function MainPage() {
                   ? value => setContentState(value)
                   : value => setMainNoteContent(value)
               }
-              style={{
-                height: "87%",
-                width: "100%",
-                outline: "none",
-              }}
+              // style={{
+              //   height: "87%",
+              //   width: "100%",
+              //   outline: "none",
+              // }}
             />
           </div>
           {/* <textarea
