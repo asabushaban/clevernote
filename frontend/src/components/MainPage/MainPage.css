@@ -80,7 +80,8 @@
 
 .notebookNameListItem {
   color: rgb(161, 159, 159);
-  font-size: 10pt;
+  /* transform: translateY(0px); */
+  font-size: 12pt;
   font-weight: 400;
   padding: 10px 0px 0px 20px;
   margin-left: 15px;
@@ -93,8 +94,9 @@
 }
 
 .allnotesNameListItem {
+  transition: all 0.3s ease-in-out;
   color: rgb(161, 159, 159);
-  font-size: 10pt;
+  font-size: 12pt;
   font-weight: 400;
   padding: 10px 0px 0px 20px;
   padding-right: 10px;
@@ -106,9 +108,54 @@
     sans-serif;
 }
 
+#notebookNameListDiv {
+  /* transform: translateY(-100px); */
+  transition: all 0.3s ease-in-out;
+}
+
+.side-bar-search {
+  width: 100%;
+  margin-bottom: 10px;
+}
+.side-bar-search i {
+  position: absolute;
+}
+
+.icon {
+  /* padding: 10px; */
+  /* min-width: 10px; */
+}
+
+#searchField {
+  margin-top: 2px;
+  background-color: #404040;
+  border: none;
+  width: 90%;
+}
+
+#searchField:focus {
+  border: none;
+  outline: none;
+  font-size: 12pt;
+  font-weight: 900;
+}
+
+.input-field {
+  /* display: flex;
+  justify-content: space-around; */
+  width: 93%;
+  height: 35px;
+  padding-top: 5px;
+  background-color: #404040;
+  border: transparent;
+  color: #a6a6a6;
+  font-size: 15px;
+  border-radius: 20px;
+}
+
 #notbookNavTab {
   color: rgb(161, 159, 159);
-  font-size: 10pt;
+  font-size: 12pt;
   padding-top: 20px;
   font-weight: 400;
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
@@ -368,6 +415,7 @@
   background-color: rgb(46, 45, 45);
   border: none;
   margin-top: 10px;
+  outline: none;
 }
 
 #textarea {

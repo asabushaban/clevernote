@@ -287,6 +287,24 @@ function MainPage() {
           <ProfileButton user={sessionUser} />
         </div>
         <div id="sideNavTop">
+          <div className="side-bar-search">
+            <i
+              className="fas fa-search icon"
+              aria-hidden="true"
+              style={{ marginLeft: " 15px", marginTop: "10px" }}
+            ></i>
+            <div className={"input-field"}>
+              <div
+                style={{
+                  marginLeft: "40px",
+                  marginTop: "3px",
+                  fontSize: "17px",
+                }}
+              >
+                <input id={"searchField"} placeholder="Search"></input>
+              </div>
+            </div>
+          </div>
           <ul id="notebookNameList">
             <li
               className="allnotesNameListItem"
@@ -316,28 +334,30 @@ function MainPage() {
               ></i>
               <li id={"notbookNavTab"}>Notebooks</li>
             </div>
-            {Object.keys(notebooks).map(key => (
+            <div id={"notebookNameListDiv"} hidden={directionHelper(direction)}>
+              {Object.keys(notebooks).map(key => (
+                <li
+                  className="notebookNameListItem"
+                  key={key}
+                  hidden={directionHelper(direction)}
+                  onClick={() => setMainNotebook(notebooks[key])}
+                >
+                  {notebooks[key].name}
+                </li>
+              ))}
               <li
                 className="notebookNameListItem"
-                key={key}
                 hidden={directionHelper(direction)}
-                onClick={() => setMainNotebook(notebooks[key])}
+                style={{ color: "#00a82d" }}
+                onClick={() =>
+                  !newNotebookHidden
+                    ? setNewNotebookHidden(true)
+                    : setNewNotebookHidden(false)
+                }
               >
-                {notebooks[key].name}
+                {"Add Notebook ⨁"}
               </li>
-            ))}
-            <li
-              className="notebookNameListItem"
-              hidden={directionHelper(direction)}
-              style={{ color: "#00a82d" }}
-              onClick={() =>
-                !newNotebookHidden
-                  ? setNewNotebookHidden(true)
-                  : setNewNotebookHidden(false)
-              }
-            >
-              {"Add New Notebook +"}
-            </li>
+            </div>
           </ul>
         </div>
         <div id="sideNavBottom">
