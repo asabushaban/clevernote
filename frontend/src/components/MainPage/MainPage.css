@@ -80,10 +80,11 @@
 
 .notebookNameListItem {
   color: rgb(161, 159, 159);
+  font-size: 10pt;
   font-weight: 400;
-  padding: 20px 20px 20px 20px;
-  padding-right: 10px;
-  border-bottom: 1px solid rgb(92, 90, 90);
+  padding: 10px 0px 0px 20px;
+  margin-left: 15px;
+  /* border-bottom: 1px solid rgb(92, 90, 90); */
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
     "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
     sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto",
@@ -91,7 +92,49 @@
     sans-serif;
 }
 
+.allnotesNameListItem {
+  color: rgb(161, 159, 159);
+  font-size: 10pt;
+  font-weight: 400;
+  padding: 10px 0px 0px 20px;
+  padding-right: 10px;
+  /* border-bottom: 1px solid rgb(92, 90, 90); */
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
+    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
+    sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto",
+    "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
+    sans-serif;
+}
+
+#notbookNavTab {
+  color: rgb(161, 159, 159);
+  font-size: 10pt;
+  padding-top: 20px;
+  font-weight: 400;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
+    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
+    sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto",
+    "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
+    sans-serif;
+}
+
+#notbookNavTab:hover {
+  color: rgb(185, 182, 182);
+  font-size: 14pt;
+  margin-right: 4px;
+  cursor: pointer;
+  border-radius: 7px;
+}
+
 .notebookNameListItem:hover {
+  color: rgb(185, 182, 182);
+  font-size: 14pt;
+  margin-right: 4px;
+  cursor: pointer;
+  border-radius: 7px;
+}
+
+.allnotesNameListItem:hover {
   color: rgb(185, 182, 182);
   font-size: 14pt;
   margin-right: 4px;

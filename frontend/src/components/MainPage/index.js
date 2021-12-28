@@ -37,6 +37,8 @@ function MainPage() {
   const [name, setName] = useState("");
   const [newName, setNewName] = useState("");
   const [error, setError] = useState("");
+  const [direction, setDirection] = useState("right");
+  const [newNotebookHidden, setNewNotebookHidden] = useState(true);
 
   //Notebook Ellipsis
   const [open, setOpen] = useState(false);
@@ -121,6 +123,8 @@ function MainPage() {
       name,
     };
     await dispatch(createNotebook(payload));
+    setNewNotebookHidden(true);
+    setName("");
   };
 
   //function to sort the notes by the selected notebook
@@ -234,6 +238,14 @@ function MainPage() {
   //match notebook dates
   const findUpdate = id => prettyDateMaker(notes[id].updatedAt);
 
+  const directionHelper = direction => {
+    if (direction === "right") {
+      return true;
+    } else {
+      return false;
+    }
+  };
+
   const modules = {
     toolbar: [
       [{ header: "1" }, { header: "2" }, { font: [] }],
@@ -277,30 +289,64 @@ function MainPage() {
         <div id="sideNavTop">
           <ul id="notebookNameList">
             <li
-              className="notebookNameListItem"
+              className="allnotesNameListItem"
               onClick={() => {
                 setMainNotebook("All Notes");
               }}
             >
               All Notes
             </li>
+            <div
+              style={{ display: "flex", alignItems: "center" }}
+              onClick={e =>
+                direction === "right"
+                  ? setDirection("down")
+                  : setDirection("right")
+              }
+            >
+              <i
+                class={`fas fa-caret-${direction}`}
+                // aria-hidden="true"
+                style={{
+                  paddingRight: "8px",
+                  color: "rgb(161, 159, 159)",
+                  paddingTop: "20px",
+                  paddingLeft: "7px",
+                }}
+              ></i>
+              <li id={"notbookNavTab"}>Notebooks</li>
+            </div>
             {Object.keys(notebooks).map(key => (
               <li
                 className="notebookNameListItem"
                 key={key}
+                hidden={directionHelper(direction)}
                 onClick={() => setMainNotebook(notebooks[key])}
               >
                 {notebooks[key].name}
               </li>
             ))}
+            <li
+              className="notebookNameListItem"
+              hidden={directionHelper(direction)}
+              style={{ color: "#00a82d" }}
+              onClick={() =>
+                !newNotebookHidden
+                  ? setNewNotebookHidden(true)
+                  : setNewNotebookHidden(false)
+              }
+            >
+              {"Add New Notebook +"}
+            </li>
           </ul>
         </div>
         <div id="sideNavBottom">
-          <div>
+          <div hidden={newNotebookHidden}>
             <input
               id="newNotebookInput"
               onChange={e => setName(e.target.value)}
               required="required"
+              value={name}
             ></input>
             <button
               id="newNotebookButton"
