@@ -94,7 +94,7 @@
 }
 
 .allnotesNameListItem {
-  transition: all 0.3s ease-in-out;
+  /* transition: all 0.3s ease-in-out; */
   color: rgb(161, 159, 159);
   font-size: 12pt;
   font-weight: 400;
