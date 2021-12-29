@@ -194,12 +194,15 @@
     "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
     sans-serif;
 }
-/* #signoutNavIcon:hover {
-  padding-top: 20px;
+#signoutNavIcon:hover i,
+#signoutNavIcon:hover li {
+  color: rgb(243, 201, 124);
+  cursor: pointer;
+  /* padding-top: 20px;
   color: rgb(161, 159, 159);
   padding-ight: "8px",
-  paddingLeft: "10px",
-} */
+  paddingLeft: "10px", */
+}
 
 .fas.fa-sign-out-alt {
   padding-top: 20px;
@@ -208,12 +211,12 @@
   padding-left: "10px";
 }
 
-#signoutNavTab:hover {
+/* #signoutNavIcon:hover {
   font-size: 14pt;
   margin-right: 4px;
   cursor: pointer;
   border-radius: 7px;
-}
+} */
 
 /* .fas.fa-sign-out-alt:hover #signoutNavIcon:hover {
   color: rgb(243, 201, 124);
@@ -229,8 +232,7 @@
 }
 
 .notebookNameListItem:hover {
-  color: rgb(185, 182, 182);
-  font-size: 14pt;
+  color: #00a82d;
   margin-right: 4px;
   cursor: pointer;
   border-radius: 7px;

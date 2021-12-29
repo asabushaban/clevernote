@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { useHistory } from "react-router-dom";
 import "./MainPage.css";
+import * as sessionActions from "../../store/session";
 import { createNote, getNotes, editNote, deleteNote } from "../../store/notes";
 import {
   createNotebook,
@@ -16,6 +18,7 @@ import "react-quill/dist/quill.snow.css";
 
 function MainPage() {
   const dispatch = useDispatch();
+  const history = useHistory();
 
   //subscribed
   const sessionUser = useSelector(state => state.session.user);
@@ -280,6 +283,12 @@ function MainPage() {
     ["clean"], // remove formatting button
   ];
 
+  const logout = e => {
+    e.preventDefault();
+    history.push("/login");
+    dispatch(sessionActions.logout());
+  };
+
   return (
     <div id="mainPageContainer">
       <div className="sideNav">
@@ -389,15 +398,19 @@ function MainPage() {
             >
               <i
                 className="fas fa-sign-out-alt"
+                // id={"signoutNavTab"}
                 aria-hidden="true"
+                onClick={logout}
                 style={{
                   paddingTop: "20px",
-                  color: "rgb(161, 159, 159)",
+                  // color: "rgb(161, 159, 159)",
                   paddingRight: "8px",
                   paddingLeft: "10px",
                 }}
               ></i>
-              <li id={"signoutNavTab"}>Sign out</li>
+              <li id={"signoutNavTab"} onClick={logout}>
+                Sign out
+              </li>
             </div>
           </ul>
         </div>
