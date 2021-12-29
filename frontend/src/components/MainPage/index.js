@@ -306,16 +306,37 @@ function MainPage() {
             </div>
           </div>
           <ul id="notebookNameList">
-            <li
-              className="allnotesNameListItem"
-              onClick={() => {
-                setMainNotebook("All Notes");
+            <div
+              style={{
+                display: "flex",
+                alignItems: "center",
+                paddingLeft: "8px",
               }}
             >
-              All Notes
-            </li>
+              <i
+                class="far fa-sticky-note"
+                aria-hidden="true"
+                style={{
+                  paddingRight: "8px",
+                  paddingTop: "20px",
+                  color: "rgb(161, 159, 159)",
+                }}
+              ></i>
+              <li
+                className="notesNameListItem"
+                onClick={() => {
+                  setMainNotebook("All Notes");
+                }}
+              >
+                All Notes
+              </li>
+            </div>
             <div
-              style={{ display: "flex", alignItems: "center" }}
+              style={{
+                display: "flex",
+                alignItems: "center",
+                paddingLeft: "8px",
+              }}
               onClick={e =>
                 direction === "right"
                   ? setDirection("down")
@@ -329,7 +350,7 @@ function MainPage() {
                   paddingRight: "8px",
                   color: "rgb(161, 159, 159)",
                   paddingTop: "20px",
-                  paddingLeft: "7px",
+                  paddingLeft: "3px",
                 }}
               ></i>
               <li id={"notbookNavTab"}>Notebooks</li>
@@ -357,6 +378,26 @@ function MainPage() {
               >
                 {"Add Notebook ⨁"}
               </li>
+            </div>
+            <div
+              id={"signoutNavIcon"}
+              style={{
+                display: "flex",
+                alignItems: "center",
+                position: "absolute",
+              }}
+            >
+              <i
+                className="fas fa-sign-out-alt"
+                aria-hidden="true"
+                style={{
+                  paddingTop: "20px",
+                  color: "rgb(161, 159, 159)",
+                  paddingRight: "8px",
+                  paddingLeft: "10px",
+                }}
+              ></i>
+              <li id={"signoutNavTab"}>Sign out</li>
             </div>
           </ul>
         </div>
@@ -419,7 +460,7 @@ function MainPage() {
               theme="snow"
               value={newNote === false ? mainNoteContent : content}
               type="text"
-              placeholder="Whats on your mind?"
+              placeholder="What is on your mind?"
               onChange={
                 newNote
                   ? value => setContentState(value)
