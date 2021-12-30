@@ -46,6 +46,10 @@ function MainPage() {
   //Notebook Ellipsis
   const [open, setOpen] = useState(false);
 
+  //Search
+
+  const [searchInput, setSearchInput] = useState("");
+
   //debugging visuals
   // console.log("notes ==========>", notes);
   // console.log("notebooks=======>", notebooks);
@@ -62,6 +66,7 @@ function MainPage() {
     mainNoteTitle,
     mainNotebook,
     open,
+    searchInput,
   ]);
 
   //saving a new note or editing an old note
@@ -163,24 +168,35 @@ function MainPage() {
     }
   };
 
-  //function to list all notebooks or specific notebooks on search
+  //functions to list all notebooks/notes or specific notebooks/notes on search
 
-  // const searchNotebook = input => {
+  // const searchNotebooks = input => {
   //   const searchableNotebooks = Object.values(notebooks);
-  //   return searchableNotebooks.map(notebook => {
-  //     if (notebook.name.includes(input)) {
-  //       return (
-  //         <li
-  //           className="notebookNameListItem"
-  //           key={notebook.id}
-  //           onClick={() => setMainNotebook(notebook)}
-  //         >
-  //           {notebook.name}
-  //         </li>
-  //       );
-  //     }
-  //   });
+  //   return searchableNotebooks.filter(notebook =>
+  //     notebook.name.toLowerCase().includes(input.toLowerCase())
+  //   );
   // };
+
+  const searchNotes = input => {
+    const searchableNotes = Object.values(notes);
+    let res = searchableNotes.filter(notes =>
+      notes.title.toLowerCase().includes(input.toLowerCase())
+    );
+    return res.map(notes => (
+      <div
+        id={"searchRes"}
+        onClick={() => {
+          setMainNote(notes);
+          setMainNoteTitle(notes.title);
+          setMainNoteContent(notes.content);
+          setNewNote(false);
+          setSearchInput("");
+        }}
+      >
+        {notes.title}
+      </div>
+    ));
+  };
 
   // create new note function updates state to empty strings
   // and provides fresh input fields
@@ -310,8 +326,17 @@ function MainPage() {
                   fontSize: "17px",
                 }}
               >
-                <input id={"searchField"} placeholder="Search"></input>
+                <input
+                  id={"searchField"}
+                  placeholder="Search"
+                  value={searchInput}
+                  onChange={e => setSearchInput(e.target.value)}
+                ></input>
               </div>
+
+              {searchInput ? (
+                <div id={"searchResDiv"}> {searchNotes(searchInput)} </div>
+              ) : null}
             </div>
           </div>
           <ul id="notebookNameList">
@@ -511,7 +536,6 @@ function MainPage() {
               {error}
             </p>
           ) : null}
-
           <form id="dropDownAlign" onSubmit={editNotebookName}>
             <input
               id={"editNotebookInput"}
