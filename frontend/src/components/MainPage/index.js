@@ -47,7 +47,6 @@ function MainPage() {
   const [open, setOpen] = useState(false);
 
   //Search
-
   const [searchInput, setSearchInput] = useState("");
 
   //debugging visuals
@@ -168,6 +167,37 @@ function MainPage() {
     }
   };
 
+  // function below returns the notebooks in the sidenav dropdown
+  // and a different color text
+  //if the notebook listed is the main notebook
+
+  const notebookListColor = key => {
+    if (notebooks[key] === mainNotebook) {
+      return (
+        <li
+          className="notebookNameListItem"
+          key={key}
+          style={{ color: "#00a82d" }}
+          hidden={directionHelper(direction)}
+          onClick={() => setMainNotebook(notebooks[key])}
+        >
+          {notebooks[key].name}
+        </li>
+      );
+    } else {
+      return (
+        <li
+          className="notebookNameListItem"
+          key={key}
+          hidden={directionHelper(direction)}
+          onClick={() => setMainNotebook(notebooks[key])}
+        >
+          {notebooks[key].name}
+        </li>
+      );
+    }
+  };
+
   //functions to list all notebooks/notes or specific notebooks/notes on search
 
   // const searchNotebooks = input => {
@@ -267,7 +297,6 @@ function MainPage() {
   };
 
   // function to logout
-
   const logout = e => {
     e.preventDefault();
     history.push("/login");
@@ -392,16 +421,7 @@ function MainPage() {
               <li id={"notbookNavTab"}>Notebooks</li>
             </div>
             <div hidden={directionHelper(direction)}>
-              {Object.keys(notebooks).map(key => (
-                <li
-                  className="notebookNameListItem"
-                  key={key}
-                  hidden={directionHelper(direction)}
-                  onClick={() => setMainNotebook(notebooks[key])}
-                >
-                  {notebooks[key].name}
-                </li>
-              ))}
+              {Object.keys(notebooks).map(key => notebookListColor(key))}
               <li
                 className="notebookNameListItem"
                 hidden={directionHelper(direction)}
@@ -429,7 +449,6 @@ function MainPage() {
                 onClick={logout}
                 style={{
                   paddingTop: "20px",
-
                   paddingRight: "8px",
                   paddingLeft: "10px",
                 }}
