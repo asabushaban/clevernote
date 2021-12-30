@@ -257,12 +257,21 @@ function MainPage() {
   //match notebook dates
   const findUpdate = id => prettyDateMaker(notes[id].updatedAt);
 
+  // sidenav notebook dropdown triangle
   const directionHelper = direction => {
     if (direction === "right") {
       return true;
     } else {
       return false;
     }
+  };
+
+  // function to logout
+
+  const logout = e => {
+    e.preventDefault();
+    history.push("/login");
+    dispatch(sessionActions.logout());
   };
 
   const modules = {
@@ -298,12 +307,6 @@ function MainPage() {
 
     ["clean"], // remove formatting button
   ];
-
-  const logout = e => {
-    e.preventDefault();
-    history.push("/login");
-    dispatch(sessionActions.logout());
-  };
 
   return (
     <div id="mainPageContainer">
