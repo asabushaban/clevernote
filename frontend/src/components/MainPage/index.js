@@ -316,7 +316,7 @@ function MainPage() {
             <i
               className="fas fa-search icon"
               aria-hidden="true"
-              style={{ marginLeft: " 15px", marginTop: "10px" }}
+              style={{ marginLeft: " 25px", marginTop: "12px" }}
             ></i>
             <div className={"input-field"}>
               <div
@@ -328,7 +328,7 @@ function MainPage() {
               >
                 <input
                   id={"searchField"}
-                  placeholder="Search"
+                  placeholder="Search Notes"
                   value={searchInput}
                   onChange={e => setSearchInput(e.target.value)}
                 ></input>
