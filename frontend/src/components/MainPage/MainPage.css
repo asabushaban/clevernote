@@ -194,14 +194,21 @@
     "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
     sans-serif;
 }
+#notebookNameListDiv i {
+  color: rgb(161, 159, 159);
+  cursor: pointer;
+}
+
+#notebookNameListDiv:hover i,
+#notebookNameListDiv:hover li {
+  color: #00a82d;
+  cursor: pointer;
+}
+
 #signoutNavIcon:hover i,
 #signoutNavIcon:hover li {
   color: rgb(243, 201, 124);
   cursor: pointer;
-  /* padding-top: 20px;
-  color: rgb(161, 159, 159);
-  padding-ight: "8px",
-  paddingLeft: "10px", */
 }
 
 .fas.fa-sign-out-alt {
@@ -211,24 +218,8 @@
   padding-left: "10px";
 }
 
-/* #signoutNavIcon:hover {
-  font-size: 14pt;
-  margin-right: 4px;
-  cursor: pointer;
-  border-radius: 7px;
-} */
-
-/* .fas.fa-sign-out-alt:hover #signoutNavIcon:hover {
-  color: rgb(243, 201, 124);
-  cursor: pointer;
-} */
-
-#notbookNavTab:hover {
-  color: rgb(185, 182, 182);
-  font-size: 14pt;
-  margin-right: 4px;
-  cursor: pointer;
-  border-radius: 7px;
+#allNotesNameListDiv i {
+  color: rgb(161, 159, 159);
 }
 
 .notebookNameListItem:hover {
@@ -238,20 +229,10 @@
   border-radius: 7px;
 }
 
-.allnotesNameListItem:hover {
-  color: rgb(185, 182, 182);
-  font-size: 14pt;
-  margin-right: 4px;
+#allNotesNameListDiv:hover i,
+#allNotesNameListDiv:hover li {
+  color: #00a82d;
   cursor: pointer;
-  border-radius: 7px;
-}
-
-.notesNameListItem:hover {
-  color: rgb(185, 182, 182);
-  font-size: 14pt;
-  margin-right: 4px;
-  cursor: pointer;
-  border-radius: 7px;
 }
 
 #sideNavBottom {
@@ -266,10 +247,6 @@
 #createNoteButton {
   background-color: #00a82d;
   color: white;
-  /* height: 8%;
-  width: 65%; */
-  /* width: 25%;
-    height: 8%; */
   border: none;
   border-radius: 7px;
   font-size: 11pt;

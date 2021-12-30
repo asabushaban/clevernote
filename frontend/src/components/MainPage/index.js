@@ -316,6 +316,7 @@ function MainPage() {
           </div>
           <ul id="notebookNameList">
             <div
+              id={"allNotesNameListDiv"}
               style={{
                 display: "flex",
                 alignItems: "center",
@@ -328,7 +329,6 @@ function MainPage() {
                 style={{
                   paddingRight: "8px",
                   paddingTop: "20px",
-                  color: "rgb(161, 159, 159)",
                 }}
               ></i>
               <li
@@ -341,6 +341,7 @@ function MainPage() {
               </li>
             </div>
             <div
+              id={"notebookNameListDiv"}
               style={{
                 display: "flex",
                 alignItems: "center",
@@ -354,17 +355,15 @@ function MainPage() {
             >
               <i
                 class={`fas fa-caret-${direction}`}
-                // aria-hidden="true"
                 style={{
                   paddingRight: "8px",
-                  color: "rgb(161, 159, 159)",
                   paddingTop: "20px",
                   paddingLeft: "3px",
                 }}
               ></i>
               <li id={"notbookNavTab"}>Notebooks</li>
             </div>
-            <div id={"notebookNameListDiv"} hidden={directionHelper(direction)}>
+            <div hidden={directionHelper(direction)}>
               {Object.keys(notebooks).map(key => (
                 <li
                   className="notebookNameListItem"
@@ -398,12 +397,11 @@ function MainPage() {
             >
               <i
                 className="fas fa-sign-out-alt"
-                // id={"signoutNavTab"}
                 aria-hidden="true"
                 onClick={logout}
                 style={{
                   paddingTop: "20px",
-                  // color: "rgb(161, 159, 159)",
+
                   paddingRight: "8px",
                   paddingLeft: "10px",
                 }}
@@ -479,23 +477,8 @@ function MainPage() {
                   ? value => setContentState(value)
                   : value => setMainNoteContent(value)
               }
-              // style={{
-              //   height: "87%",
-              //   width: "100%",
-              //   outline: "none",
-              // }}
             />
           </div>
-          {/* <textarea
-            id="textarea"
-            placeholder="There was an old farmer who sat on a rock..."
-            onChange={
-              newNote
-                ? e => setContentState(e.target.value)
-                : e => setMainNoteContent(e.target.value)
-            }
-            value={mainNoteContent ? mainNoteContent : content}
-          ></textarea> */}
           <p id="date">
             Last updated: {mainNote != "" ? findUpdate(mainNote.id) : mainNote}{" "}
             (CDT)
@@ -532,7 +515,6 @@ function MainPage() {
           <form id="dropDownAlign" onSubmit={editNotebookName}>
             <input
               id={"editNotebookInput"}
-              // id="notebookSearch"
               value={mainNotebook.name}
               type="search"
               placeholder="New notebook name.."
