@@ -665,8 +665,9 @@
   justify-content: center;
   align-items: center;
   width: 100%;
-  height: 8%;
+  height: 5%;
   margin-bottom: 15px;
+  margin-top: 15px;
 }
 
 .fa-user-circle:before {
