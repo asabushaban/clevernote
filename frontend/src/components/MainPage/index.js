@@ -288,13 +288,7 @@ function MainPage() {
   const findUpdate = id => prettyDateMaker(notes[id].updatedAt);
 
   // sidenav notebook dropdown triangle
-  const directionHelper = direction => {
-    if (direction === "right") {
-      return true;
-    } else {
-      return false;
-    }
-  };
+  const directionHelper = direction => (direction === "right" ? true : false);
 
   // function to logout
   const logout = e => {
@@ -341,7 +335,28 @@ function MainPage() {
     <div id="mainPageContainer">
       <div className="sideNav">
         <div id="profileDiv">
-          <ProfileButton user={sessionUser} />
+          {/* <ProfileButton user={sessionUser} /> */}
+          <div style={{ display: "flex" }}>
+            <i
+              class="fas fa-user-circle"
+              aria-hidden="true"
+              style={{
+                color: "white",
+                textAlign: "center",
+                fontSize: "25px",
+              }}
+            ></i>
+            <h1
+              style={{
+                color: "white",
+                fontSize: "1.3rem",
+                margin: "0px",
+                paddingLeft: "10px",
+              }}
+            >
+              {sessionUser.username}
+            </h1>
+          </div>
         </div>
         <div id="sideNavTop">
           <div className="side-bar-search">
@@ -367,7 +382,7 @@ function MainPage() {
               </div>
 
               {searchInput ? (
-                <div id={"searchResDiv"}> {searchNotes(searchInput)} </div>
+                <div id={"searchResDiv"}>{searchNotes(searchInput)}</div>
               ) : null}
             </div>
           </div>
