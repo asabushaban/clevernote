@@ -335,7 +335,6 @@ function MainPage() {
     <div id="mainPageContainer">
       <div className="sideNav">
         <div id="profileDiv">
-          {/* <ProfileButton user={sessionUser} /> */}
           <div style={{ display: "flex" }}>
             <i
               class="fas fa-user-circle"
