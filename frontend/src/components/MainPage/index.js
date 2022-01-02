@@ -11,7 +11,6 @@ import {
   deleteNotebook,
 } from "../../store/notebooks";
 import Modal from "../Modal/Modal";
-import ProfileButton from "../Navigation/ProfileButton";
 import ReactQuill from "react-quill";
 import ReactHtmlParser from "react-html-parser";
 import "react-quill/dist/quill.snow.css";
