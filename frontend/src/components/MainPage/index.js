@@ -170,7 +170,7 @@ function MainPage() {
 
   // function below returns the notebooks in the sidenav dropdown
   // and a different color text
-  //if the notebook listed is the main notebook
+  // if the notebook listed is the main notebook
 
   const notebookListColor = key => {
     if (notebooks[key] === mainNotebook) {
