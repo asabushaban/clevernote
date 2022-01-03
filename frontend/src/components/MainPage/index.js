@@ -38,9 +38,11 @@ function MainPage() {
   const [mainNotebook, setMainNotebook] = useState("All Notes");
   const [name, setName] = useState("");
   const [newName, setNewName] = useState("");
-  const [error, setError] = useState("");
   const [direction, setDirection] = useState("right");
   const [newNotebookHidden, setNewNotebookHidden] = useState(true);
+
+  //Notebooks error
+  // const [error, setError] = useState("");
 
   //Notebook Ellipsis
   const [open, setOpen] = useState(false);
