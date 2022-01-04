@@ -42,7 +42,7 @@ function MainPage() {
   const [newNotebookHidden, setNewNotebookHidden] = useState(true);
 
   //Notebooks error
-  // const [error, setError] = useState("");
+  const [error, setError] = useState("");
 
   //Notebook Ellipsis
   const [open, setOpen] = useState(false);
