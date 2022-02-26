@@ -16,22 +16,6 @@ function SplashPage() {
   function SignupButton() {
     history.push("/signup");
   }
-  // location.reload();
-  //   function navBottomBorder() {
-  //     const nav = document.querySelector(".splashNav");
-  //     nav.style.boxShadow = "0px 2px 5px rgba(0, 0, 0, 0.5)";
-  //     // nav.style.backgroundColor = "red";
-  //   }
-
-  //   window.addEventListener("DOMContentLoaded", event => {
-  //     const body = document.querySelector("body");
-  //     console.log(body);
-  //     const nav = document.querySelector(".splashNav");
-  //     console.log(nav);
-  //     body.onscroll = function () {
-  //       nav.style.boxShadow = "0px 2px 5px rgba(0, 0, 0, 0.5)";
-  //     };
-  //   });
 
   setTimeout(event => {
     const body = document.querySelector("body");
