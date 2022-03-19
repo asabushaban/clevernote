@@ -250,7 +250,7 @@ function MainPage() {
     let wrongTime = wrongDate[1].split(":");
     let wrongDay = wrongDate[0].split("-");
     let day = +wrongDay[2];
-    let hour = +wrongTime[0] - 6;
+    let hour = +wrongTime[0] - 5;
 
     if (hour < 0) {
       hour += 24;
