@@ -3,7 +3,6 @@ import { useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
 import "./MainPage.css";
 import * as sessionActions from "../../store/session";
-
 import { createNotebook } from "../../store/notebooks";
 
 const SideNav = ({

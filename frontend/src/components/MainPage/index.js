@@ -114,6 +114,7 @@ function MainPage() {
   };
   //deletes a notebook
   const handleDeleteNotebook = async e => {
+    e.preventDefault();
     setOpen(!open);
     await dispatch(deleteNotebook(mainNotebook.id));
     setMainNotebook("All Notes");
