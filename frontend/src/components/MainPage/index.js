@@ -1,11 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useHistory } from "react-router-dom";
 import "./MainPage.css";
-import * as sessionActions from "../../store/session";
 import { createNote, getNotes, editNote, deleteNote } from "../../store/notes";
 import {
-  createNotebook,
   getNotebooks,
   editNotebook,
   deleteNotebook,
@@ -14,10 +11,10 @@ import Modal from "../Modal/Modal";
 import ReactQuill from "react-quill";
 import ReactHtmlParser from "react-html-parser";
 import "react-quill/dist/quill.snow.css";
+import SideNav from "./SideNav";
 
 function MainPage() {
   const dispatch = useDispatch();
-  const history = useHistory();
 
   //subscribed
   const sessionUser = useSelector(state => state.session.user);
@@ -122,19 +119,6 @@ function MainPage() {
     setMainNotebook("All Notes");
   };
 
-  //creates new notebooks
-  const handleNewNotebookSubmit = async e => {
-    e.preventDefault();
-    if (name === "") return;
-    const payload = {
-      userId: sessionUser.id,
-      name,
-    };
-    await dispatch(createNotebook(payload));
-    setNewNotebookHidden(true);
-    setName("");
-  };
-
   //function to sort the notes by the selected notebook
   // one condition for all notes and one condition for specific notebooks
   const sortByNotebookHelper = note => (
@@ -168,37 +152,6 @@ function MainPage() {
     }
   };
 
-  // function below returns the notebooks in the sidenav dropdown
-  // and a different color text
-  // if the notebook listed is the main notebook
-
-  const notebookListColor = key => {
-    if (notebooks[key] === mainNotebook) {
-      return (
-        <li
-          className="notebookNameListItem"
-          key={key}
-          style={{ color: "#00a82d" }}
-          hidden={directionHelper(direction)}
-          onClick={() => setMainNotebook(notebooks[key])}
-        >
-          {notebooks[key].name}
-        </li>
-      );
-    } else {
-      return (
-        <li
-          className="notebookNameListItem"
-          key={key}
-          hidden={directionHelper(direction)}
-          onClick={() => setMainNotebook(notebooks[key])}
-        >
-          {notebooks[key].name}
-        </li>
-      );
-    }
-  };
-
   //functions to list all notebooks/notes or specific notebooks/notes on search
 
   // const searchNotebooks = input => {
@@ -207,27 +160,6 @@ function MainPage() {
   //     notebook.name.toLowerCase().includes(input.toLowerCase())
   //   );
   // };
-
-  const searchNotes = input => {
-    const searchableNotes = Object.values(notes);
-    let res = searchableNotes.filter(notes =>
-      notes.title.toLowerCase().includes(input.toLowerCase())
-    );
-    return res.map(notes => (
-      <div
-        id={"searchRes"}
-        onClick={() => {
-          setMainNote(notes);
-          setMainNoteTitle(notes.title);
-          setMainNoteContent(notes.content);
-          setNewNote(false);
-          setSearchInput("");
-        }}
-      >
-        {notes.title}
-      </div>
-    ));
-  };
 
   // create new note function updates state to empty strings
   // and provides fresh input fields
@@ -288,16 +220,6 @@ function MainPage() {
   //match notebook dates
   const findUpdate = id => prettyDateMaker(notes[id].updatedAt);
 
-  // sidenav notebook dropdown triangle
-  const directionHelper = direction => (direction === "right" ? true : false);
-
-  // function to logout
-  const logout = e => {
-    e.preventDefault();
-    history.push("/login");
-    dispatch(sessionActions.logout());
-  };
-
   const modules = {
     toolbar: [
       [{ header: "1" }, { header: "2" }, { font: [] }],
@@ -334,164 +256,25 @@ function MainPage() {
 
   return (
     <div id="mainPageContainer">
-      <div className="sideNav">
-        <div id="profileDiv">
-          <div style={{ display: "flex" }}>
-            <i
-              class="fas fa-user-circle"
-              aria-hidden="true"
-              style={{
-                color: "white",
-                textAlign: "center",
-                fontSize: "25px",
-              }}
-            ></i>
-            <h1
-              style={{
-                color: "white",
-                fontSize: "1.3rem",
-                margin: "0px",
-                paddingLeft: "10px",
-              }}
-            >
-              {sessionUser.username}
-            </h1>
-          </div>
-        </div>
-        <div id="sideNavTop">
-          <div className="side-bar-search">
-            <i
-              className="fas fa-search icon"
-              aria-hidden="true"
-              style={{ marginLeft: " 25px", marginTop: "12px" }}
-            ></i>
-            <div className={"input-field"}>
-              <div
-                style={{
-                  marginLeft: "40px",
-                  marginTop: "3px",
-                  fontSize: "17px",
-                }}
-              >
-                <input
-                  id={"searchField"}
-                  placeholder="Search Notes"
-                  value={searchInput}
-                  onChange={e => setSearchInput(e.target.value)}
-                ></input>
-              </div>
-
-              {searchInput ? (
-                <div id={"searchResDiv"}>{searchNotes(searchInput)}</div>
-              ) : null}
-            </div>
-          </div>
-          <ul id="notebookNameList">
-            <div
-              id={"allNotesNameListDiv"}
-              style={{
-                display: "flex",
-                alignItems: "center",
-                paddingLeft: "8px",
-              }}
-            >
-              <i
-                class="far fa-sticky-note"
-                aria-hidden="true"
-                style={{
-                  paddingRight: "8px",
-                  paddingTop: "20px",
-                }}
-              ></i>
-              <li
-                className="notesNameListItem"
-                onClick={() => {
-                  setMainNotebook("All Notes");
-                }}
-              >
-                All Notes
-              </li>
-            </div>
-            <div
-              id={"notebookNameListDiv"}
-              style={{
-                display: "flex",
-                alignItems: "center",
-                paddingLeft: "8px",
-              }}
-              onClick={e =>
-                direction === "right"
-                  ? setDirection("down")
-                  : setDirection("right")
-              }
-            >
-              <i
-                class={`fas fa-caret-${direction}`}
-                style={{
-                  paddingRight: "8px",
-                  paddingTop: "20px",
-                  paddingLeft: "3px",
-                }}
-              ></i>
-              <li id={"notbookNavTab"}>Notebooks</li>
-            </div>
-            <div hidden={directionHelper(direction)}>
-              {Object.keys(notebooks).map(key => notebookListColor(key))}
-              <li
-                className="notebookNameListItem"
-                hidden={directionHelper(direction)}
-                style={{ color: "#00a82d" }}
-                onClick={() =>
-                  !newNotebookHidden
-                    ? setNewNotebookHidden(true)
-                    : setNewNotebookHidden(false)
-                }
-              >
-                {"Add Notebook ⨁"}
-              </li>
-            </div>
-            <div
-              id={"signoutNavIcon"}
-              style={{
-                display: "flex",
-                alignItems: "center",
-                position: "absolute",
-              }}
-            >
-              <i
-                className="fas fa-sign-out-alt"
-                aria-hidden="true"
-                onClick={logout}
-                style={{
-                  paddingTop: "20px",
-                  paddingRight: "8px",
-                  paddingLeft: "10px",
-                }}
-              ></i>
-              <li id={"signoutNavTab"} onClick={logout}>
-                Sign out
-              </li>
-            </div>
-          </ul>
-        </div>
-        <div id="sideNavBottom">
-          <div hidden={newNotebookHidden}>
-            <input
-              id="newNotebookInput"
-              onChange={e => setName(e.target.value)}
-              required="required"
-              value={name}
-            ></input>
-            <button
-              id="newNotebookButton"
-              type="submit"
-              onClick={handleNewNotebookSubmit}
-            >
-              +
-            </button>
-          </div>
-        </div>
-      </div>
+      <SideNav
+        sessionUser={sessionUser}
+        notes={notes}
+        notebooks={notebooks}
+        setNewNote={setNewNote}
+        setMainNote={setMainNote}
+        setMainNoteTitle={setMainNoteTitle}
+        setMainNoteContent={setMainNoteContent}
+        mainNotebook={mainNotebook}
+        setMainNotebook={setMainNotebook}
+        name={name}
+        setName={setName}
+        direction={direction}
+        setDirection={setDirection}
+        newNotebookHidden={newNotebookHidden}
+        setNewNotebookHidden={setNewNotebookHidden}
+        searchInput={searchInput}
+        setSearchInput={setSearchInput}
+      />
       <div className="notebookNav">
         <div id="notebookNavTop">
           <h1 id="notebookNavTopHeading">
