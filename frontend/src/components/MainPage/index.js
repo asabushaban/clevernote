@@ -153,15 +153,6 @@ function MainPage() {
     }
   };
 
-  //functions to list all notebooks/notes or specific notebooks/notes on search
-
-  // const searchNotebooks = input => {
-  //   const searchableNotebooks = Object.values(notebooks);
-  //   return searchableNotebooks.filter(notebook =>
-  //     notebook.name.toLowerCase().includes(input.toLowerCase())
-  //   );
-  // };
-
   // create new note function updates state to empty strings
   // and provides fresh input fields
   function createNewNote() {
@@ -221,6 +212,7 @@ function MainPage() {
   //match notebook dates
   const findUpdate = id => prettyDateMaker(notes[id].updatedAt);
 
+  // rich text editing props
   const modules = {
     toolbar: [
       [{ header: "1" }, { header: "2" }, { font: [] }],

@@ -4,6 +4,7 @@ import { useHistory } from "react-router-dom";
 import "./MainPage.css";
 import * as sessionActions from "../../store/session";
 import { createNotebook } from "../../store/notebooks";
+import SideNavProfile from "./SideNavProfile";
 
 const SideNav = ({
   sessionUser,
@@ -26,6 +27,15 @@ const SideNav = ({
 }) => {
   const dispatch = useDispatch();
   const history = useHistory();
+
+  //functions to list all notebooks/notes or specific notebooks/notes on search
+
+  // const searchNotebooks = input => {
+  //   const searchableNotebooks = Object.values(notebooks);
+  //   return searchableNotebooks.filter(notebook =>
+  //     notebook.name.toLowerCase().includes(input.toLowerCase())
+  //   );
+  // };
 
   const searchNotes = input => {
     const searchableNotes = Object.values(notes);
@@ -104,29 +114,7 @@ const SideNav = ({
 
   return (
     <div className="sideNav">
-      <div id="profileDiv">
-        <div style={{ display: "flex" }}>
-          <i
-            class="fas fa-user-circle"
-            aria-hidden="true"
-            style={{
-              color: "white",
-              textAlign: "center",
-              fontSize: "25px",
-            }}
-          ></i>
-          <h1
-            style={{
-              color: "white",
-              fontSize: "1.3rem",
-              margin: "0px",
-              paddingLeft: "10px",
-            }}
-          >
-            {sessionUser.username}
-          </h1>
-        </div>
-      </div>
+      <SideNavProfile sessionUser={sessionUser} />
       <div id="sideNavTop">
         <div className="side-bar-search">
           <i
