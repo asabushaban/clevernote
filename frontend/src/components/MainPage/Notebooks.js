@@ -48,7 +48,6 @@ const Notebooks = ({
     }
   };
 
-  // function to logout
   const logout = e => {
     e.preventDefault();
     history.push("/login");
