@@ -3,7 +3,7 @@ import thunk from "redux-thunk";
 import sessionReducer from "./session";
 import notesReducer from "./notes";
 import notebooksReducer from "./notebooks";
-
+//add additionalitems for the reducer here
 const rootReducer = combineReducers({
   session: sessionReducer,
   notes: notesReducer,
