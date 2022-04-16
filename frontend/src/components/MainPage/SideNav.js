@@ -41,6 +41,7 @@ const SideNav = ({
     const titleResults = searchableNotes.filter(notes =>
       notes.title.toLowerCase().includes(input.toLowerCase())
     );
+
     let titles = titleResults.map(notes => (
       <div
         id={"searchResTitle"}
