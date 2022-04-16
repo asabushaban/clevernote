@@ -4,7 +4,6 @@ import "./MainPage.css";
 import { createNotebook } from "../../store/notebooks";
 import SideNavProfile from "./SideNavProfile";
 import SideNavTop from "./SideNavTop";
-import ReactHtmlParser from "react-html-parser";
 
 const SideNav = ({
   sessionUser,
