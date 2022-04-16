@@ -4,6 +4,7 @@ import "./MainPage.css";
 import { createNotebook } from "../../store/notebooks";
 import SideNavProfile from "./SideNavProfile";
 import SideNavTop from "./SideNavTop";
+import ReactHtmlParser from "react-html-parser";
 
 const SideNav = ({
   sessionUser,
@@ -37,12 +38,13 @@ const SideNav = ({
 
   const searchNotes = input => {
     const searchableNotes = Object.values(notes);
-    let res = searchableNotes.filter(notes =>
+
+    const titleResults = searchableNotes.filter(notes =>
       notes.title.toLowerCase().includes(input.toLowerCase())
     );
-    return res.map(notes => (
+    let titles = titleResults.map(notes => (
       <div
-        id={"searchRes"}
+        id={"searchResTitle"}
         onClick={() => {
           setMainNote(notes);
           setMainNoteTitle(notes.title);
@@ -54,6 +56,51 @@ const SideNav = ({
         {notes.title}
       </div>
     ));
+
+    const noteResults = searchableNotes.filter(notes =>
+      notes.content.toLowerCase().includes(input.toLowerCase())
+    );
+
+    let noteContent = noteResults.map(notes => (
+      <div
+        id={"searchRes"}
+        onClick={() => {
+          setMainNote(notes);
+          setMainNoteTitle(notes.title);
+          setMainNoteContent(notes.content);
+          setNewNote(false);
+          setSearchInput("");
+        }}
+      >
+        {notes.content
+          .replace(/(<([^>]+)>)/gi, "")
+          .slice(
+            notes.content
+              .toLowerCase()
+              .replace(/(<([^>]+)>)/gi, "")
+              .indexOf(input.toLowerCase())
+          )
+          .slice(0, 30) + "..."}
+      </div>
+    ));
+
+    if (!titles.length)
+      titles = [
+        <div id={"searchLabel"}>There are no titles with that value</div>,
+      ];
+    if (!noteContent.length)
+      noteContent = [
+        <div id={"searchLabel"}>There are no notes with that value</div>,
+      ];
+
+    const searchResults = [
+      <div id={"searchLabel"}>Titles...</div>,
+      ...titles,
+      <div id={"searchLabel"}>Notes...</div>,
+      ...noteContent,
+    ];
+
+    return searchResults;
   };
 
   //creates new notebooks
