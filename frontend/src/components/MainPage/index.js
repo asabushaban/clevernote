@@ -16,7 +16,7 @@ import SideNav from "./SideNav";
 function MainPage() {
   const dispatch = useDispatch();
 
-  //subscribed
+  //Subscribed
   const sessionUser = useSelector(state => state.session.user);
   const notes = useSelector(state => state.notes);
   const notebooks = useSelector(state => state.notebooks);
