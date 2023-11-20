@@ -2,12 +2,7 @@ import React, { useCallback, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import "./MainPage.css";
 import { createNote, getNotes, editNote, deleteNote } from "../../store/notes";
-import {
-  getNotebooks,
-  editNotebook,
-  deleteNotebook,
-} from "../../store/notebooks";
-import Modal from "../Modal/Modal";
+import { getNotebooks } from "../../store/notebooks";
 import ReactQuill from "react-quill";
 import ReactHtmlParser from "react-html-parser";
 import "react-quill/dist/quill.snow.css";
@@ -18,7 +13,7 @@ import {
   updateSelectedNoteContent,
   updateSelectedNoteTitle,
 } from "../../store/selectedNote";
-import { prettyDateMaker } from "../../helpers";
+import { prettyDateMaker, findUpdate } from "../../helpers";
 import NotebookModal from "../Modal";
 
 function MainPage() {
@@ -134,9 +129,6 @@ function MainPage() {
     setNoteTitle("");
   }
 
-  //match notebook dates
-  const findUpdate = id => prettyDateMaker(notes[id]?.updatedAt);
-
   return (
     <div id="mainPageContainer">
       <SideNav
@@ -199,7 +191,9 @@ function MainPage() {
           </div>
           <p id="date">
             Last updated:{" "}
-            {selectedNote != "" ? findUpdate(selectedNote?.id) : selectedNote}{" "}
+            {selectedNote != ""
+              ? findUpdate(selectedNote?.id, notes)
+              : selectedNote}{" "}
             (CDT)
           </p>
           <div id="bottomMain">

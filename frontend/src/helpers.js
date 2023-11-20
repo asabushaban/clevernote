@@ -50,3 +50,6 @@ export const getMockId = notes => {
   // Return the highest number plus 1
   return latestNoteId + 1;
 };
+
+//match notebook dates
+export const findUpdate = (id, notes) => prettyDateMaker(notes[id]?.updatedAt);
