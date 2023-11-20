@@ -2,15 +2,15 @@ import React from "react";
 import * as sessionActions from "../../store/session";
 import { useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
+import { setSelectedNotebook } from "../../store/selectedNotebook";
 
 const Notebooks = ({
-  setMainNotebook,
   direction,
   setDirection,
   newNotebookHidden,
   setNewNotebookHidden,
   notebooks,
-  mainNotebook,
+  selectedNotebook,
 }) => {
   const dispatch = useDispatch();
   const history = useHistory();
@@ -22,14 +22,16 @@ const Notebooks = ({
   // and a different color text
   // if the notebook listed is the main notebook
   const notebookListColor = key => {
-    if (notebooks[key] === mainNotebook) {
+    if (notebooks[key] === selectedNotebook) {
       return (
         <li
           className="notebookNameListItem"
           key={key}
           style={{ color: "#00a82d" }}
           hidden={directionHelper(direction)}
-          onClick={() => setMainNotebook(notebooks[key])}
+          onClick={() => {
+            dispatch(setSelectedNotebook(notebooks[key]));
+          }}
         >
           {notebooks[key].name}
         </li>
@@ -40,7 +42,9 @@ const Notebooks = ({
           className="notebookNameListItem"
           key={key}
           hidden={directionHelper(direction)}
-          onClick={() => setMainNotebook(notebooks[key])}
+          onClick={() => {
+            dispatch(setSelectedNotebook(notebooks[key]));
+          }}
         >
           {notebooks[key].name}
         </li>
@@ -75,7 +79,7 @@ const Notebooks = ({
         <li
           className="notesNameListItem"
           onClick={() => {
-            setMainNotebook("All Notes");
+            dispatch(setSelectedNotebook("All Notes"));
           }}
         >
           All Notes

@@ -3,11 +3,16 @@ import thunk from "redux-thunk";
 import sessionReducer from "./session";
 import notesReducer from "./notes";
 import notebooksReducer from "./notebooks";
+import selectNotebookReducer from "./selectedNotebook";
+import selectNoteReducer from "./selectedNote";
+
 //add additionalitems for the reducer here
 const rootReducer = combineReducers({
   session: sessionReducer,
   notes: notesReducer,
   notebooks: notebooksReducer,
+  selectedNote: selectNoteReducer,
+  selectedNotebook: selectNotebookReducer,
 });
 
 let enhancer;

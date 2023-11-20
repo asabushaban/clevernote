@@ -2,16 +2,15 @@ import React from "react";
 import Notebooks from "./Notebooks";
 
 const SideNavTop = ({
+  selectedNotebook,
   searchInput,
   setSearchInput,
   searchNotes,
-  setMainNotebook,
   direction,
   setDirection,
   newNotebookHidden,
   setNewNotebookHidden,
   notebooks,
-  mainNotebook,
 }) => {
   return (
     <div id="sideNavTop">
@@ -43,13 +42,12 @@ const SideNavTop = ({
         </div>
       </div>
       <Notebooks
-        setMainNotebook={setMainNotebook}
+        selectedNotebook={selectedNotebook}
         direction={direction}
         setDirection={setDirection}
         newNotebookHidden={newNotebookHidden}
         setNewNotebookHidden={setNewNotebookHidden}
         notebooks={notebooks}
-        mainNotebook={mainNotebook}
       />
     </div>
   );

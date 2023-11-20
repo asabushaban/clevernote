@@ -4,17 +4,13 @@ import "./MainPage.css";
 import { createNotebook } from "../../store/notebooks";
 import SideNavProfile from "./SideNavProfile";
 import SideNavTop from "./SideNavTop";
+import { setSelectedNote } from "../../store/selectedNote";
 
 const SideNav = ({
   sessionUser,
   notes,
   notebooks,
-  setNewNote,
-  setMainNote,
-  setMainNoteTitle,
-  setMainNoteContent,
-  mainNotebook,
-  setMainNotebook,
+  selectedNotebook,
   name,
   setName,
   direction,
@@ -46,10 +42,7 @@ const SideNav = ({
       <div
         id={"searchResTitle"}
         onClick={() => {
-          setMainNote(notes);
-          setMainNoteTitle(notes.title);
-          setMainNoteContent(notes.content);
-          setNewNote(false);
+          dispatch(setSelectedNote(notes));
           setSearchInput("");
         }}
       >
@@ -57,25 +50,22 @@ const SideNav = ({
       </div>
     ));
 
-    const noteResults = searchableNotes.filter(notes =>
-      notes.content.toLowerCase().includes(input.toLowerCase())
+    const noteResults = searchableNotes.filter(note =>
+      note.content.toLowerCase().includes(input.toLowerCase())
     );
 
-    let noteContent = noteResults.map(notes => (
+    let noteContent = noteResults.map(note => (
       <div
         id={"searchRes"}
         onClick={() => {
-          setMainNote(notes);
-          setMainNoteTitle(notes.title);
-          setMainNoteContent(notes.content);
-          setNewNote(false);
+          dispatch(setSelectedNote(note));
           setSearchInput("");
         }}
       >
-        {notes.content
+        {note.content
           .replace(/(<([^>]+)>)/gi, "")
           .slice(
-            notes.content
+            note.content
               .toLowerCase()
               .replace(/(<([^>]+)>)/gi, "")
               .indexOf(input.toLowerCase())
@@ -123,13 +113,12 @@ const SideNav = ({
         searchInput={searchInput}
         setSearchInput={setSearchInput}
         searchNotes={searchNotes}
-        setMainNotebook={setMainNotebook}
         direction={direction}
         setDirection={setDirection}
         newNotebookHidden={newNotebookHidden}
         setNewNotebookHidden={setNewNotebookHidden}
         notebooks={notebooks}
-        mainNotebook={mainNotebook}
+        selectedNotebook={selectedNotebook}
       />
       <div id="sideNavBottom">
         <div hidden={newNotebookHidden}>

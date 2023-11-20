@@ -1,4 +1,5 @@
 import { csrfFetch } from "./csrf";
+import { getMockId } from "../helpers";
 
 const ADD_ONE = "notes/ADD_ONE";
 const LOAD = "notes/LOAD";
@@ -39,7 +40,6 @@ export const editNote = note => async dispatch => {
     body: JSON.stringify({ content, title, id, notebookId }),
   });
   if (response.ok) {
-    const note = await response.json();
     dispatch(addOneNote(note));
     return response;
   }
@@ -57,13 +57,13 @@ export const getNotes = userId => async dispatch => {
 
 export const createNote = note => async dispatch => {
   const { content, title, userId, notebookId } = note;
+
   const response = await csrfFetch("/api/note", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ content, title, userId, notebookId }),
   });
   if (response.ok) {
-    const note = await response.json();
     dispatch(addOneNote(note));
     return note;
   }
@@ -74,6 +74,7 @@ const initialState = {};
 const notesReducer = (state = initialState, action) => {
   switch (action.type) {
     case ADD_ONE: {
+      console.log("hit");
       if (action.note.id) {
         const newState = {
           ...state,
@@ -81,7 +82,12 @@ const notesReducer = (state = initialState, action) => {
         };
         return newState;
       } else {
-        return state;
+        const mockId = getMockId(state);
+        const newState = {
+          ...state,
+          [mockId]: { ...action.note, id: mockId },
+        };
+        return newState;
       }
     }
     case LOAD: {
