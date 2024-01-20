@@ -1,14 +1,10 @@
-// rich text editing props
 export const modules = {
   toolbar: [
-    [{ header: "1" }, { header: "2" }, { font: [] }],
     [{ size: [] }, "code-block"],
     ["bold", "italic", "underline", "strike"],
-    [{ script: "super" }, { script: "sub" }],
     [{ list: "ordered" }, { list: "bullet" }],
     [{ color: [] }, { background: [] }],
-    ["link", "image", "video"],
-    ["direction", { align: [] }],
+    [{ align: [] }],
     ["clean"],
   ],
 };
@@ -20,7 +16,6 @@ export const toolbarOptions = [
   [{ header: 1 }, { header: 2 }], // custom button values
   [{ list: "ordered" }, { list: "bullet" }],
   [{ script: "sub" }, { script: "super" }], // superscript/subscript
-  [{ indent: "-1" }, { indent: "+1" }], // outdent/indent
   [{ direction: "rtl" }], // text direction
 
   [{ size: ["small", false, "large", "huge"] }], // custom dropdown

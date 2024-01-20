@@ -5,6 +5,20 @@
   background-color: white;
 } */
 
+:root[data-theme="light"] {
+  --main-background: #fff;
+  --secondary-background: #e2e2e2;
+  --text-standard: #000000;
+  --hover-bg: #d2d0d0;
+}
+
+:root[data-theme="dark"] {
+  --main-background: rgb(46, 45, 45);
+  --secondary-background: #2f2f2f;
+  --text-standard: #c2c2c2;
+  --hover-bg: rgb(58, 58, 58);
+}
+
 html,
 body {
   margin: 0;

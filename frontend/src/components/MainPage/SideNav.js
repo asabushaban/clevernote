@@ -5,6 +5,7 @@ import { createNotebook } from "../../store/notebooks";
 import SideNavProfile from "./SideNavProfile";
 import SideNavTop from "./SideNavTop";
 import { setSelectedNote } from "../../store/selectedNote";
+import Toggle from "../ThemeToggle";
 
 const SideNav = ({
   sessionUser,
@@ -120,6 +121,7 @@ const SideNav = ({
         notebooks={notebooks}
         selectedNotebook={selectedNotebook}
       />
+      <Toggle />
       <div id="sideNavBottom">
         <div hidden={newNotebookHidden}>
           <input

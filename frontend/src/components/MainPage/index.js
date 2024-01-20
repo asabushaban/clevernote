@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import "./MainPage.css";
 import { createNote, getNotes, editNote, deleteNote } from "../../store/notes";
@@ -165,7 +165,7 @@ function MainPage() {
         </button>
       </div>
       <div className="mainNoteArea">
-        <form id="noteContainer">
+        <div id="noteContainer">
           <input
             id="title"
             placeholder="Write a title for your note here"
@@ -177,7 +177,7 @@ function MainPage() {
               ? prettyDateMaker(selectedNote?.createdAt)
               : selectedNote}
           </p>
-          <div style={{ height: "100%" }}>
+          <div>
             <ReactQuill
               toolbarOptions={toolbarOptions}
               modules={modules}
@@ -211,7 +211,7 @@ function MainPage() {
                 : selectedNotebook}
             </p>
           </div>
-        </form>
+        </div>
       </div>
 
       <NotebookModal
