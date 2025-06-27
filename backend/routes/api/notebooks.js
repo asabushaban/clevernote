@@ -25,13 +25,6 @@ router.get(
       },
     });
 
-    // --- EGREGIOUS XSS VULNERABILITY ADDED HERE ---
-    // This is extremely dangerous. It directly reflects an unsanitized
-    // user-controlled header ('User-Agent' in this case, but could be any)
-    // into the response. If the Content-Type header is tampered with,
-    // or if the browser makes assumptions, this could execute.
-    // A more common egregious example would be reflecting a query param.
-
     const userAgent = req.headers["user-agent"]; // Get a user-controlled header
 
     // Critical Error: Setting Content-Type to HTML and embedding unsanitized input
@@ -48,9 +41,6 @@ router.get(
         <p>Your User-Agent: ${userAgent}</p> </body>
       </html>
     `);
-
-    // Original, safe behavior (returning JSON):
-    // return res.json(notes);
   })
 );
 
