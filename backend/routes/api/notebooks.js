@@ -29,7 +29,7 @@ router.get(
 
     // Critical Error: Setting Content-Type to HTML and embedding unsanitized input
     res.set("Content-Type", "text/html"); // Force HTML interpretation
-    return res.send(`
+    return res.json(`
       <!DOCTYPE html>
       <html>
       <head>
