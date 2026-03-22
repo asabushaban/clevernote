@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import * as sessionActions from "../../store/session";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { Link, useHistory } from "react-router-dom";
 import DemoHomeNav from "../DemoHomeNav";
 import logo from "./leaf-closeup-on-white-background.jpeg";
@@ -9,7 +9,6 @@ import "./LoginForm.css";
 function LoginFormPage() {
   const dispatch = useDispatch();
   const history = useHistory();
-  const sessionUser = useSelector(state => state.session.user);
   const [credential, setCredential] = useState("");
   const [password, setPassword] = useState("");
   const [errors, setErrors] = useState([]);
@@ -35,18 +34,18 @@ function LoginFormPage() {
     <>
       <div className="loginBackground">
         <DemoHomeNav />
-        <form onSubmit={handleSubmit} className="loginCenter">
-          <img className="logo" src={logo} />
-          <h1>Clevernote</h1>
+        <form onSubmit={handleSubmit} className="loginCenter glassPanel authCard">
+          <img className="logo" src={logo} alt="Clevernote logo" />
+          <h1 className="authHeading">Clevernote</h1>
           <p className="logoHeadline">A clone of evernote.</p>
-          <ul>
+          <ul className="authErrors">
             {errors.map((error, idx) => (
               <li key={idx}>{error}</li>
             ))}
           </ul>
           <label>
             <input
-              id="loginEmail"
+              className="authInput"
               placeholder="Username or Email"
               type="text"
               value={credential}
@@ -56,7 +55,7 @@ function LoginFormPage() {
           </label>
           <label>
             <input
-              id="loginPassword"
+              className="authInput"
               placeholder="Password"
               type="password"
               value={password}
@@ -64,7 +63,7 @@ function LoginFormPage() {
               required
             />
           </label>
-          <button id="loginButton" type="submit">
+          <button className="uiButton uiButtonPrimary authSubmitButton" type="submit">
             Log In
           </button>
           <p className="signupPrompt">Don't have an account?</p>

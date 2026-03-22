@@ -1,810 +1,417 @@
-/* html {
-  box-sizing: border-box;
-} */
-
-* {
-  font-size: 12pt;
-}
-
-.ql-snow .ql-picker-label {
-  color: var(--text-standard);
+.ql-snow .ql-picker-label,
+.ql-header {
+  color: var(--text-primary);
 }
 
 .ql-snow .ql-fill,
 .ql-snow .ql-stroke.ql-fill {
-  fill: var(--text-standard) !important;
+  fill: var(--text-primary) !important;
 }
 
 .ql-snow .ql-stroke {
-  stroke: var(--text-standard) !important;
-}
-
-.ql-header {
-  color: var(--text-standard);
+  stroke: var(--text-primary) !important;
 }
 
 #mainPageContainer {
-  margin: 0;
-  height: 100%;
-  width: 100%;
+  min-height: 100vh;
   display: flex;
+  gap: 12px;
+  padding: 12px;
+  background: transparent;
+}
+
+.sideNav,
+.notebookNav,
+.mainNoteArea {
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-card);
+  backdrop-filter: blur(14px);
 }
 
 .sideNav {
-  height: 100%;
+  width: min(270px, 24vw);
+  background: var(--surface-dark);
+  color: #e1e7ff;
   display: flex;
   flex-direction: column;
   align-items: center;
-  width: 12%;
-  background-color: #000000;
+  padding: 10px 0;
+}
+
+#profileDiv {
+  width: calc(100% - 18px);
+  padding: 10px 14px;
+  border-radius: var(--radius-md);
+  background: rgba(255, 255, 255, 0.07);
+}
+
+.profileRow {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.profileIcon {
+  color: #f5f8ff;
+  font-size: 22px;
+}
+
+.profileName {
+  margin: 0;
+  font-size: 17px;
+  font-weight: 600;
 }
 
 #sideNavTop {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-around;
-  align-items: center;
-  height: 76%;
   width: 100%;
-}
-
-#newNotebookInput {
-  margin-top: 8px;
-  background-color: gray;
-  font-weight: 800;
-  /* border-bottom-left-radius: 7px; */
-  border: none;
-  width: 88%;
-  height: 2.67rem;
-  border-top-left-radius: 7px;
-  border-bottom-left-radius: 7px;
-  margin-bottom: 3rem;
-}
-
-#newNotebookButton {
-  background-color: #00a82d;
-  color: white;
-  border: none;
-  border-top-right-radius: 7px;
-  border-bottom-right-radius: 7px;
-  height: 2.67rem;
-  margin-bottom: 3rem;
-}
-
-#newNotebookButton:hover {
-  background-color: #4fa566;
-  cursor: pointer;
-}
-
-#createNotebookPrompt {
-  color: rgb(160, 155, 155);
-  font-weight: 300;
-  font-size: 11.5pt;
-  margin-bottom: 0;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
-    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
-    sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto",
-    "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
-    sans-serif;
-}
-
-#notebookNameList {
-  width: 100%;
-  height: 100%;
-  overflow: scroll;
-}
-
-.notebookNameListItem {
-  color: rgb(161, 159, 159);
-  /* transform: translateY(0px); */
-  font-size: 12pt;
-  font-weight: 400;
-  padding: 10px 0px 0px 20px;
-  margin-left: 15px;
-  /* border-bottom: 1px solid rgb(92, 90, 90); */
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
-    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
-    sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto",
-    "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
-    sans-serif;
-}
-
-.allnotesNameListItem {
-  /* transition: all 0.3s ease-in-out; */
-  color: rgb(161, 159, 159);
-  font-size: 12pt;
-  font-weight: 400;
-  padding: 10px 0px 0px 20px;
-  padding-right: 10px;
-  /* border-bottom: 1px solid rgb(92, 90, 90); */
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
-    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
-    sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto",
-    "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
-    sans-serif;
-}
-
-.notesNameListItem {
-  /* transition: all 0.3s ease-in-out; */
-  color: rgb(161, 159, 159);
-  font-size: 12pt;
-  font-weight: 400;
-  padding-top: 20px;
-  padding-right: 10px;
-  padding-left: 8px;
-  /* border-bottom: 1px solid rgb(92, 90, 90); */
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
-    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
-    sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto",
-    "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
-    sans-serif;
-}
-
-#notebookNameListDiv {
-  /* transform: translateY(-100px); */
-  transition: all 0.3s ease-in-out;
+  flex: 1;
 }
 
 .side-bar-search {
   width: 100%;
-  margin-bottom: 10px;
+  padding: 10px 12px 0;
 }
+
 .side-bar-search i {
   position: absolute;
-}
-
-#searchField {
-  margin-top: 2px;
-  background-color: white;
-  border: none;
-  width: 90%;
-}
-
-#searchResDiv {
-  border-top: 1px solid black;
-  max-height: 300px;
-  overflow: scroll;
-}
-
-#searchResTitle,
-#searchRes {
-  position: relative;
-  color: black;
-  background-color: white;
-  /* margin-top: 10px; */
-  padding: 10px;
-  z-index: 1;
-  max-height: 200px;
-  overflow: scroll;
-}
-
-#searchResTitle:hover {
-  font-size: 12.5pt;
-  border-right: 5px solid #00a82d;
-  background-color: #d0f2da;
-  cursor: pointer;
-}
-
-#searchRes:hover {
-  font-size: 12.5pt;
-  border-right: 5px solid red;
-  background-color: rgb(245, 195, 195);
-  cursor: pointer;
-}
-
-#searchField:focus {
-  border: none;
-  outline: none;
-  font-size: 12pt;
-  /* font-weight: 900; */
-}
-
-#searchLabel {
-  font-style: italic;
-  font-size: small;
-  position: relative;
-  color: darkgray;
-  background-color: white;
-  /* margin-top: 10px; */
-  padding: 10px;
-  z-index: 1;
-  max-height: 200px;
-  overflow: scroll;
+  margin-left: 14px;
+  margin-top: 10px;
+  color: var(--text-secondary);
 }
 
 .input-field {
-  /* display: flex;
-  justify-content: space-around; */
-  width: 90%;
-  height: 35px;
-  padding-top: 5px;
-  background-color: white;
-  border: transparent;
-  color: #a6a6a6;
-  font-size: 15px;
-  margin-left: 10px;
-  /* border-radius: 10px; */
+  width: 100%;
+  min-height: 38px;
+  border-radius: var(--radius-sm);
+  background: #f8faff;
+  border: 1px solid transparent;
+  color: var(--text-primary);
 }
 
-#notbookNavTab {
-  color: rgb(161, 159, 159);
-  font-size: 12pt;
-  padding-top: 20px;
-  padding-left: 12px;
-  font-weight: 400;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
-    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
-    sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto",
-    "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
-    sans-serif;
+.searchInputWrap {
+  margin-left: 34px;
+  margin-top: 3px;
 }
 
-#signoutNavTab {
-  color: rgb(161, 159, 159);
-  font-size: 12pt;
-  padding-top: 20px;
-  padding-left: 5px;
-  font-weight: 400;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
-    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
-    sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto",
-    "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
-    sans-serif;
+#searchField {
+  width: 92%;
+  border: 0;
+  background: transparent;
+  color: var(--text-primary);
 }
-#notebookNameListDiv i {
-  color: rgb(161, 159, 159);
+
+#searchField:focus {
+  outline: none;
+}
+
+#searchResDiv {
+  margin-top: 8px;
+  max-height: 230px;
+  overflow: auto;
+  border-radius: var(--radius-sm);
+}
+
+#searchResTitle,
+#searchRes,
+#searchLabel {
+  background: #f8faff;
+  color: var(--text-primary);
+  padding: 8px 10px;
+  border-bottom: 1px solid var(--border);
+}
+
+#searchResTitle:hover,
+#searchRes:hover {
+  background: var(--bg-accent);
   cursor: pointer;
 }
 
+#searchLabel {
+  color: var(--text-secondary);
+  font-style: italic;
+}
+
+#notebookNameList {
+  list-style: none;
+  margin: 10px 0 0;
+  padding: 0;
+  width: 100%;
+  overflow: auto;
+  position: relative;
+  min-height: 300px;
+}
+
+.navListRow {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding-left: 14px;
+}
+
+.navListRow i,
+#notbookNavTab,
+#signoutNavTab,
+.notesNameListItem,
+.notebookNameListItem {
+  color: #d3daf3;
+}
+
+#notbookNavTab,
+#signoutNavTab,
+.notesNameListItem,
+.notebookNameListItem {
+  list-style: none;
+  padding: 14px 0 0;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.notesNameListItem:hover,
+.notebookNameListItem:hover,
 #notebookNameListDiv:hover i,
 #notebookNameListDiv:hover li {
-  color: #00a82d;
+  color: #fff;
   cursor: pointer;
+}
+
+.notebookNameListItem {
+  margin-left: 40px;
+}
+
+.notebookNameListItemActive,
+#addNotebookTrigger {
+  color: #9bb0ff;
 }
 
 #signoutNavIcon {
-  z-index: 0;
+  position: sticky;
+  bottom: 0;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 18px;
+  padding: 10px 14px;
+  background: var(--surface-dark);
 }
 
 #signoutNavIcon:hover i,
 #signoutNavIcon:hover li {
-  color: rgb(243, 201, 124);
-  cursor: pointer;
-}
-
-.fas.fa-sign-out-alt {
-  padding-top: 20px;
-  color: rgb(161, 159, 159);
-  padding-right: "8px";
-  padding-left: "10px";
-}
-
-#allNotesNameListDiv i {
-  color: rgb(161, 159, 159);
-}
-
-.notebookNameListItem:hover {
-  color: #00a82d;
-  margin-right: 4px;
-  cursor: pointer;
-  border-radius: 7px;
-}
-
-#allNotesNameListDiv:hover i,
-#allNotesNameListDiv:hover li {
-  color: #00a82d;
+  color: #ffe3b7;
   cursor: pointer;
 }
 
 #sideNavBottom {
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-end;
-  align-items: center;
-  height: 18%;
   width: 100%;
+  padding: 0 12px 10px;
 }
 
-#createNoteButton {
-  background-color: #00a82d;
-  color: white;
-  border: none;
-  border-radius: 7px;
-  font-size: 11pt;
-  font-weight: 400;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
-    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
-    sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto",
-    "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
-    sans-serif;
-  width: 80%;
-  height: 2.67rem;
-  margin-bottom: 8px;
-  margin-top: 8px;
-  margin-bottom: 3rem;
+#newNotebookInput {
+  width: calc(100% - 46px);
+  height: 38px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm) 0 0 var(--radius-sm);
+  padding: 0 10px;
+  background: #f8faff;
+  color: var(--text-primary);
 }
 
-#createNoteButton:hover {
-  background-color: #4fa566;
-  cursor: pointer;
+#newNotebookButton {
+  width: 46px;
+  border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+  padding: 0;
 }
 
-.notebookNav {
-  height: 100%;
-  width: 20%;
-  background-color: var(--secondary-background);
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  align-items: center;
-  /* border: 1px solid gray; */
-  /* border-radius: 7px; */
-}
-
-#ql-picker-options-0,
-#ql-picker-options-1,
-#ql-picker-options-2,
-#ql-picker-options-3 {
-  background-color: var(--secondary-background);
-  color: #ffffff;
-}
-
-#notebookNavTop {
-  display: flex;
-  width: 100%;
-}
-
-#notebookNavTopHeading {
-  width: 85%;
-  text-align: center;
-  padding-left: 20px;
-  font-size: 26pt;
-}
-
-#verticalEllipsis {
-  width: 15%;
-  text-align: left;
-  font-size: 26pt;
-}
-
-#verticalEllipsis:hover {
-  cursor: pointer;
-}
-
-#dropDown {
-  display: flex;
-  justify-content: space-around;
-  flex-direction: column;
-  align-items: center;
-  position: absolute;
-  background-color: rgba(14, 13, 13, 0.85);
-  color: #8d8b8b;
-  border-radius: 4px;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
-    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
-    sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto",
-    "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
-    sans-serif;
-  font-size: 12pt;
-  border: 1px solid black;
-  width: 10%;
-  height: 16%;
-  margin-top: 2.3rem;
-  margin-left: -4.2rem;
-  padding-left: 1rem;
-  padding-right: 1rem;
-  padding-top: 2rem;
-  /* margin-left: 200px;
-  margin-top: 60px; */
-}
-
-#notebookSearch {
-  margin-bottom: 1rem;
-  text-align: center;
-}
-
-#dropDownAlign {
-  display: flex;
-  justify-content: space-around;
-  flex-direction: column;
-  align-items: center;
-  margin: 0;
-  width: 100%;
-}
-
-.dropDownListItem {
-  border-bottom: 0.5px solid rgb(110, 110, 110);
-  text-align: left;
-  margin-left: 10px;
-  margin-right: 10px;
-  width: 100%;
-}
-
-.dropDownListItem:hover {
-  cursor: pointer;
-  border-radius: 2px;
-  /* background-color: rgb(216, 214, 214); */
-  margin-left: 0px;
-  margin-right: 0px;
-  font-weight: 400;
-  padding-left: 3px;
-}
-
-#editNotebookButton {
-  background-color: blue;
-  color: white;
-  /* height: 8%;
-  width: 65%; */
-  /* width: 25%;
-    height: 8%; */
-  border: none;
-  border-radius: 7px;
-  font-size: 11pt;
-  font-weight: 400;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
-    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
-    sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto",
-    "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
-    sans-serif;
-  width: 80%;
-  height: 1.87rem;
-  margin-top: 5px;
-}
-
-#editNotebookButton:hover {
-  background-color: rgb(122, 146, 255);
-  cursor: pointer;
-}
-
-#deleteNotebookButton {
-  background-color: red;
-  color: white;
-  /* height: 8%;
-  width: 65%; */
-  /* width: 25%;
-    height: 8%; */
-  border: none;
-  border-radius: 7px;
-  font-size: 11pt;
-  font-weight: 400;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
-    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
-    sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto",
-    "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
-    sans-serif;
-  width: 80%;
-  height: 1.87rem;
-  margin-top: 1rem;
-}
-
-#deleteNotebookButton:hover {
-  background-color: rgb(255, 122, 122);
-  cursor: pointer;
-}
-
-/* #deleteNotebookDropDown:hover {
-  background-color: rgb(243, 87, 87);
-} */
-
-.mainNoteArea {
-  height: 100%;
-  width: 68%;
-  padding-left: 30px;
-  padding-right: 30px;
-  background-color: var(--main-background);
-  /* background-color: #ffffff; */
-  color: black;
-  overflow: scroll;
-}
-
-/* #my-form1 {
-} */
-
-/* #my-form1 {
-  height: "90%";
-  width: "100%";
-  outline: "none";
-} */
-
-#noteContainer {
-  display: flex;
-  flex-direction: column;
-  background-color: var(--main-background);
-}
-
-.ql-container.ql-snow {
-  height: 60vh;
-  border: none !important;
-  overflow: scroll;
-}
-
-.ql-editor .ql-blank::placeholder {
-  color: var(--text-standard);
-}
-
-.ql-toolbar.ql-snow {
-  border: none !important;
-}
-
-#title {
-  font-size: 30pt;
-  color: #818181;
-  height: 8%;
-  width: 100%;
-  background-color: var(--main-background);
-  border: none;
-  margin-top: 10px;
-  outline: none;
-}
-
-#textarea {
-  width: 100%;
-  height: 100%;
-  background-color: var(--main-background);
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
-    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
-    sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto",
-    "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
-    sans-serif;
-  color: #818181;
-  font-size: 14pt;
-  border: hidden;
-  resize: none;
-}
-
-#buttons {
-  display: flex;
-  justify-content: flex-start;
-  margin-top: 8px;
-}
-
-#bottomMain {
-  display: flex;
-  justify-content: space-between;
-}
-
-#saveNoteButton {
-  background-color: #00a82d;
-  color: white;
-  /* height: 8%;
-  width: 65%; */
-  /* width: 25%;
-    height: 8%; */
-  border: none;
-  border-radius: 7px;
-  font-size: 10pt;
-  font-weight: 650;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
-    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
-    sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto",
-    "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
-    sans-serif;
-  width: 4.83rem;
-  height: 1.87rem;
-  margin-bottom: 3rem;
-  margin-right: 8px;
-}
-
-#saveNoteButton:hover {
-  background-color: #4fa566;
-  cursor: pointer;
-}
-
-#deleteNoteButton {
-  background-color: red;
-  color: white;
-  border: none;
-  border-radius: 7px;
-  font-size: 10pt;
-  font-weight: 650;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
-    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
-    sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto",
-    "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
-    sans-serif;
-  width: 4.83rem;
-  height: 1.87rem;
-  margin-bottom: 3rem;
-  margin-right: 8px;
-}
-
-#deleteNoteButton:hover {
-  background-color: rgb(245, 92, 92);
-  cursor: pointer;
-}
-
-#whereToSavePrompt {
-  color: var(--text-standard);
-  font-weight: 500;
-  margin-left: 400px;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
-    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
-    sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto",
-    "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
-    sans-serif;
-}
-
-#date {
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
-    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
-    sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto",
-    "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
-    sans-serif;
-  font-weight: 550;
-  font-size: 15pt;
-  color: var(--text-standard);
-}
-
-input::placeholder {
-  color: var(--text-standard);
-}
-
-#notebookList {
-  height: 80%;
-  width: 100%;
-  padding: 2px 2px 2px 2px;
-  overflow: hidden;
-  overflow: scroll;
-}
-
-.notebookNavListItem {
-  color: var(--text-standard);
-  font-weight: 900;
-  padding: 20px 20px 0px 20px;
-  padding-right: 10px;
-  border-bottom: 1px solid black;
-}
-
-.notebookNavListItem:hover {
-  background-color: var(--hover-bg);
-  cursor: pointer;
-  border-radius: 7px;
-}
-
-#dateOfNote {
-  color: var(--text-standard);
-  font-size: 8pt;
-}
-
-/* .profile-dropdown {
-  display: flex;
-  flex-direction: column;
-  color: gray;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
-    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
-    sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto",
-    "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
-    sans-serif;
-  font-size: 12pt;
-  margin-left: 30px;
-  align-items: center;
-} */
-
-/* .fas.fa-user-circle {
-  width: 40px;
-  height: 40px;
-} */
-
-.fas.fa-user-circle {
-  height: fit-content;
-  width: fit-content;
-}
-
-.profileButton {
-  display: flex;
-  height: fit-content;
-  margin: 8px;
-}
-
-#personButton {
-  height: fit-content;
-  width: fit-content;
-}
-
-.profileLogoutButton {
-  margin-top: 8px;
-  margin-bottom: 8px;
-  width: 4.83rem;
-  height: 1.87rem;
-  background-color: orange;
-  color: white;
-  border: none;
-  border-radius: 7px;
-}
-
-.profileLogoutButton:hover {
-  background-color: rgb(243, 201, 124);
-  cursor: pointer;
-}
-
-#profileDiv {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 100%;
-  height: 5%;
-  margin-bottom: 15px;
-  margin-top: 15px;
-}
-
-.fa-user-circle:before {
-  content: "\f2bd";
-}
-
-@media screen and (max-width: 1500px) {
-  .sideNav {
-    width: 19%;
-  }
-  .notebookNav {
-    width: 19%;
-  }
-
-  .mainNoteArea {
-    width: 62%;
-  }
-
-  /* #profileDiv {
-    margin-bottom: 28px;
-  } */
-
-  #dropDown {
-    margin-left: -3rem;
-    width: 15%;
-    height: 22%;
-  }
-
-  #title {
-    margin-top: 5px;
-  }
-  #notebookNavTopHeading {
-    font-size: 18pt;
-    color: var(--text-standard);
-  }
-
-  #verticalEllipsis {
-    font-size: 18pt;
-  }
-}
-
-/* .rdw-block-wrapper,
-.rdw-fontsize-wrapper,
-.rdw-fontfamily-wrapper {
-  color: black;
-}
-
-.rdw-editor-toolbar {
-  border: none;
-  background-color: var(--main-background);
-} */
-
-/* toggle styles */
-
-/* Toggle container */
 .toggle-container {
-  width: 50px;
-  height: 20px;
-  background-color: #ccc;
-  border-radius: 15px;
+  width: 58px;
+  height: 28px;
+  margin-top: 10px;
+  background: rgba(255, 255, 255, 0.25);
+  border: 1px solid rgba(255, 255, 255, 0.35);
+  border-radius: 20px;
   display: flex;
   align-items: center;
   cursor: pointer;
-  transition: background-color 0.2s ease;
 }
 
-/* Slider */
 .slider {
-  width: 20px;
-  height: 20px;
+  width: 24px;
+  height: 24px;
   border-radius: 50%;
-  background-color: #fff;
+  background: #fff;
+  margin-left: 2px;
   transition: transform 0.2s ease;
 }
 
-/* Active styles */
 .toggle-container.active {
-  background-color: #1050e6;
+  background: rgba(127, 151, 255, 0.58);
 }
 
 .slider.active {
   transform: translateX(30px);
+}
+
+.notebookNav {
+  width: min(320px, 30vw);
+  background: var(--surface);
+  color: var(--text-primary);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+#notebookNavTop {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  padding: 8px 14px 0;
+}
+
+#notebookNavTopHeading {
+  width: 88%;
+  margin: 0;
+  font-size: 33px;
+  letter-spacing: -0.03em;
+}
+
+#verticalEllipsis {
+  width: 12%;
+  margin: 0;
+  text-align: right;
+  color: var(--text-secondary);
+}
+
+#verticalEllipsis:hover {
+  cursor: pointer;
+  color: var(--brand);
+}
+
+#notebookList {
+  list-style: none;
+  margin: 0;
+  padding: 0 10px;
+  overflow: auto;
+  height: calc(100vh - 190px);
+}
+
+.notebookNavListItem {
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  margin: 7px 0;
+  padding: 12px;
+  background: var(--surface-strong);
+  color: var(--text-primary);
+}
+
+.notebookNavListItem li {
+  list-style: none;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.notebookNavListItem:hover {
+  background: var(--bg-accent);
+  cursor: pointer;
+}
+
+#dateOfNote {
+  margin: 5px 0 0;
+  color: var(--text-secondary);
+  font-size: 12px;
+}
+
+#createNoteButton {
+  margin: 10px 12px 12px;
+  width: calc(100% - 24px);
+}
+
+.mainNoteArea {
+  flex: 1;
+  background: var(--surface);
+  padding: 12px 20px;
+  color: var(--text-primary);
+  overflow: auto;
+}
+
+#noteContainer {
+  display: flex;
+  flex-direction: column;
+}
+
+#title {
+  width: 100%;
+  margin: 0;
+  border: 0;
+  font-size: clamp(34px, 4vw, 54px);
+  font-weight: 700;
+  color: var(--text-primary);
+  letter-spacing: -0.03em;
+  background: transparent;
+}
+
+#title:focus {
+  outline: none;
+}
+
+#date {
+  margin: 10px 0;
+  color: var(--text-secondary);
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.ql-toolbar.ql-snow {
+  border: 1px solid var(--border) !important;
+  border-bottom: 0 !important;
+  border-radius: var(--radius-md) var(--radius-md) 0 0;
+  background: var(--surface-strong);
+}
+
+.ql-container.ql-snow {
+  border: 1px solid var(--border) !important;
+  border-radius: 0 0 var(--radius-md) var(--radius-md);
+  min-height: 56vh;
+  background: var(--surface-strong);
+}
+
+.ql-editor {
+  color: var(--text-primary);
+}
+
+.ql-editor.ql-blank::before {
+  color: var(--text-secondary) !important;
+}
+
+#bottomMain {
+  margin-top: 12px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+#buttons {
+  display: flex;
+  gap: 10px;
+}
+
+#whereToSavePrompt {
+  margin: 0;
+  color: var(--text-secondary);
+  font-weight: 600;
+}
+
+@media screen and (max-width: 1200px) {
+  #mainPageContainer {
+    flex-direction: column;
+  }
+
+  .sideNav,
+  .notebookNav,
+  .mainNoteArea {
+    width: 100%;
+  }
+
+  #notebookList {
+    height: 300px;
+  }
 }

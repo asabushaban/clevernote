@@ -1,150 +1,95 @@
-.loginCenter {
-  height: 63%;
-  width: 21%;
-  background-color: white;
+.loginBackground {
+  min-height: 100vh;
+  width: 100%;
+  background-image: linear-gradient(140deg, rgba(63, 108, 244, 0.25), transparent),
+    url("./large-background.png");
+  background-size: cover;
+  background-position: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 96px 16px 24px;
+}
+
+.authCard {
+  width: min(420px, 90vw);
+  padding: 32px 28px;
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
-  box-shadow: 3px 3px 20px 5px lightgray;
-  /* border: 1px solid #00a82d; */
-  border-radius: 7px;
-}
-
-.loginBackground {
-  width: 100%;
-  height: 100%;
-  background-image: url("./large-background.png");
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  text-align: center;
 }
 
 .logo {
-  width: 350px;
-  height: 124.67px;
+  width: 220px;
+  height: auto;
 }
 
-h1 {
-  font-family: "Merriweather", serif;
-  font-weight: bolder;
-  /* font-family: "Libre Baskerville", serif; */
-  margin-bottom: 0;
+.authHeading {
+  margin: 10px 0 0;
+  letter-spacing: -0.02em;
+  font-size: 34px;
 }
 
 .logoHeadline {
-  margin-top: 5px;
-  font-size: 18pt;
-  color: rgb(155, 153, 153);
+  margin: 4px 0 14px;
+  color: var(--text-secondary);
+  font-size: 16px;
 }
 
-#loginEmail,
-#loginPassword {
-  border: 1px solid gray;
-  padding: 12px 16px;
-  /* height: 50%;
-  width: 100%; */
-  min-width: 14.83rem;
-  min-height: 2.67rem;
-  border-radius: 7px;
+.authErrors {
+  list-style: none;
+  margin: 0 0 12px;
+  padding: 0;
+  width: 100%;
 }
 
-#loginPassword:focus {
-  border: 1px solid #818181;
+.authErrors li {
+  color: var(--danger);
+  font-size: 13px;
+  text-align: left;
 }
 
-#loginEmail:focus {
-  border: 1px solid #818181;
+.authInput {
+  width: 100%;
+  border: 1px solid var(--border);
+  padding: 12px 14px;
+  min-height: 44px;
+  border-radius: var(--radius-sm);
+  margin-bottom: 10px;
+  background: var(--surface-strong);
+  color: var(--text-primary);
 }
 
-#loginPassword {
-  margin: 10px;
+.authInput:focus {
+  outline: none;
+  border-color: var(--brand);
+  box-shadow: 0 0 0 3px rgba(63, 108, 244, 0.16);
 }
 
-#loginButton {
-  background-color: #00a82d;
-  color: white;
-  /* height: 8%;
-  width: 65%; */
-  /* width: 25%;
-    height: 8%; */
-  border: none;
-  border-radius: 7px;
-  font-size: 13pt;
-  font-weight: 400;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
-    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
-    sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto",
-    "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
-    sans-serif;
-  min-width: 14.83rem;
-  min-height: 2.67rem;
-  margin-bottom: 3rem;
+.authSubmitButton {
+  width: 100%;
+  min-height: 44px;
+  margin: 8px 0 20px;
 }
 
 .signupPrompt {
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
-    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
-    sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto",
-    "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
-    sans-serif;
-  color: rgb(155, 153, 153);
+  margin: 0 0 6px;
+  color: var(--text-secondary);
 }
 
 .signupLink {
   text-decoration: none;
-  color: #00a82d;
-  font-size: 14pt;
-}
-
-#loginButton:focus {
-  background-color: #85a88e;
-  cursor: pointer;
-}
-
-#loginButton {
-  cursor: pointer;
+  color: var(--brand);
+  font-weight: 600;
 }
 
 @media screen and (max-width: 1500px) {
-  .loginCenter {
-    height: 68%;
-    width: 25%;
-  }
   .logo {
-    width: 262.5px;
-    height: 93.5px;
+    width: 185px;
   }
 
-  h1 {
-    font-size: 18pt;
-    font-family: "Cormorant Garamond", serif;
-    font-family: "Libre Baskerville", serif;
-    font-family: "Merriweather", serif;
-    font-weight: bolder;
-    margin-bottom: 0;
-  }
-
-  .logoHeadline {
-    margin-top: 5px;
-    font-size: 12pt;
-    color: rgb(155, 153, 153);
-  }
-
-  #loginButton {
-    min-width: 11.4rem;
-    min-height: 2.63rem;
-    margin-bottom: 1.5rem;
-  }
-
-  #loginEmail,
-  #loginPassword {
-    border: 1px solid gray;
-    padding: 12px 16px;
-    /* height: 50%;
-    width: 100%; */
-    min-width: 7.4rem;
-    min-height: 1.33rem;
-    border-radius: 7px;
+  .authHeading {
+    font-size: 28px;
   }
 }

@@ -46,7 +46,7 @@ function NotebookModal({
       <div id={"editNotebookModal"}>
         <p id={"editNotebookName"}>{"Edit Notebook Name"}</p>
         {error ? (
-          <p style={{ color: "red", textAlign: "center", margin: "0px" }}>
+          <p className="editNotebookError">
             {error}
           </p>
         ) : null}
@@ -60,12 +60,11 @@ function NotebookModal({
             onChange={e => setNewName(e.target.value)}
           ></input>
           <div id={"editNotebookModalBottom"}>
-            <button id={"editNotebookButton"} type="submit">
+            <button className="uiButton uiButtonPrimary editNotebookButton" type="submit">
               Edit
             </button>
             <button
-              id={"editNotebookButton"}
-              style={{ backgroundColor: "red" }}
+              className="uiButton uiButtonDanger editNotebookButton"
               onClick={handleDeleteNotebook}
             >
               Delete

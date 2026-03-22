@@ -18,16 +18,9 @@ const SideNavTop = ({
         <i
           className="fas fa-search icon"
           aria-hidden="true"
-          style={{ marginLeft: " 25px", marginTop: "12px" }}
         ></i>
         <div className={"input-field"}>
-          <div
-            style={{
-              marginLeft: "40px",
-              marginTop: "3px",
-              fontSize: "17px",
-            }}
-          >
+          <div className="searchInputWrap">
             <input
               id={"searchField"}
               placeholder="Search Notes"

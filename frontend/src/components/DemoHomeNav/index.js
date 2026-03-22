@@ -1,24 +1,21 @@
-import React, { useState } from "react";
+import React from "react";
 import { Link, useHistory } from "react-router-dom";
 import * as sessionActions from "../../store/session";
 import { useDispatch } from "react-redux";
+import "../SplashPage/SplashPage.css";
 
 function DemoHomeNav() {
   const dispatch = useDispatch();
   const history = useHistory();
-  const [errors, setErrors] = useState([]);
-
   const handleDemo = async e => {
     e.preventDefault();
-    setErrors([]);
     await dispatch(
       sessionActions.login({
         credential: "Demo-lition",
         password: "password",
       })
     ).catch(async res => {
-      const data = await res.json();
-      if (data && data.errors) setErrors(data.errors);
+      await res.json();
     });
     history.push("/");
     return;
@@ -26,15 +23,15 @@ function DemoHomeNav() {
 
   return (
     <div className="splashNav">
-      <div id="leftNav">
-        <button id="demoButton" onClick={handleDemo}>
+      <div className="leftNav">
+        <button className="uiButton uiButtonGhost splashDemoButton" onClick={handleDemo}>
           Demo
         </button>
         <Link className="loginFromSplashNav" to="/">
           Home
         </Link>
       </div>
-      <div id="rightNav"></div>
+      <div className="rightNav"></div>
     </div>
   );
 }

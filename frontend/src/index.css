@@ -1,25 +1,118 @@
-/* TODO Add site wide styles */
-/* #root {
-  width: 100%;
-  height: 100%;
-  background-color: white;
-} */
-
 :root[data-theme="light"] {
-  --main-background: #fff;
-  --secondary-background: #e2e2e2;
-  --text-standard: #000000;
-  --hover-bg: #d2d0d0;
+  --bg: #f3f5fb;
+  --bg-accent: #ebf0ff;
+  --surface: rgba(255, 255, 255, 0.78);
+  --surface-strong: #ffffff;
+  --surface-muted: #f5f6fb;
+  --surface-dark: #131727;
+  --border: rgba(15, 23, 42, 0.1);
+  --text-primary: #161b2e;
+  --text-secondary: #5f6784;
+  --brand: #3f6cf4;
+  --brand-hover: #2f59df;
+  --danger: #ef4444;
+  --danger-hover: #dc2626;
+  --shadow-soft: 0 18px 40px rgba(17, 24, 39, 0.08);
+  --shadow-card: 0 12px 28px rgba(17, 24, 39, 0.07);
+  --radius-lg: 20px;
+  --radius-md: 14px;
+  --radius-sm: 10px;
 }
 
 :root[data-theme="dark"] {
-  --main-background: rgb(46, 45, 45);
-  --secondary-background: #2f2f2f;
-  --text-standard: #c2c2c2;
-  --hover-bg: rgb(58, 58, 58);
+  --bg: #0c101d;
+  --bg-accent: #10152a;
+  --surface: rgba(20, 27, 46, 0.72);
+  --surface-strong: #171e33;
+  --surface-muted: #1f2840;
+  --surface-dark: #0f1424;
+  --border: rgba(148, 163, 184, 0.2);
+  --text-primary: #edf2ff;
+  --text-secondary: #b8c2de;
+  --brand: #7f97ff;
+  --brand-hover: #93a7ff;
+  --danger: #fb7185;
+  --danger-hover: #f43f5e;
+  --shadow-soft: 0 18px 40px rgba(0, 0, 0, 0.45);
+  --shadow-card: 0 12px 28px rgba(0, 0, 0, 0.4);
+  --radius-lg: 20px;
+  --radius-md: 14px;
+  --radius-sm: 10px;
+}
+
+* {
+  box-sizing: border-box;
 }
 
 html,
-body {
+body,
+#root {
   margin: 0;
+  min-height: 100%;
+}
+
+body {
+  font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  background: radial-gradient(circle at top, var(--bg-accent), var(--bg));
+  color: var(--text-primary);
+}
+
+a {
+  color: inherit;
+}
+
+button,
+input,
+textarea {
+  font-family: inherit;
+}
+
+.appShell {
+  min-height: 100vh;
+}
+
+.uiButton {
+  border: 0;
+  border-radius: var(--radius-sm);
+  padding: 11px 16px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: transform 140ms ease, background-color 140ms ease, opacity 140ms ease;
+}
+
+.uiButton:hover {
+  transform: translateY(-1px);
+}
+
+.uiButtonPrimary {
+  color: #fff;
+  background: var(--brand);
+}
+
+.uiButtonPrimary:hover {
+  background: var(--brand-hover);
+}
+
+.uiButtonGhost {
+  background: transparent;
+  border: 1px solid var(--border);
+  color: var(--text-secondary);
+}
+
+.uiButtonDanger {
+  color: #fff;
+  background: var(--danger);
+}
+
+.uiButtonDanger:hover {
+  background: var(--danger-hover);
+}
+
+.glassPanel {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow-soft);
+  border-radius: var(--radius-lg);
+  backdrop-filter: blur(18px);
 }

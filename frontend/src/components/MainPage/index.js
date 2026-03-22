@@ -38,7 +38,7 @@ function MainPage() {
   const [newNotebookHidden, setNewNotebookHidden] = useState(true);
 
   //Notebooks error
-  const [error, setError] = useState("");
+  const [error] = useState("");
 
   //Notebook Ellipsis
   const [open, setOpen] = useState(false);
@@ -49,7 +49,7 @@ function MainPage() {
   useEffect(() => {
     dispatch(getNotes(sessionUser.id));
     dispatch(getNotebooks(sessionUser.id));
-  }, [dispatch]);
+  }, [dispatch, sessionUser.id]);
 
   useEffect(() => {
     if (selectedNote) {
@@ -112,13 +112,10 @@ function MainPage() {
   const sortByNotebook = notebook => {
     if (notebook === "All Notes") {
       return Object.values(notes).map(note => sortByNotebookHelper(note));
-    } else {
-      return Object.values(notes).map(note => {
-        if (note.notebookId === selectedNotebook?.id) {
-          return sortByNotebookHelper(note);
-        }
-      });
     }
+    return Object.values(notes)
+      .filter(note => note.notebookId === selectedNotebook?.id)
+      .map(note => sortByNotebookHelper(note));
   };
 
   // create new note function updates state to empty strings
@@ -151,7 +148,7 @@ function MainPage() {
           <h1 id="notebookNavTopHeading">
             {selectedNotebook?.name || selectedNotebook}
           </h1>
-          {selectedNotebook != "All Notes" ? (
+          {selectedNotebook !== "All Notes" ? (
             <h1 id="verticalEllipsis" onClick={() => setOpen(!open)}>
               ⋮
             </h1>
@@ -160,7 +157,7 @@ function MainPage() {
           )}
         </div>
         <ul id="notebookList">{sortByNotebook(selectedNotebook)}</ul>
-        <button id="createNoteButton" onClick={createNewNote}>
+          <button id="createNoteButton" className="uiButton uiButtonPrimary" onClick={createNewNote}>
           Create note
         </button>
       </div>
@@ -191,17 +188,17 @@ function MainPage() {
           </div>
           <p id="date">
             Last updated:{" "}
-            {selectedNote != ""
+            {selectedNote !== ""
               ? findUpdate(selectedNote?.id, notes)
               : selectedNote}{" "}
             (CDT)
           </p>
           <div id="bottomMain">
             <div id="buttons">
-              <button id="deleteNoteButton" onClick={handleDelete}>
+              <button id="deleteNoteButton" className="uiButton uiButtonDanger" onClick={handleDelete}>
                 Delete
               </button>
-              <button id="saveNoteButton" onClick={handleSubmit}>
+              <button id="saveNoteButton" className="uiButton uiButtonPrimary" onClick={handleSubmit}>
                 Save note
               </button>
             </div>

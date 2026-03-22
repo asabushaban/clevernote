@@ -25,9 +25,8 @@ const Notebooks = ({
     if (notebooks[key] === selectedNotebook) {
       return (
         <li
-          className="notebookNameListItem"
+          className="notebookNameListItem notebookNameListItemActive"
           key={key}
-          style={{ color: "#00a82d" }}
           hidden={directionHelper(direction)}
           onClick={() => {
             dispatch(setSelectedNotebook(notebooks[key]));
@@ -60,21 +59,10 @@ const Notebooks = ({
 
   return (
     <ul id="notebookNameList">
-      <div
-        id={"allNotesNameListDiv"}
-        style={{
-          display: "flex",
-          alignItems: "center",
-          paddingLeft: "8px",
-        }}
-      >
+      <div id={"allNotesNameListDiv"} className="navListRow">
         <i
-          class="far fa-sticky-note"
+          className="far fa-sticky-note"
           aria-hidden="true"
-          style={{
-            paddingRight: "8px",
-            paddingTop: "20px",
-          }}
         ></i>
         <li
           className="notesNameListItem"
@@ -87,22 +75,13 @@ const Notebooks = ({
       </div>
       <div
         id={"notebookNameListDiv"}
-        style={{
-          display: "flex",
-          alignItems: "center",
-          paddingLeft: "8px",
-        }}
-        onClick={e =>
+        className="navListRow"
+        onClick={() =>
           direction === "right" ? setDirection("down") : setDirection("right")
         }
       >
         <i
-          class={`fas fa-caret-${direction}`}
-          style={{
-            paddingRight: "8px",
-            paddingTop: "20px",
-            paddingLeft: "3px",
-          }}
+          className={`fas fa-caret-${direction}`}
         ></i>
         <li id={"notbookNavTab"}>Notebooks</li>
       </div>
@@ -111,7 +90,7 @@ const Notebooks = ({
         <li
           className="notebookNameListItem"
           hidden={directionHelper(direction)}
-          style={{ color: "#00a82d" }}
+          id="addNotebookTrigger"
           onClick={() =>
             !newNotebookHidden
               ? setNewNotebookHidden(true)
@@ -121,23 +100,11 @@ const Notebooks = ({
           {"Add Notebook ⨁"}
         </li>
       </div>
-      <div
-        id={"signoutNavIcon"}
-        style={{
-          display: "flex",
-          alignItems: "center",
-          position: "absolute",
-        }}
-      >
+      <div id={"signoutNavIcon"}>
         <i
           className="fas fa-sign-out-alt"
           aria-hidden="true"
           onClick={logout}
-          style={{
-            paddingTop: "20px",
-            paddingRight: "8px",
-            paddingLeft: "10px",
-          }}
         ></i>
         <li id={"signoutNavTab"} onClick={logout}>
           Sign out

@@ -132,6 +132,7 @@ const SideNav = ({
           ></input>
           <button
             id="newNotebookButton"
+            className="uiButton uiButtonPrimary"
             type="submit"
             onClick={handleNewNotebookSubmit}
           >

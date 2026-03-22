@@ -3,27 +3,26 @@ import "../components/MainPage/MainPage.css";
 
 function Toggle() {
   const [theme, setTheme] = useState("light");
-  const [isChecked, setIsChecked] = useState(theme === "dark");
-
-  const toggleTheme = () => {
-    const newTheme = theme === "light" ? "dark" : "light";
-    document.documentElement.setAttribute("data-theme", newTheme);
-    setTheme(newTheme);
-  };
 
   useEffect(() => {
-    setIsChecked(theme === "dark");
+    const savedTheme = localStorage.getItem("clevernote-theme") || "light";
+    setTheme(savedTheme);
+    document.documentElement.setAttribute("data-theme", savedTheme);
+  }, []);
+
+  useEffect(() => {
+    document.documentElement.setAttribute("data-theme", theme);
+    localStorage.setItem("clevernote-theme", theme);
   }, [theme]);
 
-  const toggleSwitch = () => {
-    setIsChecked(!isChecked);
-    toggleTheme();
-  };
+  const isChecked = theme === "dark";
 
   return (
     <div
       className={`toggle-container ${isChecked ? "active" : ""}`}
-      onClick={toggleSwitch}
+      onClick={() => setTheme(isChecked ? "light" : "dark")}
+      role="button"
+      aria-label="Toggle theme"
     >
       <div className={`slider ${isChecked ? "active" : ""}`}></div>
     </div>

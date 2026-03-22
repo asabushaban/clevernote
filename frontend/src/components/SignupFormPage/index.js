@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { Redirect, Link, useHistory } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { Link, useHistory } from "react-router-dom";
 import * as sessionActions from "../../store/session";
 import DemoHomeNav from "../DemoHomeNav";
 import logo from "./leaf-closeup-on-white-background.jpeg";
@@ -9,14 +9,11 @@ import "./SignupForm.css";
 function SignupFormPage() {
   const dispatch = useDispatch();
   const history = useHistory();
-  const sessionUser = useSelector(state => state.session.user);
   const [email, setEmail] = useState("");
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [errors, setErrors] = useState([]);
-
-  // if (sessionUser) return <Redirect to="/" />;
 
   const handleSubmit = async e => {
     e.preventDefault();
@@ -45,18 +42,18 @@ function SignupFormPage() {
   return (
     <div className="loginBackground">
       <DemoHomeNav />
-      <form onSubmit={handleSubmit} className="signupCenter">
-        <img className="logo" src={logo} />
-        <h1>Clevernote</h1>
+      <form onSubmit={handleSubmit} className="signupCenter glassPanel authCard">
+        <img className="logo" src={logo} alt="Clevernote logo" />
+        <h1 className="authHeading">Clevernote</h1>
         <p className="logoHeadline">A clone of evernote.</p>
-        <ul>
+        <ul className="authErrors">
           {errors.map((error, idx) => (
             <li key={idx}>{error}</li>
           ))}
         </ul>
         <label>
           <input
-            id="signupEmail"
+            className="authInput"
             placeholder="Email"
             type="text"
             value={email}
@@ -66,7 +63,7 @@ function SignupFormPage() {
         </label>
         <label>
           <input
-            id="signupEmail"
+            className="authInput"
             placeholder="Username"
             type="text"
             value={username}
@@ -76,7 +73,7 @@ function SignupFormPage() {
         </label>
         <label>
           <input
-            id="signupPassword"
+            className="authInput"
             placeholder="Password"
             type="password"
             value={password}
@@ -86,7 +83,7 @@ function SignupFormPage() {
         </label>
         <label>
           <input
-            id="signupPassword"
+            className="authInput"
             placeholder="Confirm Password"
             type="password"
             value={confirmPassword}
@@ -94,7 +91,7 @@ function SignupFormPage() {
             required
           />
         </label>
-        <button id="loginButton" type="submit">
+        <button className="uiButton uiButtonPrimary authSubmitButton" type="submit">
           Sign Up
         </button>
         <p className="signupPrompt">Already have an account?</p>

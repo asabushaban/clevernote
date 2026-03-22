@@ -3,24 +3,12 @@ import React from "react";
 const SideNavProfile = ({ sessionUser }) => {
   return (
     <div id="profileDiv">
-      <div style={{ display: "flex" }}>
+      <div className="profileRow">
         <i
-          class="fas fa-user-circle"
+          className="fas fa-user-circle profileIcon"
           aria-hidden="true"
-          style={{
-            color: "white",
-            textAlign: "center",
-            fontSize: "25px",
-          }}
         ></i>
-        <h1
-          style={{
-            color: "white",
-            fontSize: "1.3rem",
-            margin: "0px",
-            paddingLeft: "10px",
-          }}
-        >
+        <h1 className="profileName">
           {sessionUser.username}
         </h1>
       </div>
