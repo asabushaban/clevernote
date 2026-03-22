@@ -40,8 +40,9 @@ export const editNote = note => async dispatch => {
   });
   if (response.ok) {
     dispatch(addOneNote(note));
-    return response;
+    return true;
   }
+  return false;
 };
 
 export const getNotes = userId => async dispatch => {
@@ -76,12 +77,12 @@ const notesReducer = (state = initialState, action) => {
   switch (action.type) {
     case ADD_ONE: {
       if (action.note.id) {
-        const newState = {
+        return {
           ...state,
           [action.note.id]: action.note,
         };
-        return newState;
       }
+      return state;
     }
     case LOAD: {
       const newNotes = {};

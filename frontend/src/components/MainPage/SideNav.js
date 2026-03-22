@@ -20,6 +20,8 @@ const SideNav = ({
   setNewNotebookHidden,
   searchInput,
   setSearchInput,
+  onSearchSelectNote,
+  onNotebookNavigate,
 }) => {
   const dispatch = useDispatch();
 
@@ -41,10 +43,12 @@ const SideNav = ({
 
     let titles = titleResults.map(notes => (
       <div
+        key={`search-title-${notes.id}`}
         id={"searchResTitle"}
         onClick={() => {
           dispatch(setSelectedNote(notes));
           setSearchInput("");
+          onSearchSelectNote?.();
         }}
       >
         {notes.title}
@@ -57,10 +61,12 @@ const SideNav = ({
 
     let noteContent = noteResults.map(note => (
       <div
+        key={`search-body-${note.id}`}
         id={"searchRes"}
         onClick={() => {
           dispatch(setSelectedNote(note));
           setSearchInput("");
+          onSearchSelectNote?.();
         }}
       >
         {note.content
@@ -77,17 +83,25 @@ const SideNav = ({
 
     if (!titles.length)
       titles = [
-        <div id={"searchLabel"}>There are no titles with that value</div>,
+        <div key="search-empty-titles" id={"searchLabel"}>
+          There are no titles with that value
+        </div>,
       ];
     if (!noteContent.length)
       noteContent = [
-        <div id={"searchLabel"}>There are no notes with that value</div>,
+        <div key="search-empty-notes" id={"searchLabel"}>
+          There are no notes with that value
+        </div>,
       ];
 
     const searchResults = [
-      <div id={"searchLabel"}>Titles...</div>,
+      <div key="search-label-titles" id={"searchLabel"}>
+        Titles...
+      </div>,
       ...titles,
-      <div id={"searchLabel"}>Notes...</div>,
+      <div key="search-label-notes" id={"searchLabel"}>
+        Notes...
+      </div>,
       ...noteContent,
     ];
 
@@ -120,6 +134,7 @@ const SideNav = ({
         setNewNotebookHidden={setNewNotebookHidden}
         notebooks={notebooks}
         selectedNotebook={selectedNotebook}
+        onNotebookNavigate={onNotebookNavigate}
       />
       <Toggle />
       <div id="sideNavBottom">

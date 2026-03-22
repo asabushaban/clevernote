@@ -38,12 +38,12 @@ const selectNoteReducer = (state = initialState, action) => {
       return state;
     }
     case UPDATE_NOTE_CONTENT: {
-      const newState = { ...state, content: action.noteContent };
-      return newState;
+      if (!state) return state;
+      return { ...state, content: action.noteContent };
     }
     case UPDATE_NOTE_TITLE: {
-      const newState = { ...state, title: action.noteTitle };
-      return newState;
+      if (!state) return state;
+      return { ...state, title: action.noteTitle };
     }
     default:
       return state;

@@ -11,6 +11,7 @@ const Notebooks = ({
   setNewNotebookHidden,
   notebooks,
   selectedNotebook,
+  onNotebookNavigate,
 }) => {
   const dispatch = useDispatch();
   const history = useHistory();
@@ -30,6 +31,7 @@ const Notebooks = ({
           hidden={directionHelper(direction)}
           onClick={() => {
             dispatch(setSelectedNotebook(notebooks[key]));
+            onNotebookNavigate?.();
           }}
         >
           {notebooks[key].name}
@@ -43,6 +45,7 @@ const Notebooks = ({
           hidden={directionHelper(direction)}
           onClick={() => {
             dispatch(setSelectedNotebook(notebooks[key]));
+            onNotebookNavigate?.();
           }}
         >
           {notebooks[key].name}
@@ -68,6 +71,7 @@ const Notebooks = ({
           className="notesNameListItem"
           onClick={() => {
             dispatch(setSelectedNotebook("All Notes"));
+            onNotebookNavigate?.();
           }}
         >
           All Notes

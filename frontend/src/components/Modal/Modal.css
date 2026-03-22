@@ -1,21 +1,17 @@
 .modal {
   position: fixed;
   inset: 0;
-  background-color: rgba(8, 12, 24, 0.45);
+  background: rgba(8, 12, 24, 0.42);
+  backdrop-filter: blur(10px) saturate(1.1);
   display: flex;
   align-items: center;
   justify-content: center;
-  z-index: 106;
+  z-index: 280;
   opacity: 0;
-  transition: all 0.3s ease-in-out;
+  transition:
+    opacity 0.35s cubic-bezier(0.16, 1, 0.3, 1),
+    backdrop-filter 0.35s ease;
   pointer-events: none;
-}
-
-.xbutton:hover {
-  background-color: var(--bg-accent);
-  color: var(--text-primary);
-  border-radius: 50%;
-  cursor: pointer;
 }
 
 .modal.show {
@@ -24,19 +20,23 @@
 }
 
 .modal-content {
-  width: min(560px, 90vw);
-  background: var(--surface);
+  width: min(560px, 92vw);
+  background: var(--surface-strong);
   border: 1px solid var(--border);
-  box-shadow: var(--shadow-soft);
-  transform: translateY(-200px);
-  transition: all 0.3s ease-in-out;
-  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-float);
+  transform: translateY(24px) scale(0.96);
+  opacity: 0;
+  transition:
+    transform 0.4s cubic-bezier(0.34, 1.2, 0.64, 1),
+    opacity 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+  border-radius: var(--radius-xl, 22px);
   color: var(--text-primary);
-  backdrop-filter: blur(18px);
+  backdrop-filter: blur(22px) saturate(1.2);
 }
 
 .modal.show .modal-content {
-  transform: translateY(0);
+  transform: translateY(0) scale(1);
+  opacity: 1;
 }
 
 /* .modal-header,
@@ -74,6 +74,28 @@
 
 .xbutton {
   color: var(--text-secondary);
+  border: none;
+  background: transparent;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition:
+    background 0.2s ease,
+    color 0.2s ease,
+    transform 0.15s cubic-bezier(0.34, 1.2, 0.64, 1);
+}
+
+.xbutton:hover {
+  background-color: var(--brand-soft);
+  color: var(--brand);
+}
+
+.xbutton:active {
+  transform: scale(0.92);
 }
 
 /* ask question modal */

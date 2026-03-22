@@ -11,6 +11,7 @@ const SideNavTop = ({
   newNotebookHidden,
   setNewNotebookHidden,
   notebooks,
+  onNotebookNavigate,
 }) => {
   return (
     <div id="sideNavTop">
@@ -41,6 +42,7 @@ const SideNavTop = ({
         newNotebookHidden={newNotebookHidden}
         setNewNotebookHidden={setNewNotebookHidden}
         notebooks={notebooks}
+        onNotebookNavigate={onNotebookNavigate}
       />
     </div>
   );
