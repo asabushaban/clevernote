@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import ReactHtmlParser from "react-html-parser";
 import { prettyDateMaker } from "../../helpers";
 
@@ -19,34 +19,144 @@ function notesInScope(notes, notebook) {
   return all.filter(n => n.notebookId === notebook.id);
 }
 
+function sortNotesByUpdated(list) {
+  return [...list].sort(
+    (a, b) => new Date(b?.updatedAt || b?.createdAt) - new Date(a?.updatedAt || a?.createdAt)
+  );
+}
+
 export function NotebookPickerPanel({
   notebooks,
   notes,
   onOpenNotebook,
   onOpenNote,
 }) {
-  const [hoverKey, setHoverKey] = useState(null);
+  const [expandedKey, setExpandedKey] = useState(null);
+  const [activePreviewNoteByKey, setActivePreviewNoteByKey] = useState({});
+  const [previewContext, setPreviewContext] = useState(null);
   const list = useMemo(() => Object.values(notebooks), [notebooks]);
+
+  const togglePreview = ({ key, openCtx, scoped }) => {
+    if (expandedKey === key) {
+      setExpandedKey(null);
+      setPreviewContext(null);
+      return;
+    }
+    setExpandedKey(key);
+    setPreviewContext({
+      key,
+      openCtx,
+      scoped,
+      label:
+        openCtx?.type === "allNotes"
+          ? "All notes"
+          : openCtx?.notebook?.name || "Notebook",
+    });
+  };
+
+  const renderPreviewPanel = context => {
+    if (!context) return null;
+    const { key, scoped, openCtx, label } = context;
+    const sorted = sortNotesByUpdated(scoped);
+    const firstNoteId = sorted[0]?.id || null;
+    const activeNoteId = activePreviewNoteByKey[key] || firstNoteId;
+    const activeNote =
+      sorted.find(n => n.id === activeNoteId) || sorted[0] || null;
+
+    const onHoverNote = note => {
+      setActivePreviewNoteByKey(prev => ({ ...prev, [key]: note.id }));
+    };
+
+    return (
+      <div
+        className="notebookPreviewPanel"
+        role="region"
+        aria-label={`Preview notes in ${label}`}
+      >
+        <div className="notebookPreviewPanelHeader">
+          <p className="notebookPreviewPopoverTitle">
+            {sorted.length} note{sorted.length === 1 ? "" : "s"} in this notebook
+          </p>
+          <button
+            type="button"
+            className="uiButton uiButtonGhost notebookPreviewOpenNotebookBtn"
+            onClick={() =>
+              onOpenNotebook(
+                openCtx?.type === "allNotes" ? "All Notes" : openCtx?.notebook
+              )
+            }
+          >
+            Open notebook
+          </button>
+        </div>
+        {sorted.length === 0 ? (
+          <div className="notebookPreviewEmpty">
+            No notes yet - create one inside this notebook.
+          </div>
+        ) : (
+          <div className="notebookPreviewLayout">
+            <ul className="notebookPreviewList notebookPreviewList--left">
+              {sorted.map(n => (
+                <li key={n.id} className="notebookPreviewItem">
+                  <button
+                    type="button"
+                    className={`notebookPreviewItemBtn${
+                      n.id === activeNote?.id ? " is-active" : ""
+                    }`}
+                    onMouseEnter={() => onHoverNote(n)}
+                    onFocus={() => onHoverNote(n)}
+                    onClick={() => onOpenNote(n, openCtx)}
+                  >
+                    <span className="notebookPreviewItemTitle">{n.title}</span>
+                    <span className="notebookPreviewItemSnippet">
+                      {textPreview(n.content, 54) || "Empty note"}
+                    </span>
+                  </button>
+                </li>
+              ))}
+            </ul>
+            <div className="notebookPreviewFocus">
+              <h4 className="notebookPreviewFocusTitle">
+                {activeNote?.title || "Untitled note"}
+              </h4>
+              <p className="notebookPreviewFocusSnippet">
+                {textPreview(activeNote?.content, 5000) || "This note is empty."}
+              </p>
+              <button
+                type="button"
+                className="uiButton uiButtonPrimary notebookPreviewOpenBtn"
+                onClick={() => activeNote && onOpenNote(activeNote, openCtx)}
+              >
+                Open note
+              </button>
+            </div>
+          </div>
+        )}
+      </div>
+    );
+  };
 
   return (
     <div className="browsePanel browsePanel--notebooks">
       <header className="browsePanelHeader">
         <h2 className="browsePanelTitle">Notebooks</h2>
         <p className="browsePanelSubtitle">
-          Open a notebook for its list, or pick a note from the preview. Hover a
-          card to see notes.
+          Open a notebook for its list, or use preview to jump directly to a
+          note.
         </p>
       </header>
       <div className="notebookPickerGrid">
-        <div
-          className="notebookPickerCardWrap"
-          onMouseEnter={() => setHoverKey("all")}
-          onMouseLeave={() => setHoverKey(null)}
-        >
+        <div className="notebookPickerCardWrap">
           <button
             type="button"
             className="notebookPickerCard notebookPickerCard--all"
-            onClick={() => onOpenNotebook("All Notes")}
+            onClick={() =>
+              togglePreview({
+                key: "all",
+                openCtx: { type: "allNotes" },
+                scoped: notesInScope(notes, "All Notes"),
+              })
+            }
           >
             <span className="notebookPickerCardIcon" aria-hidden="true">
               <i className="far fa-sticky-note" />
@@ -56,54 +166,23 @@ export function NotebookPickerPanel({
               {Object.keys(notes).length} notes
             </span>
           </button>
-          {hoverKey === "all" && (
-            <div
-              className="notebookPreviewPopover"
-              role="region"
-              aria-label="Notes in All notes"
-              onClick={e => e.stopPropagation()}
-            >
-              <p className="notebookPreviewPopoverTitle">Open a note</p>
-              <ul className="notebookPreviewList">
-                {notesInScope(notes, "All Notes")
-                  .slice(0, 8)
-                  .map(n => (
-                    <li key={n.id} className="notebookPreviewItem">
-                      <button
-                        type="button"
-                        className="notebookPreviewItemBtn"
-                        onClick={() =>
-                          onOpenNote(n, { type: "allNotes" })
-                        }
-                      >
-                        <span className="notebookPreviewItemTitle">
-                          {n.title}
-                        </span>
-                        <span className="notebookPreviewItemSnippet">
-                          {textPreview(n.content, 72) || "Empty note"}
-                        </span>
-                      </button>
-                    </li>
-                  ))}
-              </ul>
-            </div>
-          )}
         </div>
 
         {list.map(nb => {
           const key = `nb-${nb.id}`;
           const scoped = notesInScope(notes, nb);
           return (
-            <div
-              key={nb.id}
-              className="notebookPickerCardWrap"
-              onMouseEnter={() => setHoverKey(key)}
-              onMouseLeave={() => setHoverKey(null)}
-            >
+            <div key={nb.id} className="notebookPickerCardWrap">
               <button
                 type="button"
                 className="notebookPickerCard"
-                onClick={() => onOpenNotebook(nb)}
+                onClick={() =>
+                  togglePreview({
+                    key,
+                    openCtx: { type: "notebook", notebook: nb },
+                    scoped,
+                  })
+                }
               >
                 <span className="notebookPickerCardIcon" aria-hidden="true">
                   <i className="fas fa-book" />
@@ -113,46 +192,15 @@ export function NotebookPickerPanel({
                   {scoped.length} notes
                 </span>
               </button>
-              {hoverKey === key && (
-                <div
-                  className="notebookPreviewPopover"
-                  role="region"
-                  aria-label={`Notes in ${nb.name}`}
-                  onClick={e => e.stopPropagation()}
-                >
-                  <p className="notebookPreviewPopoverTitle">Open a note</p>
-                  <ul className="notebookPreviewList">
-                    {scoped.length === 0 ? (
-                      <li className="notebookPreviewItem notebookPreviewItem--empty">
-                        No notes yet — click the card to open this notebook.
-                      </li>
-                    ) : (
-                      scoped.slice(0, 8).map(n => (
-                        <li key={n.id} className="notebookPreviewItem">
-                          <button
-                            type="button"
-                            className="notebookPreviewItemBtn"
-                            onClick={() =>
-                              onOpenNote(n, { type: "notebook", notebook: nb })
-                            }
-                          >
-                            <span className="notebookPreviewItemTitle">
-                              {n.title}
-                            </span>
-                            <span className="notebookPreviewItemSnippet">
-                              {textPreview(n.content, 72) || "Empty note"}
-                            </span>
-                          </button>
-                        </li>
-                      ))
-                    )}
-                  </ul>
-                </div>
-              )}
             </div>
           );
         })}
       </div>
+      {previewContext ? (
+        <div className="notebookPreviewStage">
+          {renderPreviewPanel(previewContext)}
+        </div>
+      ) : null}
     </div>
   );
 }
@@ -166,15 +214,26 @@ export function NotesListPanel({
   onCreateNote,
   onNotebookMenu,
 }) {
+  const [page, setPage] = useState(1);
+  const pageSize = 12;
   const title = selectedNotebook?.name || selectedNotebook || "Notes";
   const list = useMemo(() => {
     if (selectedNotebook === "All Notes") {
-      return Object.values(notes);
+      return sortNotesByUpdated(Object.values(notes));
     }
-    return Object.values(notes).filter(
+    return sortNotesByUpdated(Object.values(notes).filter(
       n => n.notebookId === selectedNotebook?.id
-    );
+    ));
   }, [notes, selectedNotebook]);
+
+  const totalPages = Math.max(1, Math.ceil(list.length / pageSize));
+  const currentPage = Math.min(page, totalPages);
+  const start = (currentPage - 1) * pageSize;
+  const pageItems = list.slice(start, start + pageSize);
+
+  useEffect(() => {
+    setPage(1);
+  }, [selectedNotebook]);
 
   return (
     <div className="browsePanel browsePanel--notes">
@@ -216,7 +275,7 @@ export function NotesListPanel({
       </button>
 
       <ul className="notesBrowseList">
-        {list.map(note => (
+        {pageItems.map(note => (
           <li key={note.id}>
             <button
               type="button"
@@ -236,6 +295,27 @@ export function NotesListPanel({
           </li>
         ))}
       </ul>
+      <div className="notesBrowsePagination">
+        <button
+          type="button"
+          className="uiButton uiButtonGhost notesPageBtn"
+          disabled={currentPage <= 1}
+          onClick={() => setPage(p => Math.max(1, p - 1))}
+        >
+          Previous
+        </button>
+        <span className="notesPageInfo">
+          Page {currentPage} of {totalPages}
+        </span>
+        <button
+          type="button"
+          className="uiButton uiButtonGhost notesPageBtn"
+          disabled={currentPage >= totalPages}
+          onClick={() => setPage(p => Math.min(totalPages, p + 1))}
+        >
+          Next
+        </button>
+      </div>
     </div>
   );
 }

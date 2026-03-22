@@ -22,6 +22,7 @@ import {
   NotebookPickerPanel,
   NotesListPanel,
 } from "./BrowseWorkspace";
+import Toggle from "../ThemeToggle";
 
 function plainFromHtml(html) {
   if (!html) return "";
@@ -49,7 +50,6 @@ function MainPage() {
 
   const [name, setName] = useState("");
 
-  const [direction, setDirection] = useState("right");
   const [newNotebookHidden, setNewNotebookHidden] = useState(true);
 
   const [error] = useState("");
@@ -292,6 +292,14 @@ function MainPage() {
     setAppPhase("notes");
   }, []);
 
+  const handleSidebarOpenNotebookPicker = useCallback(() => {
+    setAppPhase("notebooks");
+  }, []);
+
+  const handleSidebarOpenSuggestedNote = useCallback(() => {
+    setAppPhase("editor");
+  }, []);
+
   const saveStatusLabel =
     saveStatus === "saving"
       ? "Saving…"
@@ -337,7 +345,16 @@ function MainPage() {
               <button
                 type="button"
                 className={`sideNavPinBtn${navPinned ? " is-active" : ""}`}
-                onClick={() => setNavPinned(p => !p)}
+                onClick={() => {
+                  if (navPinned) {
+                    clearNavLeaveTimer();
+                    setNavPinned(false);
+                    setNavHovered(false);
+                    return;
+                  }
+                  setNavPinned(true);
+                  setNavHovered(true);
+                }}
                 aria-pressed={navPinned}
                 title={navPinned ? "Unpin sidebar" : "Pin sidebar open"}
               >
@@ -352,14 +369,14 @@ function MainPage() {
               selectedNotebook={selectedNotebook}
               name={name}
               setName={setName}
-              direction={direction}
-              setDirection={setDirection}
               newNotebookHidden={newNotebookHidden}
               setNewNotebookHidden={setNewNotebookHidden}
               searchInput={searchInput}
               setSearchInput={setSearchInput}
               onSearchSelectNote={handleSearchSelectNote}
               onNotebookNavigate={handleSidebarNotebookNavigate}
+              onOpenNotebookPicker={handleSidebarOpenNotebookPicker}
+              onOpenNoteNavigate={handleSidebarOpenSuggestedNote}
             />
           </aside>
         </div>
@@ -470,6 +487,9 @@ function MainPage() {
           </div>
         )}
         </div>
+      </div>
+      <div className="appThemeToggleFab" aria-label="Theme toggle">
+        <Toggle />
       </div>
 
       <NotebookModal

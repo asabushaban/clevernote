@@ -3,18 +3,20 @@ import Notebooks from "./Notebooks";
 
 const SideNavTop = ({
   selectedNotebook,
+  selectedNote,
+  notes,
   searchInput,
   setSearchInput,
   searchNotes,
-  direction,
-  setDirection,
   newNotebookHidden,
   setNewNotebookHidden,
   notebooks,
   onNotebookNavigate,
+  onOpenNotebookPicker,
+  onOpenNoteNavigate,
 }) => {
   return (
-    <div id="sideNavTop">
+    <div id="sideNavTop" className={searchInput ? "sideNavHasSearch" : ""}>
       <div className="side-bar-search">
         <i
           className="fas fa-search icon"
@@ -31,18 +33,22 @@ const SideNavTop = ({
           </div>
 
           {searchInput ? (
-            <div id={"searchResDiv"}>{searchNotes(searchInput)}</div>
+            <div id={"searchResDiv"} role="listbox" aria-label="Search results">
+              {searchNotes(searchInput)}
+            </div>
           ) : null}
         </div>
       </div>
       <Notebooks
+        notes={notes}
         selectedNotebook={selectedNotebook}
-        direction={direction}
-        setDirection={setDirection}
+        selectedNote={selectedNote}
         newNotebookHidden={newNotebookHidden}
         setNewNotebookHidden={setNewNotebookHidden}
         notebooks={notebooks}
         onNotebookNavigate={onNotebookNavigate}
+        onOpenNotebookPicker={onOpenNotebookPicker}
+        onOpenNoteNavigate={onOpenNoteNavigate}
       />
     </div>
   );

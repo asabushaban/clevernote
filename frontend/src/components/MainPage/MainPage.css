@@ -21,7 +21,7 @@
 }
 
 :root {
-  --nav-hit-strip: 14px;
+  --nav-hit-strip: 28px;
 }
 
 /* Root shell: no page scroll — inner regions scroll */
@@ -43,6 +43,14 @@
   pointer-events: none;
 }
 
+.sideNavDock::after {
+  content: none;
+}
+
+:root[data-theme="dark"] .sideNavDock::after {
+  content: none;
+}
+
 .sideNavDockInner {
   position: relative;
   height: 100%;
@@ -52,6 +60,8 @@
   display: flex;
   flex-direction: row;
   align-items: stretch;
+  border-radius: 0 !important;
+  overflow: hidden;
 }
 
 .sideNavDock.is-expanded .sideNavDockInner {
@@ -60,26 +70,82 @@
 
 .sideNavHitStrip {
   width: var(--nav-hit-strip);
+  min-width: var(--nav-hit-strip);
   flex-shrink: 0;
   padding: 0;
   margin: 0;
   border: none;
+  border-radius: 0 !important;
+  -webkit-appearance: none;
+  appearance: none;
   display: block;
-  background: linear-gradient(
-    90deg,
-    rgba(15, 23, 42, 0.2),
-    rgba(15, 23, 42, 0.05)
-  );
+  background: linear-gradient(180deg, rgba(91, 108, 242, 0.62), rgba(91, 108, 242, 0.2));
+  border-right: 1px solid rgba(255, 255, 255, 0.18);
+  box-shadow: 0 0 0 1px rgba(91, 108, 242, 0.18), 6px 0 18px rgba(15, 23, 42, 0.2);
   cursor: pointer;
   align-self: stretch;
+  position: relative;
+  overflow: hidden;
+  transition: background 0.28s var(--ease-out-expo), box-shadow 0.28s var(--ease-out-expo),
+    border-color 0.28s var(--ease-out-expo);
 }
 
 :root[data-theme="dark"] .sideNavHitStrip {
-  background: linear-gradient(
-    90deg,
-    rgba(255, 255, 255, 0.12),
-    rgba(255, 255, 255, 0.03)
-  );
+  background: linear-gradient(180deg, rgba(139, 157, 255, 0.72), rgba(139, 157, 255, 0.26));
+  border-right: 1px solid rgba(255, 255, 255, 0.2);
+  box-shadow: 0 0 0 1px rgba(139, 157, 255, 0.2), 8px 0 20px rgba(0, 0, 0, 0.32);
+}
+
+.sideNavHitStrip::before,
+.sideNavHitStrip::after {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  color: rgba(255, 255, 255, 0.95);
+  font-size: 14px;
+  font-weight: 700;
+  line-height: 1;
+  text-shadow: 0 1px 6px rgba(0, 0, 0, 0.35);
+  opacity: 0.88;
+  animation: navChevronPulse 1.7s ease-in-out infinite;
+  pointer-events: none;
+}
+
+.sideNavHitStrip::before {
+  content: "›";
+  top: calc(50% - 12px);
+}
+
+.sideNavHitStrip::after {
+  content: "›";
+  top: calc(50% + 2px);
+  animation-delay: 0.2s;
+}
+
+.sideNavDock.is-expanded .sideNavHitStrip::before,
+.sideNavDock.is-expanded .sideNavHitStrip::after {
+  content: "‹";
+}
+
+.sideNavHitStrip:hover {
+  background: linear-gradient(180deg, rgba(91, 108, 242, 0.78), rgba(91, 108, 242, 0.32));
+  box-shadow: 0 0 0 1px rgba(91, 108, 242, 0.28), 12px 0 26px rgba(15, 23, 42, 0.28);
+}
+
+:root[data-theme="dark"] .sideNavHitStrip:hover {
+  background: linear-gradient(180deg, rgba(139, 157, 255, 0.88), rgba(139, 157, 255, 0.36));
+}
+
+@keyframes navChevronPulse {
+  0%,
+  100% {
+    transform: translateX(-50%) translateX(0);
+    opacity: 0.72;
+  }
+  50% {
+    transform: translateX(-50%) translateX(3px);
+    opacity: 1;
+  }
 }
 
 .sideNavHitStrip:focus-visible {
@@ -93,18 +159,25 @@
   top: 0;
   bottom: 0;
   width: min(17rem, calc(100vw - var(--nav-hit-strip) - 20px));
-  transform: translateX(-100%);
+  transform: translateX(calc(-100% - 8px));
   transition: transform 0.32s var(--ease-out-expo);
   display: flex;
   flex-direction: column;
-  box-shadow: 16px 0 48px rgba(0, 0, 0, 0.2);
+  box-shadow: none;
   border-radius: 0 var(--radius-xl) var(--radius-xl) 0;
   overflow: hidden;
   background: var(--surface-dark);
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
 }
 
 .sideNavDock.is-expanded .sideNavFlyout {
   transform: translateX(0);
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  box-shadow: 16px 0 48px rgba(0, 0, 0, 0.2);
 }
 
 .sideNavFlyoutHeader {
@@ -171,6 +244,12 @@
   background: transparent;
   box-sizing: border-box;
   overflow: hidden;
+  transition: margin-left 0.32s var(--ease-out-expo), width 0.32s var(--ease-out-expo);
+}
+
+.sideNavDock.is-pinned ~ #mainPageContainer {
+  margin-left: calc(var(--nav-hit-strip) + min(17rem, calc(100vw - 32px)));
+  width: calc(100% - (var(--nav-hit-strip) + min(17rem, calc(100vw - 32px))));
 }
 
 .mainWorkspace {
@@ -291,11 +370,14 @@
 .input-field {
   width: 100%;
   min-height: 44px;
-  max-height: 44px;
+  max-height: none;
   border-radius: var(--radius-pill);
   background: rgba(255, 255, 255, 0.1);
   border: 1px solid rgba(255, 255, 255, 0.12);
   color: var(--text-primary);
+  position: relative;
+  overflow: visible;
+  z-index: 35;
   transition: border-color 0.25s ease, background 0.25s ease,
     box-shadow 0.25s ease;
 }
@@ -330,14 +412,26 @@
 }
 
 #searchResDiv {
-  margin: 10px 12px 0;
+  margin: 0;
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: calc(100% + 8px);
   max-height: min(240px, 38vh);
   overflow: auto;
   border-radius: var(--radius-md);
   background: rgba(10, 14, 28, 0.5);
   border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: 0 20px 34px rgba(0, 0, 0, 0.35);
   scrollbar-width: thin;
   animation: mainFadeIn 0.3s var(--ease-out-expo);
+}
+
+.sideNavHasSearch #notebookNameList {
+  opacity: 0.22;
+  pointer-events: none;
+  filter: blur(1.3px);
+  transition: opacity 0.22s ease, filter 0.22s ease;
 }
 
 #searchResTitle,
@@ -401,6 +495,10 @@
   background: rgba(255, 255, 255, 0.06);
 }
 
+.sideNavPrimaryLink {
+  margin-bottom: 8px;
+}
+
 .navListRow i,
 #notbookNavTab,
 #signoutNavTab,
@@ -428,7 +526,7 @@
 }
 
 .notebookNameListItem {
-  margin-left: 36px;
+  margin-left: 4px;
   padding: 8px 12px;
   border-radius: var(--radius-sm);
   transition: background 0.2s ease, color 0.2s ease,
@@ -452,6 +550,68 @@
 .notebookNameListItemActive {
   background: rgba(127, 151, 255, 0.2);
   border: 1px solid rgba(168, 184, 255, 0.25);
+}
+
+.sideNavSectionLabel {
+  margin: 12px 8px 6px;
+  padding: 0 6px;
+  font-size: 11px;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  color: rgba(190, 201, 241, 0.62);
+  font-weight: 700;
+}
+
+.sideNavNoteList {
+  margin: 0 4px 8px;
+}
+
+.sideNavNoteItem {
+  list-style: none;
+  margin: 0 0 4px;
+  padding: 8px 10px;
+  border-radius: var(--radius-sm);
+  color: #dce4ff;
+  cursor: pointer;
+  border: 1px solid transparent;
+  transition: background 0.18s ease, transform 0.14s var(--ease-spring),
+    border-color 0.18s ease;
+}
+
+.sideNavNoteItem:hover {
+  background: rgba(255, 255, 255, 0.1);
+  border-color: rgba(168, 184, 255, 0.2);
+  transform: translateX(2px);
+}
+
+.sideNavNoteItemSuggested {
+  background: rgba(91, 108, 242, 0.14);
+}
+
+.sideNavNoteItemMuted {
+  color: rgba(190, 201, 241, 0.52);
+  font-style: italic;
+  cursor: default;
+}
+
+.sideNavNoteTitle {
+  display: block;
+  font-size: 13px;
+  line-height: 1.35;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.sideNavNotebookActions {
+  margin: 8px 4px 0;
+}
+
+.sideNavNotebookActionBtn {
+  width: 100%;
+  justify-content: center;
+  padding: 10px 14px;
+  font-size: 12px;
 }
 
 #signoutNavIcon {
@@ -489,13 +649,20 @@
   padding: 12px clamp(12px, 2vw, 16px) 0;
   position: relative;
   z-index: 1;
+  margin-top: auto;
 }
 
-#sideNavBottom > div[hidden] {
+.sideNavBottomInner {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+#sideNavBottom > .sideNavBottomInner > div[hidden] {
   display: none !important;
 }
 
-#sideNavBottom > div:not([hidden]) {
+#sideNavBottom > .sideNavBottomInner > div:not([hidden]) {
   display: flex;
   align-items: stretch;
   gap: 0;
@@ -530,6 +697,30 @@
   padding: 0;
   font-size: 1.25rem;
   line-height: 1;
+}
+
+.sideNavSignoutBtn {
+  width: 100%;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: var(--radius-md);
+  background: rgba(0, 0, 0, 0.2);
+  color: #ffd89b;
+  padding: 10px 12px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: background 0.22s ease, transform 0.15s var(--ease-spring);
+}
+
+.sideNavSignoutBtn:hover {
+  background: rgba(255, 216, 155, 0.14);
+}
+
+.sideNavSignoutBtn:active {
+  transform: scale(0.98);
 }
 
 .toggle-container {
@@ -569,6 +760,35 @@
 
 .slider.active {
   transform: translateX(24px);
+}
+
+.appThemeToggleFab {
+  position: fixed;
+  right: 28px;
+  top: 26px;
+  z-index: 320;
+  padding: 14px 16px;
+  border-radius: 999px;
+  background: var(--surface-strong);
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow-float);
+  backdrop-filter: blur(10px);
+}
+
+.appThemeToggleFab .toggle-container {
+  margin: 3px;
+  width: 44px;
+  height: 24px;
+}
+
+.appThemeToggleFab .slider {
+  width: 16px;
+  height: 16px;
+  margin-left: 3px;
+}
+
+.appThemeToggleFab .slider.active {
+  transform: translateX(20px);
 }
 
 /* —— Browse: notebook grid & note list —— */
@@ -698,10 +918,8 @@
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(min(100%, 220px), 1fr));
   gap: clamp(14px, 2vw, 20px);
-  overflow-y: auto;
-  overflow-x: hidden;
-  flex: 1;
-  min-height: 0;
+  overflow: visible;
+  flex: 0 0 auto;
   padding-bottom: 8px;
   align-content: start;
 }
@@ -760,24 +978,56 @@
   font-weight: 500;
 }
 
-.notebookPreviewPopover {
-  position: absolute;
-  left: 0;
-  right: 0;
-  top: calc(100% + 8px);
-  z-index: 30;
-  padding: 12px 14px;
+.notebookPickerActions {
+  margin-top: 8px;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.notebookPreviewToggle {
+  padding: 8px 12px;
+  font-size: 12px;
+}
+
+.notebookPreviewToggle.is-open {
+  background: var(--brand-soft);
+  border-color: var(--border-glow);
+  color: var(--text-primary);
+}
+
+.notebookPreviewPanel {
+  margin-top: 0;
   border-radius: var(--radius-md);
   background: var(--surface-strong);
   border: 1px solid var(--border);
   box-shadow: var(--shadow-float);
-  max-height: min(280px, 42vh);
-  overflow-y: auto;
-  animation: mainFadeIn 0.25s var(--ease-out-expo);
+  height: min(68vh, calc(100dvh - 280px));
+  overflow: hidden;
+  animation: mainFadeIn 0.28s var(--ease-out-expo);
+  display: flex;
+  flex-direction: column;
+}
+
+.notebookPreviewPanelHeader {
+  position: sticky;
+  top: 0;
+  z-index: 1;
+  padding: 10px 12px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+  background: var(--surface-strong);
+  border-bottom: 1px solid var(--border);
+}
+
+.notebookPreviewOpenNotebookBtn {
+  padding: 8px 12px;
+  font-size: 12px;
 }
 
 .notebookPreviewPopoverTitle {
-  margin: 0 0 10px;
+  margin: 0;
   font-size: 11px;
   font-weight: 700;
   text-transform: uppercase;
@@ -788,11 +1038,26 @@
 .notebookPreviewList {
   list-style: none;
   margin: 0;
-  padding: 0;
+  padding: 0 12px 10px;
+}
+
+.notebookPreviewLayout {
+  display: grid;
+  grid-template-columns: minmax(220px, 300px) 1fr;
+  min-height: 0;
+  height: 100%;
+}
+
+.notebookPreviewList--left {
+  border-right: 1px solid var(--border);
+  padding: 8px;
+  max-height: none;
+  height: 100%;
+  overflow-y: auto;
 }
 
 .notebookPreviewItem {
-  padding: 8px 0;
+  padding: 6px 0;
   border-bottom: 1px solid var(--border);
   display: flex;
   flex-direction: column;
@@ -824,22 +1089,90 @@
 .notebookPreviewItemBtn {
   width: 100%;
   margin: 0;
-  padding: 8px 6px;
+  padding: 10px 8px;
   border: none;
   background: transparent;
   cursor: pointer;
   text-align: left;
   font-family: inherit;
   border-radius: var(--radius-sm);
-  transition: background 0.18s ease, transform 0.12s var(--ease-spring);
+  transition: background 0.18s ease, transform 0.18s var(--ease-spring),
+    box-shadow 0.2s ease;
 }
 
 .notebookPreviewItemBtn:hover {
   background: var(--brand-soft);
+  transform: scale(1.03);
+  box-shadow: 0 8px 22px rgba(15, 23, 42, 0.12);
 }
 
 .notebookPreviewItemBtn:active {
   transform: scale(0.99);
+}
+
+.notebookPreviewItemBtn.is-active {
+  background: var(--brand-soft);
+  border: 1px solid var(--border-glow);
+}
+
+.notebookPreviewFocus {
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  min-height: 0;
+}
+
+.notebookPreviewFocusTitle {
+  margin: 0;
+  font-size: 19px;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+.notebookPreviewFocusSnippet {
+  margin: 0;
+  flex: 1;
+  line-height: 1.55;
+  color: var(--text-secondary);
+  font-size: 14px;
+  overflow-y: auto;
+  white-space: pre-wrap;
+}
+
+.notebookPreviewOpenBtn {
+  align-self: flex-start;
+  padding: 9px 14px;
+  font-size: 12px;
+}
+
+.notebookPreviewEmpty {
+  padding: 18px;
+  color: var(--text-secondary);
+  font-style: italic;
+}
+
+.notebookPreviewStage {
+  margin-top: 14px;
+  flex: 1;
+  min-height: 0;
+}
+
+.notebookPreviewPagination {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.notebookPreviewPageBtn {
+  padding: 6px 10px;
+  font-size: 11px;
+}
+
+.notebookPreviewPageInfo {
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--text-secondary);
 }
 
 .notebookPreviewItemBtn .notebookPreviewItemTitle {
@@ -865,6 +1198,45 @@
   min-height: 0;
   overflow-y: auto;
   overflow-x: hidden;
+}
+
+.notesBrowsePagination {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 10px;
+  padding-top: 10px;
+  border-top: 1px solid var(--border);
+}
+
+.notesPageBtn {
+  padding: 8px 12px;
+  font-size: 12px;
+}
+
+.notesPageInfo {
+  min-width: 120px;
+  text-align: center;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text-secondary);
+}
+
+@media screen and (max-width: 900px) {
+  .notebookPreviewPanel {
+    height: min(64vh, calc(100dvh - 300px));
+  }
+
+  .notebookPreviewLayout {
+    grid-template-columns: 1fr;
+  }
+
+  .notebookPreviewList--left {
+    border-right: 0;
+    border-bottom: 1px solid var(--border);
+    max-height: min(220px, 32vh);
+    height: auto;
+  }
 }
 
 .notesBrowseRow {

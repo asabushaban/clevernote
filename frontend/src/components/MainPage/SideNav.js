@@ -1,29 +1,32 @@
 import React from "react";
 import { useDispatch } from "react-redux";
+import { useHistory } from "react-router-dom";
 import "./MainPage.css";
 import { createNotebook } from "../../store/notebooks";
 import SideNavProfile from "./SideNavProfile";
 import SideNavTop from "./SideNavTop";
 import { setSelectedNote } from "../../store/selectedNote";
-import Toggle from "../ThemeToggle";
+import * as sessionActions from "../../store/session";
 
 const SideNav = ({
   sessionUser,
   notes,
   notebooks,
+  selectedNote,
   selectedNotebook,
   name,
   setName,
-  direction,
-  setDirection,
   newNotebookHidden,
   setNewNotebookHidden,
   searchInput,
   setSearchInput,
   onSearchSelectNote,
   onNotebookNavigate,
+  onOpenNotebookPicker,
+  onOpenNoteNavigate,
 }) => {
   const dispatch = useDispatch();
+  const history = useHistory();
 
   //functions to list all notebooks/notes or specific notebooks/notes on search
 
@@ -121,37 +124,54 @@ const SideNav = ({
     setName("");
   };
 
+  const logout = e => {
+    e.preventDefault();
+    history.push("/login");
+    dispatch(sessionActions.logout());
+  };
+
   return (
     <div className="sideNav">
       <SideNavProfile sessionUser={sessionUser} />
       <SideNavTop
+        notes={notes}
+        selectedNote={selectedNote}
         searchInput={searchInput}
         setSearchInput={setSearchInput}
         searchNotes={searchNotes}
-        direction={direction}
-        setDirection={setDirection}
         newNotebookHidden={newNotebookHidden}
         setNewNotebookHidden={setNewNotebookHidden}
         notebooks={notebooks}
         selectedNotebook={selectedNotebook}
         onNotebookNavigate={onNotebookNavigate}
+        onOpenNotebookPicker={onOpenNotebookPicker}
+        onOpenNoteNavigate={onOpenNoteNavigate}
       />
-      <Toggle />
       <div id="sideNavBottom">
-        <div hidden={newNotebookHidden}>
-          <input
-            id="newNotebookInput"
-            onChange={e => setName(e.target.value)}
-            required="required"
-            value={name}
-          ></input>
+        <div className="sideNavBottomInner">
+          <div hidden={newNotebookHidden}>
+            <input
+              id="newNotebookInput"
+              onChange={e => setName(e.target.value)}
+              required="required"
+              value={name}
+            ></input>
+            <button
+              id="newNotebookButton"
+              className="uiButton uiButtonPrimary"
+              type="submit"
+              onClick={handleNewNotebookSubmit}
+            >
+              +
+            </button>
+          </div>
           <button
-            id="newNotebookButton"
-            className="uiButton uiButtonPrimary"
-            type="submit"
-            onClick={handleNewNotebookSubmit}
+            type="button"
+            className="sideNavSignoutBtn"
+            onClick={logout}
           >
-            +
+            <i className="fas fa-sign-out-alt" aria-hidden="true" />
+            <span>Sign out</span>
           </button>
         </div>
       </div>
