@@ -8,8 +8,6 @@ const SideNavTop = ({
   searchInput,
   setSearchInput,
   searchNotes,
-  newNotebookHidden,
-  setNewNotebookHidden,
   notebooks,
   onNotebookNavigate,
   onOpenNotebookPicker,
@@ -43,8 +41,6 @@ const SideNavTop = ({
         notes={notes}
         selectedNotebook={selectedNotebook}
         selectedNote={selectedNote}
-        newNotebookHidden={newNotebookHidden}
-        setNewNotebookHidden={setNewNotebookHidden}
         notebooks={notebooks}
         onNotebookNavigate={onNotebookNavigate}
         onOpenNotebookPicker={onOpenNotebookPicker}

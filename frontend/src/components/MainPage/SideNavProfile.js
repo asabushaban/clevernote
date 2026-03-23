@@ -1,4 +1,5 @@
 import React from "react";
+import Toggle from "../ThemeToggle";
 
 const SideNavProfile = ({ sessionUser }) => {
   return (
@@ -11,6 +12,9 @@ const SideNavProfile = ({ sessionUser }) => {
         <h1 className="profileName">
           {sessionUser.username}
         </h1>
+        <div className="profileThemeToggleWrap">
+          <Toggle compact />
+        </div>
       </div>
     </div>
   );

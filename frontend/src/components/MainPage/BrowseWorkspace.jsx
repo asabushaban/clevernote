@@ -30,11 +30,46 @@ export function NotebookPickerPanel({
   notes,
   onOpenNotebook,
   onOpenNote,
+  onCreateNote,
+  onCreateNotebook,
 }) {
   const [expandedKey, setExpandedKey] = useState(null);
   const [activePreviewNoteByKey, setActivePreviewNoteByKey] = useState({});
   const [previewContext, setPreviewContext] = useState(null);
+  const [isAddNotebookOpen, setIsAddNotebookOpen] = useState(false);
+  const [newNotebookName, setNewNotebookName] = useState("");
+  const [createError, setCreateError] = useState("");
+  const [isCreatingNotebook, setIsCreatingNotebook] = useState(false);
   const list = useMemo(() => Object.values(notebooks), [notebooks]);
+
+  const handleAddNotebookSubmit = async e => {
+    e.preventDefault();
+    const name = newNotebookName.trim();
+    if (!name) {
+      setCreateError("Notebook name is required.");
+      return;
+    }
+    if (name.length > 60) {
+      setCreateError("Notebook name must be 60 characters or fewer.");
+      return;
+    }
+
+    setIsCreatingNotebook(true);
+    setCreateError("");
+    try {
+      const result = await onCreateNotebook?.(name);
+      if (result?.ok === false) {
+        setCreateError(result.error || "Could not create notebook.");
+      } else {
+        setNewNotebookName("");
+        setIsAddNotebookOpen(false);
+      }
+    } catch {
+      setCreateError("Could not create notebook.");
+    } finally {
+      setIsCreatingNotebook(false);
+    }
+  };
 
   const togglePreview = ({ key, openCtx, scoped }) => {
     if (expandedKey === key) {
@@ -139,11 +174,72 @@ export function NotebookPickerPanel({
   return (
     <div className="browsePanel browsePanel--notebooks">
       <header className="browsePanelHeader">
-        <h2 className="browsePanelTitle">Notebooks</h2>
-        <p className="browsePanelSubtitle">
-          Open a notebook for its list, or use preview to jump directly to a
-          note.
-        </p>
+        <div className="browsePanelHeaderText">
+          <h2 className="browsePanelTitle">Notebooks</h2>
+          <p className="browsePanelSubtitle">
+            Open a notebook for its list, or use preview to jump directly to a
+            note.
+          </p>
+        </div>
+        <div className="browsePanelQuickActions">
+          <button
+            type="button"
+            className="uiButton uiButtonGhost browsePanelAddNotebookBtn"
+            onClick={() => {
+              setIsAddNotebookOpen(open => !open);
+              setCreateError("");
+            }}
+          >
+            {isAddNotebookOpen ? "Close" : "Add notebook"}
+          </button>
+          <button
+            type="button"
+            className="uiButton uiButtonPrimary browsePanelAddNoteBtn"
+            onClick={onCreateNote}
+          >
+            Add note
+          </button>
+        </div>
+        {isAddNotebookOpen ? (
+          <form
+            className="browsePanelCreateNotebookForm"
+            onSubmit={handleAddNotebookSubmit}
+          >
+            <input
+              type="text"
+              className="browsePanelCreateNotebookInput"
+              placeholder="Notebook name"
+              value={newNotebookName}
+              onChange={e => setNewNotebookName(e.target.value)}
+              maxLength={60}
+              autoFocus
+            />
+            <button
+              type="submit"
+              className="uiButton uiButtonPrimary browsePanelCreateNotebookSubmit"
+              disabled={isCreatingNotebook}
+            >
+              {isCreatingNotebook ? "Creating..." : "Create"}
+            </button>
+            <button
+              type="button"
+              className="uiButton uiButtonGhost browsePanelCreateNotebookCancel"
+              onClick={() => {
+                setIsAddNotebookOpen(false);
+                setCreateError("");
+                setNewNotebookName("");
+              }}
+              disabled={isCreatingNotebook}
+            >
+              Cancel
+            </button>
+          </form>
+        ) : null}
+        {createError ? (
+          <p className="browsePanelCreateNotebookError" role="alert">
+            {createError}
+          </p>
+        ) : null}
       </header>
       <div className="notebookPickerGrid">
         <div className="notebookPickerCardWrap">

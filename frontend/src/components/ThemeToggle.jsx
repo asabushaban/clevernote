@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import "../components/MainPage/MainPage.css";
 
-function Toggle() {
+function Toggle({ compact = false }) {
   const [theme, setTheme] = useState("light");
 
   useEffect(() => {
@@ -18,14 +18,20 @@ function Toggle() {
   const isChecked = theme === "dark";
 
   return (
-    <div
-      className={`toggle-container ${isChecked ? "active" : ""}`}
+    <button
+      type="button"
+      className={`themeToggleButton${compact ? " themeToggleButton--compact" : ""}`}
       onClick={() => setTheme(isChecked ? "light" : "dark")}
-      role="button"
-      aria-label="Toggle theme"
+      aria-label={`Switch to ${isChecked ? "light" : "dark"} mode`}
+      title={`Switch to ${isChecked ? "light" : "dark"} mode`}
     >
-      <div className={`slider ${isChecked ? "active" : ""}`}></div>
-    </div>
+      <span className="themeToggleGlyph" aria-hidden="true">
+        {isChecked ? "☾" : "☀"}
+      </span>
+      {!compact && (
+        <span className="themeToggleText">{isChecked ? "Dark" : "Light"}</span>
+      )}
+    </button>
   );
 }
 

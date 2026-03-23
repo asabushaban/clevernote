@@ -6,8 +6,6 @@ import { setSelectedNotebook } from "../../store/selectedNotebook";
 const Notebooks = ({
   notes,
   notebooks,
-  newNotebookHidden,
-  setNewNotebookHidden,
   selectedNote,
   onOpenNotebookPicker,
   onOpenNoteNavigate,
@@ -120,20 +118,6 @@ const Notebooks = ({
         ) : (
           <li className="sideNavNoteItem sideNavNoteItemMuted">No suggestions yet</li>
         )}
-      </div>
-
-      <div className="sideNavNotebookActions">
-        <button
-          type="button"
-          className="uiButton uiButtonGhost sideNavNotebookActionBtn"
-          onClick={() =>
-            !newNotebookHidden
-              ? setNewNotebookHidden(true)
-              : setNewNotebookHidden(false)
-          }
-        >
-          Add notebook
-        </button>
       </div>
     </ul>
   );

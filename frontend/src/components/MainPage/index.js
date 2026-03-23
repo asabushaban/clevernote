@@ -7,7 +7,7 @@ import React, {
 import { useDispatch, useSelector } from "react-redux";
 import "./MainPage.css";
 import { createNote, getNotes, editNote, deleteNote } from "../../store/notes";
-import { getNotebooks } from "../../store/notebooks";
+import { createNotebook, getNotebooks } from "../../store/notebooks";
 import SideNav from "./SideNav";
 import NoteEditor from "./NoteEditor";
 import {
@@ -22,7 +22,6 @@ import {
   NotebookPickerPanel,
   NotesListPanel,
 } from "./BrowseWorkspace";
-import Toggle from "../ThemeToggle";
 
 function plainFromHtml(html) {
   if (!html) return "";
@@ -47,10 +46,6 @@ function MainPage() {
 
   const [noteContent, setNoteContent] = useState("");
   const [noteTitle, setNoteTitle] = useState("");
-
-  const [name, setName] = useState("");
-
-  const [newNotebookHidden, setNewNotebookHidden] = useState(true);
 
   const [error] = useState("");
 
@@ -284,6 +279,31 @@ function MainPage() {
     setAppPhase("editor");
   }, [dispatch]);
 
+  const createNotebookFromPicker = useCallback(
+    async notebookName => {
+      const name = String(notebookName || "").trim();
+      if (!name) {
+        return { ok: false, error: "Notebook name is required." };
+      }
+
+      const created = await dispatch(
+        createNotebook({
+          userId: sessionUser.id,
+          name,
+        })
+      );
+
+      if (!created) {
+        return { ok: false, error: "Could not create notebook." };
+      }
+
+      await dispatch(getNotebooks(sessionUser.id));
+      setAppPhase("notebooks");
+      return { ok: true };
+    },
+    [dispatch, sessionUser.id]
+  );
+
   const handleSearchSelectNote = useCallback(() => {
     setAppPhase("editor");
   }, []);
@@ -367,10 +387,6 @@ function MainPage() {
               notebooks={notebooks}
               selectedNote={selectedNote}
               selectedNotebook={selectedNotebook}
-              name={name}
-              setName={setName}
-              newNotebookHidden={newNotebookHidden}
-              setNewNotebookHidden={setNewNotebookHidden}
               searchInput={searchInput}
               setSearchInput={setSearchInput}
               onSearchSelectNote={handleSearchSelectNote}
@@ -390,6 +406,8 @@ function MainPage() {
             notes={notes}
             onOpenNotebook={openNotebook}
             onOpenNote={openNoteFromPicker}
+            onCreateNote={createNewNote}
+            onCreateNotebook={createNotebookFromPicker}
           />
         )}
 
@@ -428,6 +446,10 @@ function MainPage() {
                   placeholder="Write a title for your note here"
                   value={noteTitle}
                   onChange={e => setNoteTitle(e.target.value)}
+                  spellCheck
+                  autoCorrect="on"
+                  autoCapitalize="sentences"
+                  lang="en-US"
                 />
                 <span
                   className={`saveStatusPill saveStatusPill--${saveStatus}`}
@@ -488,10 +510,6 @@ function MainPage() {
         )}
         </div>
       </div>
-      <div className="appThemeToggleFab" aria-label="Theme toggle">
-        <Toggle />
-      </div>
-
       <NotebookModal
         sessionUser={sessionUser}
         open={open}

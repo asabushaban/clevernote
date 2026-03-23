@@ -3,6 +3,7 @@ import { useEditor, EditorContent } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
 import Placeholder from "@tiptap/extension-placeholder";
 import Underline from "@tiptap/extension-underline";
+import AutoCorrectExtension from "./AutoCorrectExtension";
 
 function ToolbarButton({ active, disabled, onClick, title, children }) {
   return (
@@ -37,6 +38,7 @@ export default function NoteEditor({
           horizontalRule: false,
         }),
         Underline,
+        AutoCorrectExtension,
         Placeholder.configure({
           placeholder,
         }),
@@ -47,6 +49,10 @@ export default function NoteEditor({
         attributes: {
           class: "noteEditorProse",
           spellcheck: "true",
+          lang: "en-US",
+          autocorrect: "on",
+          autocomplete: "on",
+          autocapitalize: "sentences",
         },
       },
       onUpdate: ({ editor: ed }) => {

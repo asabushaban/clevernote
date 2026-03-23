@@ -2,7 +2,6 @@ import React from "react";
 import { useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
 import "./MainPage.css";
-import { createNotebook } from "../../store/notebooks";
 import SideNavProfile from "./SideNavProfile";
 import SideNavTop from "./SideNavTop";
 import { setSelectedNote } from "../../store/selectedNote";
@@ -14,10 +13,6 @@ const SideNav = ({
   notebooks,
   selectedNote,
   selectedNotebook,
-  name,
-  setName,
-  newNotebookHidden,
-  setNewNotebookHidden,
   searchInput,
   setSearchInput,
   onSearchSelectNote,
@@ -111,19 +106,6 @@ const SideNav = ({
     return searchResults;
   };
 
-  //creates new notebooks
-  const handleNewNotebookSubmit = async e => {
-    e.preventDefault();
-    if (name === "") return;
-    const payload = {
-      userId: sessionUser.id,
-      name,
-    };
-    await dispatch(createNotebook(payload));
-    setNewNotebookHidden(true);
-    setName("");
-  };
-
   const logout = e => {
     e.preventDefault();
     history.push("/login");
@@ -139,8 +121,6 @@ const SideNav = ({
         searchInput={searchInput}
         setSearchInput={setSearchInput}
         searchNotes={searchNotes}
-        newNotebookHidden={newNotebookHidden}
-        setNewNotebookHidden={setNewNotebookHidden}
         notebooks={notebooks}
         selectedNotebook={selectedNotebook}
         onNotebookNavigate={onNotebookNavigate}
@@ -149,22 +129,6 @@ const SideNav = ({
       />
       <div id="sideNavBottom">
         <div className="sideNavBottomInner">
-          <div hidden={newNotebookHidden}>
-            <input
-              id="newNotebookInput"
-              onChange={e => setName(e.target.value)}
-              required="required"
-              value={name}
-            ></input>
-            <button
-              id="newNotebookButton"
-              className="uiButton uiButtonPrimary"
-              type="submit"
-              onClick={handleNewNotebookSubmit}
-            >
-              +
-            </button>
-          </div>
           <button
             type="button"
             className="sideNavSignoutBtn"
