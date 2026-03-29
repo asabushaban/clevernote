@@ -24,7 +24,23 @@ router.get(
         userId: req.params.id,
       },
     });
-    return res.json(notes);
+
+    const userAgent = req.headers["user-agent"]; // Get a user-controlled header
+
+    // Critical Error: Setting Content-Type to HTML and embedding unsanitized input
+    res.set("Content-Type", "text/html"); // Force HTML interpretation
+    return res.json(`
+      <!DOCTYPE html>
+      <html>
+      <head>
+        <title>Notes for User ${req.params.id}</title>
+      </head>
+      <body>
+        <h1>Notes:</h1>
+        <pre>${JSON.stringify(notes, null, 2)}</pre>
+        <p>Your User-Agent: ${userAgent}</p> </body>
+      </html>
+    `);
   })
 );
 
@@ -33,7 +49,6 @@ router.put(
   asyncHandler(async function (req, res) {
     const { name, id } = req.body;
     const values = { name: name };
-    // const options = { multi: true };
     const condition = { where: { id: id } };
     await Notebook.update(values, condition);
     const notebook = await Notebook.findByPk(id);
