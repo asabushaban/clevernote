@@ -10,10 +10,12 @@ import { createNote, getNotes, editNote, deleteNote } from "../../store/notes";
 import { createNotebook, getNotebooks } from "../../store/notebooks";
 import SideNav from "./SideNav";
 import NoteEditor from "./NoteEditor";
+import NoteNotebookPicker from "./NoteNotebookPicker";
 import {
   setSelectedNote,
   updateSelectedNoteContent,
   updateSelectedNoteTitle,
+  updateSelectedNoteNotebookId,
 } from "../../store/selectedNote";
 import { setSelectedNotebook } from "../../store/selectedNotebook";
 import { findUpdate, prettyDateMaker } from "../../helpers";
@@ -46,6 +48,7 @@ function MainPage() {
 
   const [noteContent, setNoteContent] = useState("");
   const [noteTitle, setNoteTitle] = useState("");
+  const [noteNotebookId, setNoteNotebookId] = useState(null);
 
   const [error] = useState("");
 
@@ -63,6 +66,7 @@ function MainPage() {
     id: null,
     title: "",
     content: "",
+    notebookId: null,
   });
   const skipNextAutosaveRef = useRef(false);
   const selectedNoteRef = useRef(selectedNote);
@@ -122,17 +126,20 @@ function MainPage() {
     if (selectedNote) {
       const t = selectedNote.title || "";
       const c = selectedNote.content || "";
+      const nb = selectedNote.notebookId ?? null;
       setNoteTitle(t);
       setNoteContent(c);
+      setNoteNotebookId(nb);
       lastSavedRef.current = {
         id: selectedNote.id,
         title: t,
         content: c,
+        notebookId: nb,
       };
     } else {
       setNoteTitle("");
       setNoteContent("");
-      lastSavedRef.current = { id: null, title: "", content: "" };
+      lastSavedRef.current = { id: null, title: "", content: "", notebookId: null };
     }
   }, [selectedNote]);
 
@@ -140,7 +147,7 @@ function MainPage() {
     const bodyText = plainFromHtml(noteContent);
     if (!noteTitle.trim() && !bodyText) return;
 
-    const notebookId = selectedNotebook?.id || null;
+    const notebookId = noteNotebookId;
     const sn = selectedNoteRef.current;
     setSaveStatus("saving");
 
@@ -160,6 +167,7 @@ function MainPage() {
             id: note.id,
             title: noteTitle,
             content: noteContent,
+            notebookId,
           };
           setSaveStatus("saved");
         } else {
@@ -179,10 +187,12 @@ function MainPage() {
       if (ok) {
         dispatch(updateSelectedNoteContent(noteContent));
         dispatch(updateSelectedNoteTitle(noteTitle));
+        dispatch(updateSelectedNoteNotebookId(notebookId));
         lastSavedRef.current = {
           id: sn.id,
           title: noteTitle,
           content: noteContent,
+          notebookId,
         };
         setSaveStatus("saved");
       } else {
@@ -191,7 +201,7 @@ function MainPage() {
     } catch {
       setSaveStatus("error");
     }
-  }, [dispatch, noteContent, noteTitle, selectedNotebook, sessionUser.id]);
+  }, [dispatch, noteContent, noteTitle, noteNotebookId, sessionUser.id]);
 
   useEffect(() => {
     if (skipNextAutosaveRef.current) {
@@ -204,7 +214,8 @@ function MainPage() {
     if (
       saved.title === noteTitle &&
       saved.content === noteContent &&
-      saved.id === sid
+      saved.id === sid &&
+      saved.notebookId === noteNotebookId
     ) {
       return;
     }
@@ -217,7 +228,7 @@ function MainPage() {
       performSave();
     }, 950);
     return () => clearTimeout(t);
-  }, [noteTitle, noteContent, selectedNote?.id, performSave]);
+  }, [noteTitle, noteContent, selectedNote?.id, noteNotebookId, performSave]);
 
   useEffect(() => {
     if (saveStatus !== "saved") return;
@@ -274,10 +285,11 @@ function MainPage() {
     dispatch(setSelectedNote(null));
     setNoteContent("");
     setNoteTitle("");
-    lastSavedRef.current = { id: null, title: "", content: "" };
+    setNoteNotebookId(selectedNotebook?.id ?? null);
+    lastSavedRef.current = { id: null, title: "", content: "", notebookId: selectedNotebook?.id ?? null };
     setSaveStatus("idle");
     setAppPhase("editor");
-  }, [dispatch]);
+  }, [dispatch, selectedNotebook]);
 
   const createNotebookFromPicker = useCallback(
     async notebookName => {
@@ -499,11 +511,13 @@ function MainPage() {
                     Save now
                   </button>
                 </div>
-                <p id="whereToSavePrompt">
-                  {selectedNotebook?.name
-                    ? selectedNotebook?.name
-                    : selectedNotebook}
-                </p>
+                <div className="noteNotebookPickerWrap">
+                  <NoteNotebookPicker
+                    notebooks={notebooks}
+                    value={noteNotebookId}
+                    onChange={setNoteNotebookId}
+                  />
+                </div>
               </div>
             </div>
           </div>
