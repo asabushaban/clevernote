@@ -10,6 +10,7 @@ import { createNote, getNotes, editNote, deleteNote } from "../../store/notes";
 import { createNotebook, getNotebooks } from "../../store/notebooks";
 import SideNav from "./SideNav";
 import NoteEditor from "./NoteEditor";
+import NoteNotebookPicker from "./NoteNotebookPicker";
 import {
   setSelectedNote,
   updateSelectedNoteContent,
@@ -511,25 +512,11 @@ function MainPage() {
                   </button>
                 </div>
                 <div className="noteNotebookPickerWrap">
-                  <label htmlFor="noteNotebookSelect" className="noteNotebookPickerLabel">
-                    Notebook
-                  </label>
-                  <select
-                    id="noteNotebookSelect"
-                    className="noteNotebookSelect"
-                    value={noteNotebookId ?? ""}
-                    onChange={e => {
-                      const val = e.target.value ? Number(e.target.value) : null;
-                      setNoteNotebookId(val);
-                    }}
-                  >
-                    <option value="">No notebook</option>
-                    {Object.values(notebooks).map(nb => (
-                      <option key={nb.id} value={nb.id}>
-                        {nb.name}
-                      </option>
-                    ))}
-                  </select>
+                  <NoteNotebookPicker
+                    notebooks={notebooks}
+                    value={noteNotebookId}
+                    onChange={setNoteNotebookId}
+                  />
                 </div>
               </div>
             </div>
