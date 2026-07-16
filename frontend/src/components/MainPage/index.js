@@ -187,7 +187,7 @@ function MainPage() {
       if (ok) {
         dispatch(updateSelectedNoteContent(noteContent));
         dispatch(updateSelectedNoteTitle(noteTitle));
-        dispatch(updateSelectedNoteNotebookId(notebookId));
+        dispatch(updateSelectedNoteNotebookId(sn.id, notebookId));
         lastSavedRef.current = {
           id: sn.id,
           title: noteTitle,

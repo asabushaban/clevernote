@@ -18,8 +18,9 @@ const updateNoteTitle = noteTitle => ({
   noteTitle,
 });
 
-const updateNoteNotebookId = notebookId => ({
+const updateNoteNotebookId = (noteId, notebookId) => ({
   type: UPDATE_NOTE_NOTEBOOK_ID,
+  noteId,
   notebookId,
 });
 
@@ -35,8 +36,8 @@ export const updateSelectedNoteTitle = noteTitle => async dispatch => {
   dispatch(updateNoteTitle(noteTitle));
 };
 
-export const updateSelectedNoteNotebookId = notebookId => async dispatch => {
-  dispatch(updateNoteNotebookId(notebookId));
+export const updateSelectedNoteNotebookId = (noteId, notebookId) => async dispatch => {
+  dispatch(updateNoteNotebookId(noteId, notebookId));
 };
 
 const initialState = null;
@@ -56,7 +57,7 @@ const selectNoteReducer = (state = initialState, action) => {
       return { ...state, title: action.noteTitle };
     }
     case UPDATE_NOTE_NOTEBOOK_ID: {
-      if (!state) return state;
+      if (!state || state.id !== action.noteId) return state;
       return { ...state, notebookId: action.notebookId };
     }
     default:
