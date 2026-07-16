@@ -1753,15 +1753,52 @@
   gap: 10px;
 }
 
-#whereToSavePrompt {
+.noteNotebookPickerWrap {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.noteNotebookPickerLabel {
   margin: 0;
   color: var(--text-secondary);
   font-weight: 600;
   font-size: 13px;
-  padding: 8px 14px;
-  border-radius: var(--radius-pill);
+  white-space: nowrap;
+  cursor: default;
+  user-select: none;
+}
+
+.noteNotebookSelect {
+  font-family: var(--font-ui);
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-primary);
   background: var(--surface-muted);
   border: 1px solid var(--border);
+  border-radius: var(--radius-pill);
+  padding: 7px 32px 7px 14px;
+  cursor: pointer;
+  appearance: none;
+  -webkit-appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath fill='none' stroke='%235c6478' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round' d='M1 1l5 5 5-5'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 12px center;
+  transition: border-color 0.2s ease, background-color 0.2s ease, box-shadow 0.2s ease;
+  max-width: 200px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.noteNotebookSelect:hover {
+  border-color: var(--border-glow);
+  background-color: var(--surface-strong);
+}
+
+.noteNotebookSelect:focus {
+  outline: none;
+  border-color: var(--brand);
+  box-shadow: 0 0 0 3px var(--brand-soft);
 }
 
 /* —— Responsive —— */
@@ -1827,8 +1864,14 @@
     align-items: stretch;
   }
 
-  #whereToSavePrompt {
-    text-align: center;
+  .noteNotebookPickerWrap {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .noteNotebookSelect {
+    flex: 1;
+    max-width: none;
   }
 }
 
