@@ -1,9 +1,13 @@
-import React, { useEffect, useId, useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
+
+let noteNotebookPickerIdCounter = 0;
 
 export default function NoteNotebookPicker({ notebooks, value, onChange }) {
   const [open, setOpen] = useState(false);
   const wrapRef = useRef(null);
-  const listId = useId();
+  const listId = useRef(
+    `note-notebook-picker-${++noteNotebookPickerIdCounter}`
+  ).current;
 
   const notebookList = Object.values(notebooks || {});
   const selectedNotebook = notebookList.find(nb => nb.id === value) || null;
