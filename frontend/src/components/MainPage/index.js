@@ -320,6 +320,15 @@ function MainPage() {
     setAppPhase("editor");
   }, []);
 
+  const handleSearchSelectNotebook = useCallback(
+    notebook => {
+      dispatch(setSelectedNotebook(notebook));
+      dispatch(setSelectedNote(null));
+      setAppPhase("notes");
+    },
+    [dispatch]
+  );
+
   const handleSidebarNotebookNavigate = useCallback(() => {
     setAppPhase("notes");
   }, []);
@@ -402,6 +411,7 @@ function MainPage() {
               searchInput={searchInput}
               setSearchInput={setSearchInput}
               onSearchSelectNote={handleSearchSelectNote}
+              onSearchSelectNotebook={handleSearchSelectNotebook}
               onNotebookNavigate={handleSidebarNotebookNavigate}
               onOpenNotebookPicker={handleSidebarOpenNotebookPicker}
               onOpenNoteNavigate={handleSidebarOpenSuggestedNote}

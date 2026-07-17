@@ -16,6 +16,7 @@ const SideNav = ({
   searchInput,
   setSearchInput,
   onSearchSelectNote,
+  onSearchSelectNotebook,
   onNotebookNavigate,
   onOpenNotebookPicker,
   onOpenNoteNavigate,
@@ -23,20 +24,21 @@ const SideNav = ({
   const dispatch = useDispatch();
   const history = useHistory();
 
-  //functions to list all notebooks/notes or specific notebooks/notes on search
-
-  // const searchNotebooks = input => {
-  //   const searchableNotebooks = Object.values(notebooks);
-  //   return searchableNotebooks.filter(notebook =>
-  //     notebook.name.toLowerCase().includes(input.toLowerCase())
-  //   );
-  // };
+  const normalize = value => String(value || "").toLowerCase();
+  const stripHtml = value =>
+    String(value || "")
+      .replace(/<[^>]+>/g, " ")
+      .replace(/&nbsp;/gi, " ")
+      .replace(/\s+/g, " ")
+      .trim();
 
   const searchNotes = input => {
+    const query = normalize(input);
     const searchableNotes = Object.values(notes);
+    const searchableNotebooks = Object.values(notebooks);
 
     const titleResults = searchableNotes.filter(notes =>
-      notes.title.toLowerCase().includes(input.toLowerCase())
+      normalize(notes.title).includes(query)
     );
 
     let titles = titleResults.map(notes => (
@@ -54,7 +56,7 @@ const SideNav = ({
     ));
 
     const noteResults = searchableNotes.filter(note =>
-      note.content.toLowerCase().includes(input.toLowerCase())
+      normalize(note.content).includes(query)
     );
 
     let noteContent = noteResults.map(note => (
@@ -67,17 +69,49 @@ const SideNav = ({
           onSearchSelectNote?.();
         }}
       >
-        {note.content
-          .replace(/(<([^>]+)>)/gi, "")
-          .slice(
-            note.content
-              .toLowerCase()
-              .replace(/(<([^>]+)>)/gi, "")
-              .indexOf(input.toLowerCase())
-          )
-          .slice(0, 30) + "..."}
+        {(() => {
+          const plain = stripHtml(note.content);
+          const matchIndex = plain.toLowerCase().indexOf(query);
+          const start = matchIndex >= 0 ? Math.max(0, matchIndex - 12) : 0;
+          const snippet = plain.slice(start, start + 42);
+          return `${snippet}${plain.length > start + 42 ? "..." : ""}`;
+        })()}
       </div>
     ));
+
+    const notebookResults = searchableNotebooks.filter(notebook =>
+      normalize(notebook.name).includes(query)
+    );
+
+    const notebooksSection = notebookResults.length ? (
+      [
+        <div key="search-label-notebooks" id={"searchLabel"}>
+          Notebooks...
+        </div>,
+        ...notebookResults.map(notebook => (
+          <div
+            key={`search-notebook-${notebook.id}`}
+            id={"searchResTitle"}
+            onClick={() => {
+              dispatch(setSelectedNote(null));
+              setSearchInput("");
+              onSearchSelectNotebook?.(notebook);
+            }}
+          >
+            {notebook.name}
+          </div>
+        )),
+      ]
+    ) : (
+      [
+        <div key="search-label-notebooks" id={"searchLabel"}>
+          Notebooks...
+        </div>,
+        <div key="search-empty-notebooks" id={"searchLabel"}>
+          There are no notebooks with that value
+        </div>,
+      ]
+    );
 
     if (!titles.length)
       titles = [
@@ -93,6 +127,7 @@ const SideNav = ({
       ];
 
     const searchResults = [
+      ...notebooksSection,
       <div key="search-label-titles" id={"searchLabel"}>
         Titles...
       </div>,
