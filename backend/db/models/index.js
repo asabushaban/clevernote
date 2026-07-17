@@ -27,7 +27,12 @@ fs.readdirSync(__dirname)
     );
   })
   .forEach(file => {
-    const model = sequelize["import"](path.join(__dirname, file));
+    // sequelize.import() was removed in Sequelize v6; models are now
+    // loaded by requiring the factory function directly.
+    const model = require(path.join(__dirname, file))(
+      sequelize,
+      Sequelize.DataTypes
+    );
     db[model.name] = model;
   });
 
