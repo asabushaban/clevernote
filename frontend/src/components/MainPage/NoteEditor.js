@@ -1,9 +1,10 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useEditor, EditorContent } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
 import Placeholder from "@tiptap/extension-placeholder";
 import Underline from "@tiptap/extension-underline";
 import AutoCorrectExtension from "./AutoCorrectExtension";
+import { getTextStats } from "./textStats";
 
 function ToolbarButton({ active, disabled, onClick, title, children }) {
   return (
@@ -29,6 +30,7 @@ export default function NoteEditor({
   placeholder = "What is on your mind?",
   editable = true,
 }) {
+  const [textStats, setTextStats] = useState(getTextStats());
   const editor = useEditor(
     {
       extensions: [
@@ -55,7 +57,11 @@ export default function NoteEditor({
           autocapitalize: "sentences",
         },
       },
+      onCreate: ({ editor: ed }) => {
+        setTextStats(getTextStats(ed.getText()));
+      },
       onUpdate: ({ editor: ed }) => {
+        setTextStats(getTextStats(ed.getText()));
         onChange(ed.getHTML());
       },
     },
@@ -166,6 +172,12 @@ export default function NoteEditor({
         </ToolbarButton>
       </div>
       <EditorContent editor={editor} className="noteEditorSurface" />
+      <div className="noteEditorStats" role="status" aria-live="polite">
+        {textStats.words} {textStats.words === 1 ? "word" : "words"}
+        <span aria-hidden="true"> · </span>
+        {textStats.characters}{" "}
+        {textStats.characters === 1 ? "character" : "characters"}
+      </div>
     </div>
   );
 }
