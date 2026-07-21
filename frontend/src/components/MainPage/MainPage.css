@@ -1735,6 +1735,14 @@
   text-decoration-thickness: 1.4px;
 }
 
+.noteEditorSurface [data-inline-suggestion]::after {
+  content: attr(data-inline-suggestion);
+  color: var(--text-secondary);
+  font-style: italic;
+  opacity: 0.58;
+  pointer-events: none;
+}
+
 .noteEditorStats {
   flex-shrink: 0;
   padding: 8px 14px;
