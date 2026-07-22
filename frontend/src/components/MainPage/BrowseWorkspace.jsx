@@ -1,5 +1,5 @@
 import React, { useEffect, useMemo, useState } from "react";
-import ReactHtmlParser from "react-html-parser";
+import parseHtml from "html-react-parser";
 import { prettyDateMaker } from "../../helpers";
 
 function textPreview(html, max = 96) {
@@ -385,7 +385,7 @@ export function NotesListPanel({
                 {textPreview(note.content, 120) || "Empty note"}
               </span>
               <span className="notesBrowseRowDate">
-                {ReactHtmlParser(prettyDateMaker(note?.createdAt).slice(0, 80))}
+                {parseHtml(prettyDateMaker(note?.createdAt).slice(0, 80))}
               </span>
             </button>
           </li>
