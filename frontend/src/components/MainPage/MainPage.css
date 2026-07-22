@@ -1735,6 +1735,17 @@
   text-decoration-thickness: 1.4px;
 }
 
+.noteEditorStats {
+  flex-shrink: 0;
+  padding: 8px 14px;
+  border-top: 1px solid var(--border);
+  color: var(--text-secondary);
+  background: var(--surface-muted);
+  font-size: 12px;
+  font-weight: 500;
+  text-align: right;
+}
+
 #bottomMain {
   flex-shrink: 0;
   margin-top: clamp(12px, 1.5vw, 18px);
