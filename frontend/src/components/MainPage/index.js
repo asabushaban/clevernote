@@ -24,6 +24,12 @@ import {
   NotebookPickerPanel,
   NotesListPanel,
 } from "./BrowseWorkspace";
+import {
+  ALL_NOTES,
+  NO_NOTEBOOK,
+  collectionLabel,
+  notebookIdForCollection,
+} from "./noteCollections";
 
 function plainFromHtml(html) {
   if (!html) return "";
@@ -42,7 +48,7 @@ function MainPage() {
   const notebooks = useSelector(state => state.notebooks);
   const selectedNote = useSelector(state => state?.selectedNote);
   const selectedNotebook =
-    useSelector(state => state?.selectedNotebook) || "All Notes";
+    useSelector(state => state?.selectedNotebook) || ALL_NOTES;
 
   const [appPhase, setAppPhase] = useState("notebooks");
 
@@ -271,7 +277,9 @@ function MainPage() {
   const openNoteFromPicker = useCallback(
     (note, ctx) => {
       if (ctx?.type === "allNotes") {
-        dispatch(setSelectedNotebook("All Notes"));
+        dispatch(setSelectedNotebook(ALL_NOTES));
+      } else if (ctx?.type === "noNotebook") {
+        dispatch(setSelectedNotebook(NO_NOTEBOOK));
       } else if (ctx?.type === "notebook" && ctx.notebook) {
         dispatch(setSelectedNotebook(ctx.notebook));
       }
@@ -281,15 +289,23 @@ function MainPage() {
     [dispatch]
   );
 
-  const createNewNote = useCallback(() => {
+  const createNewNote = useCallback(collection => {
+    const targetCollection = collection || ALL_NOTES;
+    const notebookId = notebookIdForCollection(targetCollection);
+    dispatch(setSelectedNotebook(targetCollection));
     dispatch(setSelectedNote(null));
     setNoteContent("");
     setNoteTitle("");
-    setNoteNotebookId(selectedNotebook?.id ?? null);
-    lastSavedRef.current = { id: null, title: "", content: "", notebookId: selectedNotebook?.id ?? null };
+    setNoteNotebookId(notebookId);
+    lastSavedRef.current = {
+      id: null,
+      title: "",
+      content: "",
+      notebookId,
+    };
     setSaveStatus("idle");
     setAppPhase("editor");
-  }, [dispatch, selectedNotebook]);
+  }, [dispatch]);
 
   const createNotebookFromPicker = useCallback(
     async notebookName => {
@@ -458,7 +474,7 @@ function MainPage() {
                   ← Notes
                 </button>
                 <span className="editorFocusNotebookLabel">
-                  {selectedNotebook?.name || selectedNotebook}
+                  {collectionLabel(selectedNotebook)}
                 </span>
               </div>
 
