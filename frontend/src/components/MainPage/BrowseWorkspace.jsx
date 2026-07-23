@@ -1,6 +1,13 @@
 import React, { useEffect, useMemo, useState } from "react";
 import parseHtml from "html-react-parser";
 import { prettyDateMaker } from "../../helpers";
+import {
+  ALL_NOTES,
+  NO_NOTEBOOK,
+  collectionLabel,
+  isVirtualCollection,
+  notesInCollection,
+} from "./noteCollections";
 
 function textPreview(html, max = 96) {
   if (!html) return "";
@@ -10,13 +17,6 @@ function textPreview(html, max = 96) {
     .replace(/\s+/g, " ")
     .trim();
   return t.length > max ? `${t.slice(0, max)}…` : t;
-}
-
-function notesInScope(notes, notebook) {
-  const all = Object.values(notes);
-  if (notebook === "All Notes") return all;
-  if (!notebook?.id) return all;
-  return all.filter(n => n.notebookId === notebook.id);
 }
 
 function sortNotesByUpdated(list) {
@@ -85,6 +85,8 @@ export function NotebookPickerPanel({
       label:
         openCtx?.type === "allNotes"
           ? "All notes"
+          : openCtx?.type === "noNotebook"
+          ? "No notebook"
           : openCtx?.notebook?.name || "Notebook",
     });
   };
@@ -110,23 +112,31 @@ export function NotebookPickerPanel({
       >
         <div className="notebookPreviewPanelHeader">
           <p className="notebookPreviewPopoverTitle">
-            {sorted.length} note{sorted.length === 1 ? "" : "s"} in this notebook
+            {sorted.length} note{sorted.length === 1 ? "" : "s"} in this{" "}
+            {openCtx?.type === "notebook" ? "notebook" : "collection"}
           </p>
           <button
             type="button"
             className="uiButton uiButtonGhost notebookPreviewOpenNotebookBtn"
             onClick={() =>
               onOpenNotebook(
-                openCtx?.type === "allNotes" ? "All Notes" : openCtx?.notebook
+                openCtx?.type === "allNotes"
+                  ? ALL_NOTES
+                  : openCtx?.type === "noNotebook"
+                  ? NO_NOTEBOOK
+                  : openCtx?.notebook
               )
             }
           >
-            Open notebook
+            Open {openCtx?.type === "notebook" ? "notebook" : "collection"}
           </button>
         </div>
         {sorted.length === 0 ? (
           <div className="notebookPreviewEmpty">
-            No notes yet - create one inside this notebook.
+            No notes yet
+            {openCtx?.type === "notebook"
+              ? " - create one inside this notebook."
+              : "."}
           </div>
         ) : (
           <div className="notebookPreviewLayout">
@@ -178,7 +188,7 @@ export function NotebookPickerPanel({
           <h2 className="browsePanelTitle">Notebooks</h2>
           <p className="browsePanelSubtitle">
             Open a notebook for its list, or use preview to jump directly to a
-            note.
+            note. All notes and No notebook are collections, not notebooks.
           </p>
         </div>
         <div className="browsePanelQuickActions">
@@ -195,7 +205,7 @@ export function NotebookPickerPanel({
           <button
             type="button"
             className="uiButton uiButtonPrimary browsePanelAddNoteBtn"
-            onClick={onCreateNote}
+            onClick={() => onCreateNote(ALL_NOTES)}
           >
             Add note
           </button>
@@ -250,7 +260,7 @@ export function NotebookPickerPanel({
               togglePreview({
                 key: "all",
                 openCtx: { type: "allNotes" },
-                scoped: notesInScope(notes, "All Notes"),
+                scoped: notesInCollection(notes, ALL_NOTES),
               })
             }
           >
@@ -264,9 +274,31 @@ export function NotebookPickerPanel({
           </button>
         </div>
 
+        <div className="notebookPickerCardWrap">
+          <button
+            type="button"
+            className="notebookPickerCard notebookPickerCard--all"
+            onClick={() =>
+              togglePreview({
+                key: "none",
+                openCtx: { type: "noNotebook" },
+                scoped: notesInCollection(notes, NO_NOTEBOOK),
+              })
+            }
+          >
+            <span className="notebookPickerCardIcon" aria-hidden="true">
+              <i className="far fa-folder-open" />
+            </span>
+            <span className="notebookPickerCardName">No notebook</span>
+            <span className="notebookPickerCardMeta">
+              {notesInCollection(notes, NO_NOTEBOOK).length} notes
+            </span>
+          </button>
+        </div>
+
         {list.map(nb => {
           const key = `nb-${nb.id}`;
-          const scoped = notesInScope(notes, nb);
+          const scoped = notesInCollection(notes, nb);
           return (
             <div key={nb.id} className="notebookPickerCardWrap">
               <button
@@ -312,15 +344,11 @@ export function NotesListPanel({
 }) {
   const [page, setPage] = useState(1);
   const pageSize = 12;
-  const title = selectedNotebook?.name || selectedNotebook || "Notes";
-  const list = useMemo(() => {
-    if (selectedNotebook === "All Notes") {
-      return sortNotesByUpdated(Object.values(notes));
-    }
-    return sortNotesByUpdated(Object.values(notes).filter(
-      n => n.notebookId === selectedNotebook?.id
-    ));
-  }, [notes, selectedNotebook]);
+  const title = collectionLabel(selectedNotebook);
+  const list = useMemo(
+    () => sortNotesByUpdated(notesInCollection(notes, selectedNotebook)),
+    [notes, selectedNotebook]
+  );
 
   const totalPages = Math.max(1, Math.ceil(list.length / pageSize));
   const currentPage = Math.min(page, totalPages);
@@ -348,7 +376,7 @@ export function NotesListPanel({
             {list.length} note{list.length === 1 ? "" : "s"}
           </p>
         </div>
-        {selectedNotebook !== "All Notes" ? (
+        {!isVirtualCollection(selectedNotebook) ? (
           <button
             type="button"
             className="browseNotebookMenuBtn"
@@ -365,7 +393,7 @@ export function NotesListPanel({
       <button
         type="button"
         className="uiButton uiButtonPrimary browseNewNoteBtn"
-        onClick={onCreateNote}
+        onClick={() => onCreateNote(selectedNotebook)}
       >
         New note
       </button>
