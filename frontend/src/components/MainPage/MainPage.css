@@ -1036,6 +1036,59 @@
   border: 1px solid var(--border);
 }
 
+.notebookPickerWorkspace {
+  min-height: 0;
+}
+
+.notebookPickerWorkspace.is-previewing {
+  display: grid;
+  grid-template-columns: minmax(180px, 240px) minmax(0, 1fr);
+  gap: clamp(16px, 2.5vw, 28px);
+  flex: 1;
+  min-height: 0;
+  align-items: stretch;
+}
+
+.notebookPickerRail {
+  min-width: 0;
+}
+
+.notebookPickerWorkspace.is-previewing .notebookPickerRail {
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  padding: 12px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  background: var(--surface-muted);
+}
+
+.notebookPickerRailHeader {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-bottom: 12px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid var(--border);
+}
+
+.notebookPickerBackToGrid {
+  justify-content: flex-start;
+  gap: 7px;
+  width: 100%;
+  padding: 9px 10px;
+  font-size: 12px;
+}
+
+.notebookPickerRailHint {
+  padding: 0 4px;
+  color: var(--text-secondary);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
 .notebookPickerGrid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(min(100%, 220px), 1fr));
@@ -1046,9 +1099,56 @@
   align-content: start;
 }
 
+.notebookPickerWorkspace.is-previewing .notebookPickerGrid {
+  display: flex;
+  flex-direction: column;
+  flex: 1 1 auto;
+  gap: 8px;
+  min-height: 0;
+  overflow-y: auto;
+  padding: 2px 4px 8px 2px;
+}
+
 .notebookPickerCardWrap {
   position: relative;
   overflow: visible;
+}
+
+.notebookPickerWorkspace.is-previewing .notebookPickerCard {
+  display: grid;
+  grid-template-columns: 30px minmax(0, 1fr);
+  grid-template-areas:
+    "icon name"
+    "icon meta";
+  column-gap: 8px;
+  row-gap: 2px;
+  padding: 11px 10px;
+  border-radius: var(--radius-md);
+}
+
+.notebookPickerWorkspace.is-previewing .notebookPickerCardIcon {
+  grid-area: icon;
+  align-self: center;
+  font-size: 1.05rem;
+}
+
+.notebookPickerWorkspace.is-previewing .notebookPickerCardName {
+  grid-area: name;
+  overflow: hidden;
+  font-size: 13px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.notebookPickerWorkspace.is-previewing .notebookPickerCardMeta {
+  grid-area: meta;
+  font-size: 10px;
+}
+
+.notebookPickerCard.is-active {
+  border-color: var(--brand);
+  background: var(--brand-soft);
+  box-shadow: 0 0 0 2px rgba(91, 108, 242, 0.12);
 }
 
 .notebookPickerCard {
@@ -1275,7 +1375,7 @@
 }
 
 .notebookPreviewStage {
-  margin-top: 14px;
+  margin-top: 0;
   flex: 1;
   min-height: 0;
 }
@@ -1345,19 +1445,54 @@
 }
 
 @media screen and (max-width: 900px) {
+  .notebookPickerWorkspace.is-previewing {
+    grid-template-columns: 1fr;
+    grid-template-rows: auto minmax(0, 1fr);
+    overflow: hidden;
+  }
+
+  .notebookPickerWorkspace.is-previewing .notebookPickerRail {
+    padding: 10px;
+    max-height: min(190px, 32vh);
+    overflow: hidden;
+  }
+
+  .notebookPickerRailHeader {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .notebookPickerBackToGrid {
+    width: auto;
+  }
+
+  .notebookPickerWorkspace.is-previewing .notebookPickerGrid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    flex: 1 1 auto;
+    min-height: 0;
+    max-height: none;
+  }
+
   .notebookPreviewPanel {
-    height: min(64vh, calc(100dvh - 300px));
+    height: 100%;
   }
 
   .notebookPreviewLayout {
     grid-template-columns: 1fr;
+    grid-template-rows: minmax(80px, 38%) minmax(0, 1fr);
   }
 
   .notebookPreviewList--left {
     border-right: 0;
     border-bottom: 1px solid var(--border);
-    max-height: min(220px, 32vh);
-    height: auto;
+    max-height: none;
+    height: 100%;
+  }
+
+  .notebookPreviewFocus {
+    overflow: hidden;
   }
 }
 

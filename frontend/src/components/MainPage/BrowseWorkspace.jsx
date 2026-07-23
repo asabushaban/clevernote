@@ -71,7 +71,7 @@ export function NotebookPickerPanel({
     }
   };
 
-  const togglePreview = ({ key, openCtx, scoped }) => {
+  const togglePreview = ({ key, openCtx }) => {
     if (expandedKey === key) {
       setExpandedKey(null);
       setPreviewContext(null);
@@ -81,7 +81,6 @@ export function NotebookPickerPanel({
     setPreviewContext({
       key,
       openCtx,
-      scoped,
       label:
         openCtx?.type === "allNotes"
           ? "All notes"
@@ -91,9 +90,21 @@ export function NotebookPickerPanel({
     });
   };
 
+  const closePreview = () => {
+    setExpandedKey(null);
+    setPreviewContext(null);
+  };
+
   const renderPreviewPanel = context => {
     if (!context) return null;
-    const { key, scoped, openCtx, label } = context;
+    const { key, openCtx, label } = context;
+    const collection =
+      openCtx?.type === "allNotes"
+        ? ALL_NOTES
+        : openCtx?.type === "noNotebook"
+        ? NO_NOTEBOOK
+        : openCtx?.notebook;
+    const scoped = notesInCollection(notes, collection);
     const sorted = sortNotesByUpdated(scoped);
     const firstNoteId = sorted[0]?.id || null;
     const activeNoteId = activePreviewNoteByKey[key] || firstNoteId;
@@ -182,7 +193,11 @@ export function NotebookPickerPanel({
   };
 
   return (
-    <div className="browsePanel browsePanel--notebooks">
+    <div
+      className={`browsePanel browsePanel--notebooks${
+        previewContext ? " is-previewing" : ""
+      }`}
+    >
       <header className="browsePanelHeader">
         <div className="browsePanelHeaderText">
           <h2 className="browsePanelTitle">Notebooks</h2>
@@ -251,16 +266,41 @@ export function NotebookPickerPanel({
           </p>
         ) : null}
       </header>
-      <div className="notebookPickerGrid">
-        <div className="notebookPickerCardWrap">
+      <div
+        className={`notebookPickerWorkspace${
+          previewContext ? " is-previewing" : ""
+        }`}
+      >
+        <aside
+          className="notebookPickerRail"
+          aria-label={previewContext ? "Notebook navigation" : undefined}
+        >
+          {previewContext ? (
+            <div className="notebookPickerRailHeader">
+              <button
+                type="button"
+                className="uiButton uiButtonGhost notebookPickerBackToGrid"
+                onClick={closePreview}
+              >
+                <span aria-hidden="true">←</span> All notebooks
+              </button>
+              <span className="notebookPickerRailHint">
+                Choose another collection
+              </span>
+            </div>
+          ) : null}
+          <div className="notebookPickerGrid">
+            <div className="notebookPickerCardWrap">
           <button
             type="button"
-            className="notebookPickerCard notebookPickerCard--all"
+            className={`notebookPickerCard notebookPickerCard--all${
+              expandedKey === "all" ? " is-active" : ""
+            }`}
+            aria-pressed={expandedKey === "all"}
             onClick={() =>
               togglePreview({
                 key: "all",
                 openCtx: { type: "allNotes" },
-                scoped: notesInCollection(notes, ALL_NOTES),
               })
             }
           >
@@ -277,12 +317,14 @@ export function NotebookPickerPanel({
         <div className="notebookPickerCardWrap">
           <button
             type="button"
-            className="notebookPickerCard notebookPickerCard--all"
+            className={`notebookPickerCard notebookPickerCard--all${
+              expandedKey === "none" ? " is-active" : ""
+            }`}
+            aria-pressed={expandedKey === "none"}
             onClick={() =>
               togglePreview({
                 key: "none",
                 openCtx: { type: "noNotebook" },
-                scoped: notesInCollection(notes, NO_NOTEBOOK),
               })
             }
           >
@@ -303,12 +345,14 @@ export function NotebookPickerPanel({
             <div key={nb.id} className="notebookPickerCardWrap">
               <button
                 type="button"
-                className="notebookPickerCard"
+                className={`notebookPickerCard${
+                  expandedKey === key ? " is-active" : ""
+                }`}
+                aria-pressed={expandedKey === key}
                 onClick={() =>
                   togglePreview({
                     key,
                     openCtx: { type: "notebook", notebook: nb },
-                    scoped,
                   })
                 }
               >
@@ -323,12 +367,14 @@ export function NotebookPickerPanel({
             </div>
           );
         })}
+          </div>
+        </aside>
+        {previewContext ? (
+          <div className="notebookPreviewStage">
+            {renderPreviewPanel(previewContext)}
+          </div>
+        ) : null}
       </div>
-      {previewContext ? (
-        <div className="notebookPreviewStage">
-          {renderPreviewPanel(previewContext)}
-        </div>
-      ) : null}
     </div>
   );
 }
