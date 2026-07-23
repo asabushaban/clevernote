@@ -1446,10 +1446,13 @@
 @media screen and (max-width: 900px) {
   .notebookPickerWorkspace.is-previewing {
     grid-template-columns: 1fr;
+    grid-template-rows: auto minmax(0, 1fr);
+    overflow: hidden;
   }
 
   .notebookPickerWorkspace.is-previewing .notebookPickerRail {
     padding: 10px;
+    max-height: min(190px, 32vh);
   }
 
   .notebookPickerRailHeader {
@@ -1465,22 +1468,27 @@
   .notebookPickerWorkspace.is-previewing .notebookPickerGrid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-    max-height: 190px;
+    max-height: 120px;
   }
 
   .notebookPreviewPanel {
-    height: min(64vh, calc(100dvh - 300px));
+    height: 100%;
   }
 
   .notebookPreviewLayout {
     grid-template-columns: 1fr;
+    grid-template-rows: minmax(80px, 38%) minmax(0, 1fr);
   }
 
   .notebookPreviewList--left {
     border-right: 0;
     border-bottom: 1px solid var(--border);
-    max-height: min(220px, 32vh);
-    height: auto;
+    max-height: none;
+    height: 100%;
+  }
+
+  .notebookPreviewFocus {
+    overflow: hidden;
   }
 }
 

@@ -71,7 +71,7 @@ export function NotebookPickerPanel({
     }
   };
 
-  const togglePreview = ({ key, openCtx, scoped }) => {
+  const togglePreview = ({ key, openCtx }) => {
     if (expandedKey === key) {
       setExpandedKey(null);
       setPreviewContext(null);
@@ -81,7 +81,6 @@ export function NotebookPickerPanel({
     setPreviewContext({
       key,
       openCtx,
-      scoped,
       label:
         openCtx?.type === "allNotes"
           ? "All notes"
@@ -98,7 +97,14 @@ export function NotebookPickerPanel({
 
   const renderPreviewPanel = context => {
     if (!context) return null;
-    const { key, scoped, openCtx, label } = context;
+    const { key, openCtx, label } = context;
+    const collection =
+      openCtx?.type === "allNotes"
+        ? ALL_NOTES
+        : openCtx?.type === "noNotebook"
+        ? NO_NOTEBOOK
+        : openCtx?.notebook;
+    const scoped = notesInCollection(notes, collection);
     const sorted = sortNotesByUpdated(scoped);
     const firstNoteId = sorted[0]?.id || null;
     const activeNoteId = activePreviewNoteByKey[key] || firstNoteId;
@@ -295,7 +301,6 @@ export function NotebookPickerPanel({
               togglePreview({
                 key: "all",
                 openCtx: { type: "allNotes" },
-                scoped: notesInCollection(notes, ALL_NOTES),
               })
             }
           >
@@ -320,7 +325,6 @@ export function NotebookPickerPanel({
               togglePreview({
                 key: "none",
                 openCtx: { type: "noNotebook" },
-                scoped: notesInCollection(notes, NO_NOTEBOOK),
               })
             }
           >
@@ -349,7 +353,6 @@ export function NotebookPickerPanel({
                   togglePreview({
                     key,
                     openCtx: { type: "notebook", notebook: nb },
-                    scoped,
                   })
                 }
               >

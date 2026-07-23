@@ -41,6 +41,19 @@ function renderPicker() {
   );
 }
 
+function pickerWithNotes(nextNotes) {
+  return (
+    <NotebookPickerPanel
+      notebooks={notebooks}
+      notes={nextNotes}
+      onOpenNotebook={jest.fn()}
+      onOpenNote={jest.fn()}
+      onCreateNote={jest.fn()}
+      onCreateNotebook={jest.fn()}
+    />
+  );
+}
+
 test("moves notebook navigation into a rail while a preview is open", () => {
   const { container } = renderPicker();
 
@@ -74,4 +87,27 @@ test("restores the full notebook grid from the preview rail", () => {
   expect(
     screen.queryByRole("button", { name: /All notebooks/i })
   ).toBeNull();
+});
+
+test("refreshes an open preview when notes change", () => {
+  const { rerender } = render(pickerWithNotes({}));
+
+  fireEvent.click(screen.getByRole("button", { name: /No notebook 0 notes/i }));
+  expect(screen.getByText("No notes yet.")).not.toBeNull();
+
+  rerender(
+    pickerWithNotes({
+      3: {
+        id: 3,
+        notebookId: null,
+        title: "New unassigned note",
+        content: "<p>Loaded after preview opened</p>",
+        createdAt: "2026-07-23T13:00:00.000Z",
+        updatedAt: "2026-07-23T13:00:00.000Z",
+      },
+    })
+  );
+
+  expect(screen.getAllByText("New unassigned note")).toHaveLength(2);
+  expect(screen.getAllByText("Loaded after preview opened")).toHaveLength(2);
 });
