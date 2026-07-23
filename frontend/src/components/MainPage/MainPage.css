@@ -1453,6 +1453,7 @@
   .notebookPickerWorkspace.is-previewing .notebookPickerRail {
     padding: 10px;
     max-height: min(190px, 32vh);
+    overflow: hidden;
   }
 
   .notebookPickerRailHeader {
@@ -1468,7 +1469,9 @@
   .notebookPickerWorkspace.is-previewing .notebookPickerGrid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-    max-height: 120px;
+    flex: 1 1 auto;
+    min-height: 0;
+    max-height: none;
   }
 
   .notebookPreviewPanel {
