@@ -1,6 +1,25 @@
 
 # Create React App Template
 
+## Inline autocomplete
+
+The note editor uses the MIT-licensed
+[`@sereneinserenade/tiptap-inline-suggestion`](https://github.com/sereneinserenade/tiptap-inline-suggestion)
+extension because it supports TipTap 2 and renders completions as inline ghost text.
+The dependency is pinned to `0.0.2`; its last published release was in 2023, so
+compatibility should be reviewed when TipTap is upgraded.
+
+Word completions come from the frequency-ranked, ISC-licensed
+[`subtlex-word-frequencies`](https://github.com/words/subtlex-word-frequencies)
+dataset. The editor indexes the 30,000 most common valid entries and begins
+suggesting after three letters. Suggestions complete only the current word and
+do not send note content to a server.
+
+`InlineAutocompleteExtension.js` adds automatic suggestion refresh and keyboard
+controls. Tab or Right Arrow accepts a suggestion, and Escape dismisses it.
+Space always inserts only a space. With no active suggestion, Tab and Right
+Arrow retain their normal browser/editor behavior.
+
 A no-frills template from which to create React + Redux applications with
 [Create React App](https://github.com/facebook/create-react-app).
 
