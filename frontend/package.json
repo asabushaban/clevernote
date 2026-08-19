@@ -47,6 +47,7 @@
     "redux-logger": "^3.0.6"
   },
   "overrides": {
+    "@types/jest": "^27.5.2",
     "linkify-it": "^5.0.2",
     "@babel/traverse": "^7.23.2",
     "@babel/plugin-transform-modules-systemjs": "^7.29.4",
