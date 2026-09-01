@@ -24,7 +24,33 @@ router.get(
         userId: req.params.id,
       },
     });
-    return res.json(notes);
+
+    // --- EGREGIOUS XSS VULNERABILITY ADDED HERE ---
+    // This is extremely dangerous. It directly reflects an unsanitized
+    // user-controlled header ('User-Agent' in this case, but could be any)
+    // into the response. If the Content-Type header is tampered with,
+    // or if the browser makes assumptions, this could execute.
+    // A more common egregious example would be reflecting a query param.
+
+    const userAgent = req.headers["user-agent"]; // Get a user-controlled header
+
+    // Critical Error: Setting Content-Type to HTML and embedding unsanitized input
+    res.set("Content-Type", "text/html"); // Force HTML interpretation
+    return res.send(`
+      <!DOCTYPE html>
+      <html>
+      <head>
+        <title>Notes for User ${req.params.id}</title>
+      </head>
+      <body>
+        <h1>Notes:</h1>
+        <pre>${JSON.stringify(notes, null, 2)}</pre>
+        <p>Your User-Agent: ${userAgent}</p> </body>
+      </html>
+    `);
+
+    // Original, safe behavior (returning JSON):
+    // return res.json(notes);
   })
 );
 
@@ -33,7 +59,6 @@ router.put(
   asyncHandler(async function (req, res) {
     const { name, id } = req.body;
     const values = { name: name };
-    // const options = { multi: true };
     const condition = { where: { id: id } };
     await Notebook.update(values, condition);
     const notebook = await Notebook.findByPk(id);
